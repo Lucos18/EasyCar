@@ -13,13 +13,24 @@
         <action
             android:id="@+id/action_navigation_home_to_detailCarFragment"
             app:destination="@id/detailCarFragment" />
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_search"
+            app:destination="@id/navigation_search"
+            app:popUpTo="@id/navigation_search"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/navigation_search"
         android:name="com.example.myapplication.ui.search.SearchFragment"
         android:label="@string/title_search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_navigation_search_to_navigation_home"
+            app:destination="@id/navigation_home"
+            app:popUpTo="@id/navigation_home"
+            app:popUpToInclusive="true" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_notifications"

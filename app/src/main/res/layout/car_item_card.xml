@@ -3,6 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="car"
+            type="com.example.myapplication.model.Car" />
+    </data>
+
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card"
@@ -29,7 +35,8 @@
                 android:layout_height="80dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginTop="8dp">
+                android:layout_marginTop="8dp"
+                android:src="@drawable/ic_baseline_star_border_24dp">
 
             </ImageView>
             <TextView
@@ -38,6 +45,7 @@
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
                 tools:text="Brand"
+                android:text="@{car.brand}"
                 app:layout_constraintStart_toEndOf="@id/car_image"
                 app:layout_constraintTop_toTopOf="@id/car_image"
                 android:layout_marginStart="8dp">
@@ -48,6 +56,7 @@
                 android:id="@+id/car_model"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="@{car.model}"
                 tools:text="Model"
                 app:layout_constraintStart_toStartOf="@id/car_brand"
                 app:layout_constraintTop_toBottomOf="@id/car_brand"
@@ -60,6 +69,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
+                android:text="8 euro"
                 tools:text="$50"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="@id/car_brand"
@@ -82,6 +92,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         tools:text="8kw"
+                        android:text="8kw"
                         android:textSize="12sp"
                         app:layout_constraintStart_toStartOf="@id/car_image"
                         app:layout_constraintTop_toBottomOf="@id/car_image"
@@ -94,6 +105,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         tools:text="diesel"
+                        android:text="@{car.fuelType}"
                         android:textSize="12sp"
                         app:layout_constraintStart_toStartOf="@id/car_image"
                         app:layout_constraintTop_toBottomOf="@id/car_image"
@@ -111,6 +123,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         tools:text="2022"
+                        android:text="anno"
                         android:textSize="12sp"
                         app:layout_constraintStart_toStartOf="@id/car_image"
                         app:layout_constraintTop_toBottomOf="@id/car_image"
@@ -121,6 +134,7 @@
                         android:id="@+id/car_info"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="info"
                         tools:text="info to add"
                         android:textSize="12sp"
                         app:layout_constraintStart_toStartOf="@id/car_image"
@@ -134,7 +148,7 @@
             <View
                 android:id="@+id/divider_card"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="3dp"
                 android:background="?attr/dividerHorizontal"
                 android:layout_marginTop="8dp"
                 app:layout_constraintTop_toBottomOf="@id/table_layout_card"

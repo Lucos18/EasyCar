@@ -57,6 +57,10 @@ class HomeFragment : Fragment() {
             recyclerView.adapter = adapter
         }
 
+        binding.searchCars.setOnClickListener{
+            findNavController().navigate(HomeFragmentDirections.actionNavigationHomeToNavigationSearch())
+        }
+
     }
 
     override fun onDestroyView() {

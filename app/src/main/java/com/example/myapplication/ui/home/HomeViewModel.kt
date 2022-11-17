@@ -36,8 +36,9 @@ class HomeViewModel(private val CarDao: CarDao) : ViewModel() {
             CarDao.insert(car)
         }
     }
-}
 
+    fun getYearToString(year: Int): String = year.toString()
+}
 class HomeViewModelFactory(private val carDao: CarDao) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(HomeViewModel::class.java)) {

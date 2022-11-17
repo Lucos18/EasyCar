@@ -17,6 +17,7 @@ class HomeListAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(car: Car) {
+            binding.car = car
             binding.executePendingBindings()
         }
     }
