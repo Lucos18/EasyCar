@@ -9,7 +9,11 @@
         android:id="@+id/navigation_home"
         android:name="com.example.myapplication.ui.home.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_navigation_home_to_detailCarFragment"
+            app:destination="@id/detailCarFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_dashboard"
@@ -28,5 +32,17 @@
         android:name="com.example.myapplication.ui.sell.SellFragment"
         android:label="@string/title_sell"
         tools:layout="@layout/fragment_sell" />
+    <fragment
+        android:id="@+id/detailCarFragment"
+        android:name="com.example.myapplication.ui.detailCar.DetailCarFragment"
+        android:label="DetailCarFragment" >
+        <action
+            android:id="@+id/action_detailCarFragment_to_navigation_home"
+            app:destination="@id/navigation_home" />
+        <argument
+            android:name="carId"
+            app:argType="long"
+            android:defaultValue="0L" />
+    </fragment>
 
 </navigation>

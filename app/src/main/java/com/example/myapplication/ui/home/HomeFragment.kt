@@ -1,15 +1,12 @@
 package com.example.myapplication.ui.home
 
-import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.myapplication.BaseApplication
 import com.example.myapplication.databinding.FragmentHomeBinding
@@ -35,14 +32,9 @@ class HomeFragment : Fragment() {
         try {
 
             _binding = FragmentHomeBinding.inflate(inflater, container, false)
-            val root: View = binding.root
+            return binding.root
 
-            val textView: TextView = binding.textHome
-            homeViewModel.text.observe(viewLifecycleOwner) {
-                textView.text = it
-            }
-            return root
-        }catch (e: Exception) {
+        } catch (e: Exception) {
             Log.e("ciao", "onCreateView", e);
             throw e;
         }
@@ -50,10 +42,10 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-/*
+        homeViewModel.addCar("Audi", "8000", 2010, 2022,5,"Electric")
         val adapter = HomeListAdapter { car ->
-            val action = CarListFragmentDirections
-                .actionCarListFragmentToCarDetailsFragment(car.id)
+            val action = HomeFragmentDirections
+                .actionNavigationHomeToDetailCarFragment(car.id)
             findNavController().navigate(action)
         }
         homeViewModel.allCars.observe(this.viewLifecycleOwner) { carSelected ->
@@ -62,9 +54,9 @@ class HomeFragment : Fragment() {
             }
         }
         binding.apply {
-            carRecyclerViewList.adapter = adapter
+            recyclerView.adapter = adapter
         }
-        */
+
     }
 
     override fun onDestroyView() {
