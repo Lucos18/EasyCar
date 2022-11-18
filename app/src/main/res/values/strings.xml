@@ -19,4 +19,9 @@
     <string name="car_cambio_detail_string">cambio: %s</string>
     <string name="car_notes_detail_string_label">Notes</string>
 
+    <!-- SEARCH FRAGMENT STRINGS -->
+
+    <string name="car_price_search_string_label">Price &amp; Payment</string>
+    <string name="starting_at_price">Starting at</string>
+    <string name="ending_price">Ending price</string>
 </resources>

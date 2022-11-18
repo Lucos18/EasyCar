@@ -1,5 +1,7 @@
 package com.example.myapplication.ui.home
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,11 +10,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.NavigationUI
 import com.example.myapplication.BaseApplication
-import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentHomeBinding
-import java.lang.Exception
+
 
 class HomeFragment : Fragment() {
     val homeViewModel: HomeViewModel by activityViewModels {
@@ -62,9 +62,7 @@ class HomeFragment : Fragment() {
         binding.searchCars.setOnClickListener{
             findNavController().navigate(HomeFragmentDirections.actionNavigationHomeToNavigationSearch())
         }
-
     }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
