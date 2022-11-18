@@ -12,5 +12,7 @@ data class Car(
     @ColumnInfo(name="year_start_production") val yearStartProduction: Int,
     @ColumnInfo(name="year_end_production") val yearEndProduction: Int,
     @ColumnInfo val seats: Int,
-    @ColumnInfo(name="fuel_type") val fuelType: String
+    @ColumnInfo(name="fuel_type") val fuelType: String,
+    @ColumnInfo val price: Double
 )
+fun Car.doubleToString(price:Double): String = price.toString()

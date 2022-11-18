@@ -1,13 +1,22 @@
 package com.example.myapplication.ui.detailCar
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
+import com.example.myapplication.data.CarDao
+import com.example.myapplication.model.Car
+import com.example.myapplication.ui.home.HomeViewModel
 
-class DetailCarViewModel : ViewModel() {
+class DetailCarViewModel(private val carDao: CarDao) : ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is favorites Fragment"
+    fun getCarById(id: Long): LiveData<Car> {
+        return carDao.getCarById(id).asLiveData()
     }
-    val text: LiveData<String> = _text
+}
+class DetailViewModelFactory(private val carDao: CarDao) : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(DetailCarViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return DetailCarViewModel(carDao) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
+    }
 }

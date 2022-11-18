@@ -1,9 +1,12 @@
 <resources>
+    <!-- FRAGMENT TITLES -->
     <string name="app_name">EasyCar</string>
     <string name="title_home">Home</string>
     <string name="title_search">Search</string>
     <string name="title_favorites">Favorites</string>
     <string name="title_sell">Sell</string>
     <string name="search">Search</string>
+
+    <!-- IMAGE CONTENT DESCRIPTION -->
     <string name="car_image_content_description">Car Image</string>
 </resources>

@@ -69,7 +69,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
-                android:text="8 euro"
+                android:text="mettere il prezzo"
                 tools:text="$50"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="@id/car_brand"
