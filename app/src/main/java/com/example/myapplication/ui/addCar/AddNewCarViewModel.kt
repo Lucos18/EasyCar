@@ -3,11 +3,12 @@ package com.example.myapplication.ui.addCar
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.myapplication.data.CarDao
+import com.example.myapplication.databinding.FragmentAddNewCarBinding
 import com.example.myapplication.ui.detailCar.DetailCarViewModel
 
 class AddNewCarViewModel(private val carDao: CarDao) : ViewModel() {
-    fun checkInputEditTextNewCar(): Boolean{
-
+    fun checkInputEditTextNewCar(brand: String): Boolean{
+        return brand.isNotBlank()
     }
 }
 class AddNewCarViewModelFactory(private val carDao: CarDao) : ViewModelProvider.Factory {
