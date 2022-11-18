@@ -39,8 +39,6 @@ class DetailCarFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val notificationsViewModel =
-            ViewModelProvider(this).get(FavoritesViewModel::class.java)
 
         _binding = FragmentDetailCarBinding.inflate(inflater, container, false)
         val root: View = binding.root

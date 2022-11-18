@@ -5,10 +5,13 @@
     <string name="title_search">Search</string>
     <string name="title_favorites">Favorites</string>
     <string name="title_sell">Sell</string>
+    <string name="title_add_new_car">Add New Car</string>
     <string name="search">Search</string>
 
     <!-- IMAGE CONTENT DESCRIPTION -->
+
     <string name="car_image_content_description">Car Image</string>
+    <string name="add_new_car_content_description">Add new car</string>
 
     <!-- DETAIL FRAGMENT STRINGS -->
 
@@ -24,4 +27,12 @@
     <string name="car_price_search_string_label">Price &amp; Payment</string>
     <string name="starting_at_price">Starting at</string>
     <string name="ending_price">Ending price</string>
+
+    <!-- ADD NEW CAR FRAGMENT STRINGS -->
+
+    <string name="car_brand_add">Brand</string>
+    <string name="car_year_add">Production Year</string>
+    <string name="car_model_add">Model</string>
+    <string name="car_fuel_type_add">Fuel Type</string>
+    <string name="add_new_car">Add new car</string>
 </resources>

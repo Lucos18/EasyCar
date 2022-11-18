@@ -44,7 +44,7 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        homeViewModel.addCar("Aaaaaaaaaaaa", "88000", 1910, 2022,5,"Electric", 10000.00)
+        homeViewModel.addCar("FIAT", "Abarth", 2021, 2022,5,"Electric", 13000.00)
         val adapter = HomeListAdapter { car ->
             val action = HomeFragmentDirections
                 .actionNavigationHomeToDetailCarFragment(car.id)

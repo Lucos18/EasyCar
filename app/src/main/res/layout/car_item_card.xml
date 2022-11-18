@@ -44,6 +44,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
+                android:textSize="18sp"
+                android:textColor="@color/black"
                 tools:text="Brand"
                 android:text="@{car.brand}"
                 app:layout_constraintStart_toEndOf="@id/car_image"
