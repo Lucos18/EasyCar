@@ -17,6 +17,7 @@ import com.example.myapplication.model.Car
 import com.example.myapplication.ui.favorites.FavoritesViewModel
 import com.example.myapplication.ui.home.HomeViewModel
 import com.example.myapplication.ui.home.HomeViewModelFactory
+import java.util.*
 
 class DetailCarFragment : Fragment() {
     private val detailCarArgs: DetailCarFragmentArgs by navArgs()
@@ -69,9 +70,18 @@ class DetailCarFragment : Fragment() {
             carBrandDetail.text = car.brand
             carModelDetail.text = car.model
             carPriceDetail.text = car.price.toString()
-            carPowerDetail.text = "8kw da cambiare"
-            carFuelType.text = car.fuelType
-            carYearProductionDetail.text = car.yearStartProduction.toString()
+            carPowerDetail.text = getString(R.string.car_power_detail_string, "8kw")
+            carFuelTypeDetail.text = getString(R.string.car_fuel_type_detail_string, car.fuelType)
+            carChangeTypeDetail.text = getString(R.string.car_cambio_detail_string, "cambio")
+            carYearProductionDetail.text = getString(R.string.car_year_detail_string, car.yearStartProduction.toString())
+            carNotesDetailLabel.text = getString(R.string.car_notes_detail_string_label)
         }
     }
+    //TODO add method to convert price to currency
+    /*
+    fun priceToCurrency(price: Double): String{
+        return Currency.getInstance(Locale.getDefault())
+    }
+
+     */
 }

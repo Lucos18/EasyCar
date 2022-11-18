@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.NavigationUI
 import com.example.myapplication.BaseApplication
+import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentHomeBinding
 import java.lang.Exception
 

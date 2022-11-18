@@ -9,4 +9,14 @@
 
     <!-- IMAGE CONTENT DESCRIPTION -->
     <string name="car_image_content_description">Car Image</string>
+
+    <!-- DETAIL FRAGMENT STRINGS -->
+
+    <string name="car_power_detail_string">Power: %s</string>
+    <string name="car_fuel_type_detail_string">Fuel Type: %s</string>
+    <string name="car_year_detail_string">Year production: %s</string>
+    <!-- TODO change the name of cambio -->
+    <string name="car_cambio_detail_string">cambio: %s</string>
+    <string name="car_notes_detail_string_label">Notes</string>
+
 </resources>

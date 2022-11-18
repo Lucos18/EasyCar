@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="8dp"
-        android:textSize="24sp"
+        android:textSize="26sp"
         android:textColor="@color/black"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,6 +38,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
+        android:textSize="18sp"
         android:layout_marginTop="4dp"
         app:layout_constraintStart_toStartOf="@id/car_brand_detail"
         app:layout_constraintTop_toBottomOf="@id/car_brand_detail"
@@ -59,7 +60,7 @@
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="16dp"
         android:textColor="@color/black"
-        android:textSize="22sp"
+        android:textSize="26sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@id/car_brand_detail"
         app:layout_constraintTop_toBottomOf="@id/divider_1"
@@ -88,16 +89,15 @@
         <TableRow
             android:id="@+id/firstRow"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_marginBottom="8dp">
 
             <TextView
                 android:id="@+id/car_power_detail"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Power: "
+                android:layout_height="40dp"
                 android:gravity="center_vertical"
-                android:textSize="12sp"
+                android:textSize="16sp"
                 app:drawableLeftCompat="@drawable/ic_baseline_search_24dp"
                 app:layout_constraintStart_toStartOf="@id/car_image"
                 app:layout_constraintTop_toBottomOf="@id/car_image"
@@ -109,8 +109,7 @@
                 android:id="@+id/car_fuel_type_detail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Fuel type: "
-                android:textSize="12sp"
+                android:textSize="16sp"
                 android:gravity="center_vertical"
                 app:drawableLeftCompat="@drawable/ic_baseline_search_24dp"
                 app:layout_constraintStart_toStartOf="@id/car_image"
@@ -125,10 +124,8 @@
             <TextView
                 android:id="@+id/car_year_production_detail"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="Year Production: "
-                android:textSize="12sp"
+                android:layout_height="40dp"
+                android:textSize="16sp"
                 android:gravity="center_vertical"
                 app:drawableLeftCompat="@drawable/ic_baseline_search_24dp"
                 app:layout_constraintStart_toStartOf="@id/car_image"
@@ -138,12 +135,10 @@
             </TextView>
 
             <TextView
-                android:id="@+id/car_fuel_type"
+                android:id="@+id/car_change_type_detail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="Cambio in inglese: "
-                android:textSize="12sp"
+                android:textSize="16sp"
                 android:gravity="center_vertical"
                 app:drawableLeftCompat="@drawable/ic_baseline_search_24dp"
                 app:layout_constraintStart_toStartOf="@id/car_image"
@@ -164,12 +159,11 @@
         app:layout_constraintTop_toBottomOf="@id/table_layout_card" />
 
     <ImageView
-        android:id="@+id/car_notes_detail_label"
+        android:id="@+id/car_notes_detail_icon"
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="8dp"
-
         android:src="@drawable/ic_baseline_notes_24"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/divider_3">
@@ -177,11 +171,13 @@
     </ImageView>
 
     <TextView
+        android:id="@+id/car_notes_detail_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Notes"
         android:layout_marginStart="4dp"
-        app:layout_constraintBottom_toBottomOf="@id/car_notes_detail_label"
-        app:layout_constraintStart_toEndOf="@+id/car_notes_detail_label"
-        app:layout_constraintTop_toTopOf="@id/car_notes_detail_label" />
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@id/car_notes_detail_icon"
+        app:layout_constraintStart_toEndOf="@+id/car_notes_detail_icon"
+        app:layout_constraintTop_toTopOf="@id/car_notes_detail_icon"
+        tools:text="Notes"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
