@@ -17,3 +17,9 @@ data class Car(
     @ColumnInfo val price: Double
 )
 fun Car.doubleToString(price:Double): String = price.toString()
+enum class fuelType{
+    Diesel,
+    Electric,
+    gas,
+}
+

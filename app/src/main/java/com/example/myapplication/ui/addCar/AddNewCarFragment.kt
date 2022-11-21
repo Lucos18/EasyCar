@@ -3,26 +3,28 @@ package com.example.myapplication.ui.addCar
 import android.app.DatePickerDialog
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.example.myapplication.BaseApplication
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentAddNewCarBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import java.lang.Exception
+import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.properties.Delegates
 
 
 class AddNewCarFragment : Fragment() {
-    private var kw by Delegates.notNull<Int>()
+    private var kw: Int = 0
+    private var price: Double = 0.0
     val addNewCarViewModel: AddNewCarViewModel by activityViewModels {
         AddNewCarViewModelFactory(
             (activity?.application as BaseApplication).database.CarDao()
@@ -43,7 +45,7 @@ class AddNewCarFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val navBar: BottomNavigationView = requireActivity().findViewById(com.example.myapplication.R.id.nav_view)
+        val navBar: BottomNavigationView = requireActivity().findViewById(R.id.nav_view)
         navBar.visibility = View.GONE
         binding.apply {
 
@@ -55,21 +57,53 @@ class AddNewCarFragment : Fragment() {
             binding.carYearAddText.transformIntoDatePicker(requireContext(), "yyyy", Date())
             binding.carPowerAddText.onFocusChangeListener = View.OnFocusChangeListener { _, b ->
                 if (!b) {
-                    try{
-                        kw = binding.carPowerAddText.text.toString().toInt()
-                        binding.carPowerAddText.setText(getString(R.string.car_power_convert, kw.toString(), addNewCarViewModel.convertKwToCv(kw).toString()))
-                    }catch (e: Exception){
-
+                    val kwText = binding.carPowerAddText.text.toString().toIntOrNull()
+                    if (kwText != null)
+                    {
+                        binding.carPowerAddText.setText(getString(R.string.car_power_convert, kwText.toString(), addNewCarViewModel.convertKwToCv(kwText).toString()))
+                        kw = kwText
                     }
                 }
             }
-
+            binding.carPriceAddText.onFocusChangeListener = View.OnFocusChangeListener {_,b ->
+                if (!b){
+                    val priceText = binding.carPriceAddText.text.toString().toDoubleOrNull()
+                    if (priceText != null)
+                    {
+                        val format: NumberFormat = NumberFormat.getCurrencyInstance(Locale.getDefault())
+                        val result: String = format.format(priceText)
+                        binding.carPriceAddText.setText(result)
+                        price = priceText
+                    }
+                }
+            }
+            /*
+            binding.carFuelTypeAddText.onFocusChangeListener = View.OnFocusChangeListener { _, b ->
+                if (b){
+                    val checkedItems = 1
+                    val values: Array<fuelType> = fuelType.values()
+                    val items = arrayOfNulls<CharSequence>(values.size)
+                    for (i in values.indices) {
+                        items[i] = values[i].toString()
+                    }
+                    val builder: AlertDialog.Builder = AlertDialog.Builder(context)
+                    builder.setTitle("Choose fuel type")
+                    builder.setSingleChoiceItems(items,checkedItems, ) { dialog, which, isChecked ->
+                        // The user checked or unchecked a box
+                    }
+                    builder.setPositiveButton("OK") { dialog, which ->
+                        // The user clicked OK
+                    }
+                    builder.setNegativeButton("Cancel", null)
+                }
+            }
+            */
         }
     }
 
     override fun onDestroyView() {
         //TODO change to better function or method
-        val navBar: BottomNavigationView = requireActivity().findViewById(com.example.myapplication.R.id.nav_view)
+        val navBar: BottomNavigationView = requireActivity().findViewById(R.id.nav_view)
         navBar.visibility = View.VISIBLE
         super.onDestroyView()
         _binding = null
@@ -78,7 +112,6 @@ class AddNewCarFragment : Fragment() {
 
     fun addNewCar(){
         if(isValidCar()){
-            showToastAddCar("macchina valida",Toast.LENGTH_LONG)
             addNewCarViewModel.addCar(
                 Brand = binding.carBrandAddText.text.toString(),
                 YearStartProduction = binding.carYearAddText.text.toString().toInt(),
@@ -87,10 +120,13 @@ class AddNewCarFragment : Fragment() {
                 FuelType = binding.carFuelTypeAddText.text.toString(),
                 Seats = binding.carSeatsAddText.text.toString().toInt(),
                 CarPower = kw,
-                Price = binding.carPriceAddText.text.toString().toDouble()
+                Price = price
             )
+            val action = AddNewCarFragmentDirections
+                .actionAddNewCarFragmentToNavigationSell()
+            findNavController().navigate(action)
         } else {
-            showToastAddCar("macchina non valida",Toast.LENGTH_LONG)
+            showToastAddCar("Input fields not valid, please retry.",Toast.LENGTH_LONG)
         }
     }
 
@@ -103,7 +139,7 @@ class AddNewCarFragment : Fragment() {
                 binding.carFuelTypeAddText.text.toString(),
                 kw,
                 binding.carSeatsAddText.text.toString().toInt(),
-                binding.carPriceAddText.text.toString().toDouble()
+                price
             )
         } catch (e: Exception){
             showToastAddCar("Input inseriti non validi, controlla e riprova.", Toast.LENGTH_LONG)
