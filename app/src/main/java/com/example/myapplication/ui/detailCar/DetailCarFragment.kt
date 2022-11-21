@@ -17,6 +17,7 @@ import com.example.myapplication.model.Car
 import com.example.myapplication.ui.favorites.FavoritesViewModel
 import com.example.myapplication.ui.home.HomeViewModel
 import com.example.myapplication.ui.home.HomeViewModelFactory
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.util.*
 
 class DetailCarFragment : Fragment() {
@@ -49,6 +50,8 @@ class DetailCarFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val navBar: BottomNavigationView = requireActivity().findViewById(com.example.myapplication.R.id.nav_view)
+        navBar.visibility = View.GONE
         val id = detailCarArgs.carId
         if(id > 0)
         {
@@ -60,6 +63,8 @@ class DetailCarFragment : Fragment() {
     }
 
     override fun onDestroyView() {
+        val navBar: BottomNavigationView = requireActivity().findViewById(com.example.myapplication.R.id.nav_view)
+        navBar.visibility = View.VISIBLE
         super.onDestroyView()
         _binding = null
     }

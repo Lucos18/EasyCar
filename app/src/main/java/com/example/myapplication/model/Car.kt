@@ -10,7 +10,8 @@ data class Car(
     @ColumnInfo val brand: String,
     @ColumnInfo val model: String,
     @ColumnInfo(name="year_start_production") val yearStartProduction: Int,
-    @ColumnInfo(name="year_end_production") val yearEndProduction: Int,
+    @ColumnInfo(name="year_end_production") val yearEndProduction: Int?,
+    @ColumnInfo(name="car_power") val carPower: Int,
     @ColumnInfo val seats: Int,
     @ColumnInfo(name="fuel_type") val fuelType: String,
     @ColumnInfo val price: Double
