@@ -20,6 +20,6 @@ fun Car.doubleToString(price:Double): String = price.toString()
 enum class fuelType{
     Diesel,
     Electric,
-    gas,
+    Gas,
 }
 

@@ -11,6 +11,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.myapplication.BaseApplication
 import com.example.myapplication.R
@@ -25,7 +26,7 @@ import kotlin.properties.Delegates
 class AddNewCarFragment : Fragment() {
     private var kw: Int = 0
     private var price: Double = 0.0
-    val addNewCarViewModel: AddNewCarViewModel by activityViewModels {
+    private val addNewCarViewModel: AddNewCarViewModel by viewModels {
         AddNewCarViewModelFactory(
             (activity?.application as BaseApplication).database.CarDao()
         )
@@ -45,6 +46,7 @@ class AddNewCarFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        addNewCarViewModel.addCar("FIAT", "Abarth", 2021, 2022, 5, 8, "diesel",8.0)
         val navBar: BottomNavigationView = requireActivity().findViewById(R.id.nav_view)
         navBar.visibility = View.GONE
         binding.apply {

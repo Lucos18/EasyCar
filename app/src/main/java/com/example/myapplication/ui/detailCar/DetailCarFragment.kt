@@ -1,5 +1,6 @@
 package com.example.myapplication.ui.detailCar
 
+import android.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,7 +8,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.myapplication.BaseApplication
 import com.example.myapplication.R
@@ -17,13 +21,14 @@ import com.example.myapplication.model.Car
 import com.example.myapplication.ui.favorites.FavoritesViewModel
 import com.example.myapplication.ui.home.HomeViewModel
 import com.example.myapplication.ui.home.HomeViewModelFactory
+import com.example.myapplication.ui.sell.SellFragmentDirections
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.util.*
 
 class DetailCarFragment : Fragment() {
     private val detailCarArgs: DetailCarFragmentArgs by navArgs()
     private lateinit var car: Car
-    val detailCarViewModel: DetailCarViewModel by activityViewModels {
+    private val detailCarViewModel: DetailCarViewModel by viewModels {
         DetailViewModelFactory(
             (activity?.application as BaseApplication).database.CarDao()
         )
@@ -31,8 +36,6 @@ class DetailCarFragment : Fragment() {
 
     private var _binding: FragmentDetailCarBinding? = null
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -40,11 +43,8 @@ class DetailCarFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         _binding = FragmentDetailCarBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
-
         return root
     }
 
@@ -58,6 +58,36 @@ class DetailCarFragment : Fragment() {
             detailCarViewModel.getCarById(id).observe(this.viewLifecycleOwner) { carSelected ->
                 car = carSelected
                 bindCar(car)
+            }
+        }
+        if (detailCarArgs.isUserCreated)
+        {
+            binding.deleteCarFab.visibility = View.VISIBLE
+            binding.deleteCarFab.setOnClickListener{
+                val builder = AlertDialog.Builder(requireContext())
+                //set title for alert dialog
+                builder.setTitle("Delete Car")
+                //set message for alert dialog
+                builder.setMessage("Are you sure do you want to delete this car from database?")
+                builder.setIcon(android.R.drawable.ic_dialog_alert)
+
+                //performing positive action
+                builder.setPositiveButton("Yes"){dialogInterface, which ->
+                    detailCarViewModel.deleteCarById(detailCarArgs.carId)
+                    val action = DetailCarFragmentDirections
+                        .actionDetailCarFragmentToNavigationSell()
+                    findNavController().navigate(action)
+                }
+
+                //performing negative action
+                builder.setNegativeButton("No"){dialogInterface, which ->
+
+                }
+                // Create the AlertDialog
+                val alertDialog: AlertDialog = builder.create()
+                // Set other dialog properties
+                alertDialog.setCancelable(false)
+                alertDialog.show()
             }
         }
     }

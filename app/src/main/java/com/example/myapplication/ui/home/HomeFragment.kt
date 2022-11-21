@@ -9,13 +9,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.myapplication.BaseApplication
 import com.example.myapplication.databinding.FragmentHomeBinding
 
 
 class HomeFragment : Fragment() {
-    val homeViewModel: HomeViewModel by activityViewModels {
+    private val homeViewModel: HomeViewModel by viewModels {
         HomeViewModelFactory(
             (activity?.application as BaseApplication).database.CarDao()
         )
@@ -44,7 +45,7 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //homeViewModel.addCar("FIAT", "Abarth", 2021, 2022,5,"Electric", 13000.00)
+        //
         val adapter = HomeListAdapter { car ->
             val action = HomeFragmentDirections
                 .actionNavigationHomeToDetailCarFragment(car.id)

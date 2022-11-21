@@ -180,4 +180,17 @@
         app:layout_constraintStart_toEndOf="@+id/car_notes_detail_icon"
         app:layout_constraintTop_toTopOf="@id/car_notes_detail_icon"
         tools:text="Notes"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/delete_car_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:visibility="gone"
+        android:backgroundTint="@color/red"
+        android:src="@drawable/ic_baseline_delete_forever_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:contentDescription="@string/add_new_car_content_description" />
 </androidx.constraintlayout.widget.ConstraintLayout>

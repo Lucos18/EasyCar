@@ -1,25 +1,20 @@
 package com.example.myapplication.ui.sell
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.myapplication.BaseApplication
-import com.example.myapplication.R
-import com.example.myapplication.databinding.FragmentSearchBinding
 import com.example.myapplication.databinding.FragmentSellBinding
 import com.example.myapplication.ui.home.HomeFragmentDirections
-import com.example.myapplication.ui.search.SearchViewModel
-import com.example.myapplication.ui.search.SearchViewModelFactory
+import com.example.myapplication.ui.home.HomeListAdapter
 
 class SellFragment : Fragment() {
 
-    val sellViewModel: SellViewModel by activityViewModels {
+    private val sellViewModel: SellViewModel by viewModels {
         SellViewModelFactory(
             (activity?.application as BaseApplication).database.CarDao()
         )
@@ -34,8 +29,7 @@ class SellFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentSellBinding.inflate(inflater, container, false)
-        val root: View = binding.root
-        return root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -46,6 +40,19 @@ class SellFragment : Fragment() {
                     .actionNavigationSellToAddNewCarFragment()
                 findNavController().navigate(action)
             }
+        }
+        val adapter = SellListAdapter { car ->
+            val action = SellFragmentDirections
+                .actionNavigationSellToDetailCarFragment(car.id, true)
+            findNavController().navigate(action)
+        }
+        sellViewModel.allCars.observe(this.viewLifecycleOwner) { carSelected ->
+            carSelected.let {
+                adapter.submitList(it)
+            }
+        }
+        binding.apply {
+            recyclerView.adapter = adapter
         }
     }
 
