@@ -1,12 +1,16 @@
 package com.example.myapplication.ui.home
 
+import android.provider.Settings.Global.getString
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.myapplication.R
 import com.example.myapplication.databinding.CarItemCardBinding
 import com.example.myapplication.model.Car
+import java.text.NumberFormat
+import java.util.*
 
 class HomeListAdapter(
     private val clickListener: (Car) -> Unit
@@ -17,9 +21,15 @@ class HomeListAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(car: Car) {
+            val format: NumberFormat = NumberFormat.getCurrencyInstance(Locale.getDefault())
+            val result: String = format.format(car.price)
             binding.car = car
+            binding.carPrice.text = result
+            binding.carPower.text = car.carPower.toString() + " kW"
+            binding.carYearProduction.text = car.yearStartProduction.toString()
             binding.executePendingBindings()
         }
+
     }
     companion object DiffCallback: DiffUtil.ItemCallback<Car>() {
         override fun areItemsTheSame(oldItem: Car, newItem: Car): Boolean {

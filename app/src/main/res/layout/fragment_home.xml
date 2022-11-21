@@ -14,8 +14,8 @@
         android:textColor="@color/black"
         android:layout_marginHorizontal="16dp"
         android:backgroundTint="@color/white"
-        android:paddingTop="?attr/actionBarSize"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/recycler_view"
         android:drawableStart="@drawable/ic_baseline_search_24dp"
         tools:layout_editor_absoluteX="16dp">
 

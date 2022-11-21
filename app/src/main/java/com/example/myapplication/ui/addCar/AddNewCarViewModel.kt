@@ -1,5 +1,7 @@
 package com.example.myapplication.ui.addCar
 
+import android.media.Image
+import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -37,7 +39,8 @@ class AddNewCarViewModel(private val carDao: CarDao) : ViewModel() {
             seats = Seats,
             carPower = CarPower,
             fuelType = FuelType,
-            price = Price
+            price = Price,
+            image = null
         )
 
         viewModelScope.launch {

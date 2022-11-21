@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.databinding.CarItemCardBinding
 import com.example.myapplication.model.Car
 import com.example.myapplication.ui.home.HomeListAdapter
+import java.text.NumberFormat
+import java.util.*
 
 class SellListAdapter(
     private val clickListener: (Car) -> Unit
@@ -18,7 +20,12 @@ class SellListAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(car: Car) {
+            val format: NumberFormat = NumberFormat.getCurrencyInstance(Locale.getDefault())
+            val result: String = format.format(car.price)
             binding.car = car
+            binding.carPrice.text = result
+            binding.carPower.text = car.carPower.toString() + " kW"
+            binding.carYearProduction.text = car.yearStartProduction.toString()
             binding.executePendingBindings()
         }
     }

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
@@ -6,6 +7,9 @@
     <data>
         <variable
             name="car"
+            type="com.example.myapplication.model.Car" />
+        <import
+            alias="ExtensionFunctions"
             type="com.example.myapplication.model.Car" />
     </data>
 
@@ -72,7 +76,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="mettere il prezzo"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@id/car_brand"
@@ -98,7 +101,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text="8kw"
                         android:textSize="12sp"
                         app:layout_constraintStart_toStartOf="@id/car_image"
                         app:layout_constraintTop_toBottomOf="@id/car_image"
@@ -130,7 +132,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text="anno"
                         android:textSize="12sp"
                         app:layout_constraintStart_toStartOf="@id/car_image"
                         app:layout_constraintTop_toBottomOf="@id/car_image"
@@ -143,7 +144,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text="info"
                         android:textSize="12sp"
                         app:layout_constraintStart_toStartOf="@id/car_image"
                         app:layout_constraintTop_toBottomOf="@id/car_image"

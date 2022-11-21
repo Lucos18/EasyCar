@@ -14,9 +14,11 @@ data class Car(
     @ColumnInfo(name="car_power") val carPower: Int,
     @ColumnInfo val seats: Int,
     @ColumnInfo(name="fuel_type") val fuelType: String,
-    @ColumnInfo val price: Double
+    @ColumnInfo val price: Double,
+    @ColumnInfo(typeAffinity = ColumnInfo.BLOB) val image: ByteArray?
+
 )
-fun Car.doubleToString(price:Double): String = price.toString()
+
 enum class fuelType{
     Diesel,
     Electric,

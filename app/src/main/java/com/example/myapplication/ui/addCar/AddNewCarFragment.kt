@@ -1,16 +1,19 @@
 package com.example.myapplication.ui.addCar
 
+import android.app.Activity
+import android.app.Activity.RESULT_OK
 import android.app.DatePickerDialog
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.myapplication.BaseApplication
@@ -20,12 +23,14 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.properties.Delegates
 
 
 class AddNewCarFragment : Fragment() {
     private var kw: Int = 0
     private var price: Double = 0.0
+    private var SELECT_PICTURE = 200
+    private var selectedImage: Uri? = null
+    val REQUEST_CODE = 100
     private val addNewCarViewModel: AddNewCarViewModel by viewModels {
         AddNewCarViewModelFactory(
             (activity?.application as BaseApplication).database.CarDao()
@@ -79,6 +84,16 @@ class AddNewCarFragment : Fragment() {
                     }
                 }
             }
+            binding.carImage1.setOnClickListener{
+                openGalleryForImage()
+                selectedImage = null
+                carImage1.setImageURI(selectedImage)
+            }
+            binding.carImage2.setOnClickListener{
+                openGalleryForImage()
+                selectedImage = null
+                carImage2.setImageURI(selectedImage)
+            }
             /*
             binding.carFuelTypeAddText.onFocusChangeListener = View.OnFocusChangeListener { _, b ->
                 if (b){
@@ -122,7 +137,7 @@ class AddNewCarFragment : Fragment() {
                 FuelType = binding.carFuelTypeAddText.text.toString(),
                 Seats = binding.carSeatsAddText.text.toString().toInt(),
                 CarPower = kw,
-                Price = price
+                Price = price,
             )
             val action = AddNewCarFragmentDirections
                 .actionAddNewCarFragmentToNavigationSell()
@@ -175,6 +190,18 @@ class AddNewCarFragment : Fragment() {
                 maxDate?.time?.also { datePicker.maxDate = it }
                 show()
             }
+        }
+    }
+    private fun openGalleryForImage() {
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = "image/*"
+        startActivityForResult(intent, REQUEST_CODE)
+    }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE){
+            binding.carImage1.setImageURI(data?.data) // handle chosen image
+            selectedImage = data?.data
         }
     }
 }

@@ -23,6 +23,7 @@ import com.example.myapplication.ui.home.HomeViewModel
 import com.example.myapplication.ui.home.HomeViewModelFactory
 import com.example.myapplication.ui.sell.SellFragmentDirections
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import java.text.NumberFormat
 import java.util.*
 
 class DetailCarFragment : Fragment() {
@@ -99,22 +100,21 @@ class DetailCarFragment : Fragment() {
         _binding = null
     }
     fun bindCar(car: Car){
+
         binding.apply {
             carBrandDetail.text = car.brand
             carModelDetail.text = car.model
-            carPriceDetail.text = car.price.toString()
-            carPowerDetail.text = getString(R.string.car_power_detail_string, "8kw")
+            carPriceDetail.text = priceToCurrency(car.price)
+            carPowerDetail.text = getString(R.string.car_power_detail_string, car.carPower.toString())
             carFuelTypeDetail.text = getString(R.string.car_fuel_type_detail_string, car.fuelType)
-            carChangeTypeDetail.text = getString(R.string.car_cambio_detail_string, "cambio")
+            carSeatsTypeDetail.text = getString(R.string.car_seats_detail_string, car.seats.toString())
             carYearProductionDetail.text = getString(R.string.car_year_detail_string, car.yearStartProduction.toString())
             carNotesDetailLabel.text = getString(R.string.car_notes_detail_string_label)
         }
     }
     //TODO add method to convert price to currency
-    /*
     fun priceToCurrency(price: Double): String{
-        return Currency.getInstance(Locale.getDefault())
+        val format: NumberFormat = NumberFormat.getCurrencyInstance(Locale.getDefault())
+        return format.format(car.price)
     }
-
-     */
 }
