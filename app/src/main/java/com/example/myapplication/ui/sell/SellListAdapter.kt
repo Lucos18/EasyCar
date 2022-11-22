@@ -3,6 +3,7 @@ package com.example.myapplication.ui.sell
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -25,6 +26,7 @@ class SellListAdapter(
             binding.carPrice.text = car.formatPriceToCurrency(car.price)
             binding.carPower.text = car.carPowerWithUnitString(car.carPower)
             binding.carYearProduction.text = car.yearStartProduction.toString()
+            binding.favoritesButtonImage.visibility = View.GONE
             if (car.image != null) {
                 binding.carImage.setImageBitmap(
                     Bitmap.createScaledBitmap(

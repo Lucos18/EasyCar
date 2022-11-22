@@ -24,6 +24,9 @@ class HomeListAdapter(
             binding.carPrice.text = car.formatPriceToCurrency(car.price)
             binding.carPower.text = car.carPowerWithUnitString(car.carPower)
             binding.carYearProduction.text = car.yearStartProduction.toString()
+            binding.favoritesButtonImage.setOnClickListener {
+                binding.favoritesButtonImage.setImageResource(R.drawable.ic_baseline_star_24)
+            }
             if (car.image != null) {
                 binding.carImage.setImageBitmap(
                     Bitmap.createScaledBitmap(

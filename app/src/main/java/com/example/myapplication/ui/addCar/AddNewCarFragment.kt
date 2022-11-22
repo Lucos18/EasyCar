@@ -114,13 +114,15 @@ class AddNewCarFragment : Fragment() {
                 builder.setSingleChoiceItems(items, 0) { dialogInterface: DialogInterface, which ->
                     binding.carFuelTypeAddText.setText(items[which].toString())
                 }
-                builder.setItems(items) {dialogInterface: DialogInterface, which ->
+                builder.setItems(items) { _: DialogInterface, which ->
                     binding.carFuelTypeAddText.setText(items[which].toString())
                 }
-                builder.setPositiveButton("OK") { dialogInterface: DialogInterface, which ->
+                builder.setPositiveButton("OK") { _: DialogInterface, _ ->
 
                 }
-                builder.setNegativeButton("Cancel", null)
+                builder.setNegativeButton("Cancel") { _: DialogInterface, _ ->
+                    binding.carFuelTypeAddText.setText("")
+                }
                 builder.show()
             }
         }

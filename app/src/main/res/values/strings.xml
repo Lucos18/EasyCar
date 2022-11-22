@@ -16,10 +16,10 @@
 
     <!-- DETAIL FRAGMENT STRINGS -->
 
-    <string name="car_power_detail_string">Power: %s kW</string>
-    <string name="car_fuel_type_detail_string">Fuel Type: %s</string>
-    <string name="car_year_detail_string">Year production: %s</string>
-    <string name="car_seats_detail_string">Seats: %s</string>
+    <string name="car_power_detail_string"> Power: %s kW</string>
+    <string name="car_fuel_type_detail_string"> Fuel Type: %s</string>
+    <string name="car_year_detail_string"> Year production: %s</string>
+    <string name="car_seats_detail_string"> Seats: %s</string>
     <string name="car_notes_detail_string_label">Notes</string>
 
     <!-- SEARCH FRAGMENT STRINGS -->
