@@ -2,6 +2,7 @@
     <!-- FRAGMENT TITLES -->
     <string name="app_name">EasyCar</string>
     <string name="title_home">Home</string>
+    <string name="title_car_details">Car Details</string>
     <string name="title_search">Search</string>
     <string name="title_favorites">Favorites</string>
     <string name="title_sell">Sell</string>

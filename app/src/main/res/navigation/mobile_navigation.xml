@@ -55,21 +55,21 @@
     <fragment
         android:id="@+id/detailCarFragment"
         android:name="com.example.myapplication.ui.detailCar.DetailCarFragment"
-        android:label="DetailCarFragment" >
+        android:label="@string/title_car_details">
         <action
             android:id="@+id/action_detailCarFragment_to_navigation_home"
             app:destination="@id/navigation_home" />
         <argument
             android:name="carId"
-            app:argType="long"
-            android:defaultValue="0L" />
+            android:defaultValue="0L"
+            app:argType="long" />
         <action
             android:id="@+id/action_detailCarFragment_to_navigation_sell"
             app:destination="@id/navigation_sell" />
         <argument
             android:name="isUserCreated"
-            app:argType="boolean"
-            android:defaultValue="false" />
+            android:defaultValue="false"
+            app:argType="boolean" />
     </fragment>
     <fragment
         android:id="@+id/addNewCarFragment"

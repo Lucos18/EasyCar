@@ -10,7 +10,6 @@
         android:id="@+id/car_image_detail"
         android:layout_width="match_parent"
         android:layout_height="250dp"
-        android:src="@drawable/ic_baseline_star_border_24dp"
         app:layout_constraintStart_toStartOf="parent"
         android:scaleType="fitXY"
         app:layout_constraintTop_toTopOf="parent"
