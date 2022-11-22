@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -66,13 +67,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/car_model_add_label">
+        app:layout_constraintTop_toBottomOf="@id/car_model_add_label"
+       >
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/car_fuel_type_add_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/white"
+            android:focusable="false"
             android:hint="@string/car_fuel_type_add"
             android:inputType="text">
 
@@ -110,6 +113,7 @@
             android:layout_height="wrap_content"
             android:backgroundTint="@color/white"
             android:hint="@string/car_seats_add"
+            android:maxLength="2"
             android:inputType="numberDecimal">
 
         </com.google.android.material.textfield.TextInputEditText>

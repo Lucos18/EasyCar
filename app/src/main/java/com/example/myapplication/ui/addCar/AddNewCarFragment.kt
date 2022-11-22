@@ -1,12 +1,15 @@
 package com.example.myapplication.ui.addCar
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +21,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.myapplication.BaseApplication
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentAddNewCarBinding
+import com.example.myapplication.model.fuelType
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
@@ -98,27 +102,27 @@ class AddNewCarFragment : Fragment() {
             }
 
              */
-            /*
-            binding.carFuelTypeAddText.onFocusChangeListener = View.OnFocusChangeListener { _, b ->
-                if (b){
-                    val checkedItems = 1
-                    val values: Array<fuelType> = fuelType.values()
-                    val items = arrayOfNulls<CharSequence>(values.size)
-                    for (i in values.indices) {
-                        items[i] = values[i].toString()
-                    }
-                    val builder: AlertDialog.Builder = AlertDialog.Builder(context)
-                    builder.setTitle("Choose fuel type")
-                    builder.setSingleChoiceItems(items,checkedItems, ) { dialog, which, isChecked ->
-                        // The user checked or unchecked a box
-                    }
-                    builder.setPositiveButton("OK") { dialog, which ->
-                        // The user clicked OK
-                    }
-                    builder.setNegativeButton("Cancel", null)
+
+            binding.carFuelTypeAddText.setOnClickListener {
+                val values: Array<fuelType> = fuelType.values()
+                val items = arrayOfNulls<CharSequence>(values.size)
+                for (i in values.indices) {
+                    items[i] = values[i].toString()
                 }
+                val builder: AlertDialog.Builder = AlertDialog.Builder(context)
+                builder.setTitle("Choose fuel type")
+                builder.setSingleChoiceItems(items, 0) { dialogInterface: DialogInterface, which ->
+                    binding.carFuelTypeAddText.setText(items[which].toString())
+                }
+                builder.setItems(items) {dialogInterface: DialogInterface, which ->
+                    binding.carFuelTypeAddText.setText(items[which].toString())
+                }
+                builder.setPositiveButton("OK") { dialogInterface: DialogInterface, which ->
+
+                }
+                builder.setNegativeButton("Cancel", null)
+                builder.show()
             }
-            */
         }
     }
 
@@ -215,19 +219,20 @@ class AddNewCarFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE) {
             val selectedImage = data?.data
-            if (selectedImage != null)
-            {
+            if (selectedImage != null) {
                 // handle chosen image
                 binding.carImage1.setImageURI(data.data)
                 binding.carImage1.tag = "is_not_null"
             }
         }
     }
+
     private fun createBitmapFromView(view: View): Bitmap {
         view.isDrawingCacheEnabled = true
         view.buildDrawingCache()
         return view.drawingCache
     }
+
     private fun checkIfInsertIsNull(image: Bitmap): Bitmap? {
         return if (binding.carImage1.tag == "is_not_null") {
             image

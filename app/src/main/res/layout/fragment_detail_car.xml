@@ -98,7 +98,7 @@
                 android:layout_height="40dp"
                 android:gravity="center_vertical"
                 android:textSize="16sp"
-                app:drawableLeftCompat="@drawable/ic_baseline_search_24dp"
+                app:drawableLeftCompat="@drawable/engine"
                 app:layout_constraintStart_toStartOf="@id/car_image"
                 app:layout_constraintTop_toBottomOf="@id/car_image"
                 tools:text="Power: ">
@@ -111,7 +111,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
                 android:gravity="center_vertical"
-                app:drawableLeftCompat="@drawable/ic_baseline_search_24dp"
+                app:drawableLeftCompat="@drawable/icons8_benzina_50"
                 app:layout_constraintStart_toStartOf="@id/car_image"
                 app:layout_constraintTop_toBottomOf="@id/car_image"
                 tools:text="Fuel type: ">
@@ -127,7 +127,7 @@
                 android:layout_height="40dp"
                 android:textSize="16sp"
                 android:gravity="center_vertical"
-                app:drawableLeftCompat="@drawable/ic_baseline_search_24dp"
+                app:drawableLeftCompat="@drawable/ic_baseline_calendar_today_24"
                 app:layout_constraintStart_toStartOf="@id/car_image"
                 app:layout_constraintTop_toBottomOf="@id/car_image"
                 tools:text="Year Production: ">
@@ -140,10 +140,10 @@
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
                 android:gravity="center_vertical"
-                app:drawableLeftCompat="@drawable/ic_baseline_search_24dp"
+                app:drawableLeftCompat="@drawable/car"
                 app:layout_constraintStart_toStartOf="@id/car_image"
                 app:layout_constraintTop_toBottomOf="@id/car_image"
-                tools:text="Seats: ">
+                tools:text=" Seats: ">
 
             </TextView>
         </TableRow>
