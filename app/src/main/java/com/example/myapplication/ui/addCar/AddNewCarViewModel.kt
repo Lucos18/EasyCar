@@ -1,7 +1,5 @@
 package com.example.myapplication.ui.addCar
 
-import android.media.Image
-import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -21,6 +19,7 @@ class AddNewCarViewModel(private val carDao: CarDao) : ViewModel() {
     ): Boolean {
         return brand.isNotBlank() && year != 0 && model.isNotBlank() && fuelType.isNotBlank() && power != 0 && seats != 0 && price != 0.0
     }
+
     fun addCar(
         Brand: String,
         Model: String,
@@ -48,7 +47,7 @@ class AddNewCarViewModel(private val carDao: CarDao) : ViewModel() {
         }
     }
 
-    fun convertKwToCv(kw:Int):Int{
+    fun convertKwToCv(kw: Int): Int {
         return (kw * 1.36).toInt()
     }
 }

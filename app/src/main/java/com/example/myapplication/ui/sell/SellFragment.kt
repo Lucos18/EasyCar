@@ -1,16 +1,14 @@
 package com.example.myapplication.ui.sell
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.myapplication.BaseApplication
 import com.example.myapplication.databinding.FragmentSellBinding
-import com.example.myapplication.ui.home.HomeFragmentDirections
-import com.example.myapplication.ui.home.HomeListAdapter
 
 class SellFragment : Fragment() {
 
@@ -35,7 +33,7 @@ class SellFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
-            addForageableFab.setOnClickListener{
+            addCarFab.setOnClickListener {
                 val action = SellFragmentDirections
                     .actionNavigationSellToAddNewCarFragment()
                 findNavController().navigate(action)

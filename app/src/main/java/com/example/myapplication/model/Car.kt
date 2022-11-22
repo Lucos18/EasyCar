@@ -3,6 +3,8 @@ package com.example.myapplication.model
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.text.NumberFormat
+import java.util.*
 
 @Entity(tableName = "Car")
 data class Car(
@@ -18,7 +20,16 @@ data class Car(
     @ColumnInfo(typeAffinity = ColumnInfo.BLOB) val image: ByteArray?
 
 )
-
+fun Car.formatPriceToCurrency(price:Double): String{
+    val format: NumberFormat = NumberFormat.getCurrencyInstance(Locale.getDefault())
+    return format.format(price)
+}
+fun Car.carPowerWithUnitString(kw: Int): String {
+    return "$kw kW (${convertKwToCv(kw)}CV)"
+}
+fun Car.convertKwToCv(kw: Int): Int {
+    return (kw * 1.36).toInt()
+}
 enum class fuelType{
     Diesel,
     Electric,

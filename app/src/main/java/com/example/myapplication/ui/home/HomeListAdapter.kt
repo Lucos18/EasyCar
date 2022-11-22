@@ -1,16 +1,12 @@
 package com.example.myapplication.ui.home
 
-import android.provider.Settings.Global.getString
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.myapplication.R
 import com.example.myapplication.databinding.CarItemCardBinding
-import com.example.myapplication.model.Car
-import java.text.NumberFormat
-import java.util.*
+import com.example.myapplication.model.*
 
 class HomeListAdapter(
     private val clickListener: (Car) -> Unit
@@ -19,19 +15,18 @@ class HomeListAdapter(
     class HomeViewHolder(
         private var binding: CarItemCardBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-
+        //TODO change car power
         fun bind(car: Car) {
-            val format: NumberFormat = NumberFormat.getCurrencyInstance(Locale.getDefault())
-            val result: String = format.format(car.price)
             binding.car = car
-            binding.carPrice.text = result
-            binding.carPower.text = car.carPower.toString() + " kW"
+            binding.carPrice.text = car.formatPriceToCurrency(car.price)
+            binding.carPower.text = car.carPowerWithUnitString(car.carPower)
             binding.carYearProduction.text = car.yearStartProduction.toString()
             binding.executePendingBindings()
         }
 
     }
-    companion object DiffCallback: DiffUtil.ItemCallback<Car>() {
+
+    companion object DiffCallback : DiffUtil.ItemCallback<Car>() {
         override fun areItemsTheSame(oldItem: Car, newItem: Car): Boolean {
             return oldItem.id == newItem.id
         }
@@ -41,9 +36,10 @@ class HomeListAdapter(
         }
 
     }
+
     override fun onBindViewHolder(holder: HomeViewHolder, position: Int) {
         val car = getItem(position)
-        holder.itemView.setOnClickListener{
+        holder.itemView.setOnClickListener {
             clickListener(car)
         }
         holder.bind(car)

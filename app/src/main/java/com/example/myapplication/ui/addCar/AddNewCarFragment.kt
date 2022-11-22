@@ -1,7 +1,6 @@
 package com.example.myapplication.ui.addCar
 
 import android.app.Activity
-import android.app.Activity.RESULT_OK
 import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
@@ -11,7 +10,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -28,9 +26,8 @@ import java.util.*
 class AddNewCarFragment : Fragment() {
     private var kw: Int = 0
     private var price: Double = 0.0
-    private var SELECT_PICTURE = 200
     private var selectedImage: Uri? = null
-    val REQUEST_CODE = 100
+    private val REQUEST_CODE = 100
     private val addNewCarViewModel: AddNewCarViewModel by viewModels {
         AddNewCarViewModelFactory(
             (activity?.application as BaseApplication).database.CarDao()
@@ -51,45 +48,50 @@ class AddNewCarFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        addNewCarViewModel.addCar("FIAT", "Abarth", 2021, 2022, 5, 8, "diesel",8.0)
+        addNewCarViewModel.addCar("FIAT", "Abarth", 2021, 2022, 5, 8, "diesel", 8.0)
         val navBar: BottomNavigationView = requireActivity().findViewById(R.id.nav_view)
         navBar.visibility = View.GONE
         binding.apply {
 
             //TODO change when the button will be invisible
             buttonAddNewCar.visibility = View.VISIBLE
-            buttonAddNewCar.setOnClickListener{
+            buttonAddNewCar.setOnClickListener {
                 addNewCar()
             }
             binding.carYearAddText.transformIntoDatePicker(requireContext(), "yyyy", Date())
             binding.carPowerAddText.onFocusChangeListener = View.OnFocusChangeListener { _, b ->
                 if (!b) {
                     val kwText = binding.carPowerAddText.text.toString().toIntOrNull()
-                    if (kwText != null)
-                    {
-                        binding.carPowerAddText.setText(getString(R.string.car_power_convert, kwText.toString(), addNewCarViewModel.convertKwToCv(kwText).toString()))
+                    if (kwText != null) {
+                        binding.carPowerAddText.setText(
+                            getString(
+                                R.string.car_power_convert,
+                                kwText.toString(),
+                                addNewCarViewModel.convertKwToCv(kwText).toString()
+                            )
+                        )
                         kw = kwText
                     }
                 }
             }
-            binding.carPriceAddText.onFocusChangeListener = View.OnFocusChangeListener {_,b ->
-                if (!b){
+            binding.carPriceAddText.onFocusChangeListener = View.OnFocusChangeListener { _, b ->
+                if (!b) {
                     val priceText = binding.carPriceAddText.text.toString().toDoubleOrNull()
-                    if (priceText != null)
-                    {
-                        val format: NumberFormat = NumberFormat.getCurrencyInstance(Locale.getDefault())
+                    if (priceText != null) {
+                        val format: NumberFormat =
+                            NumberFormat.getCurrencyInstance(Locale.getDefault())
                         val result: String = format.format(priceText)
                         binding.carPriceAddText.setText(result)
                         price = priceText
                     }
                 }
             }
-            binding.carImage1.setOnClickListener{
+            binding.carImage1.setOnClickListener {
                 openGalleryForImage()
                 selectedImage = null
                 carImage1.setImageURI(selectedImage)
             }
-            binding.carImage2.setOnClickListener{
+            binding.carImage2.setOnClickListener {
                 openGalleryForImage()
                 selectedImage = null
                 carImage2.setImageURI(selectedImage)
@@ -127,8 +129,8 @@ class AddNewCarFragment : Fragment() {
     }
 
 
-    fun addNewCar(){
-        if(isValidCar()){
+    private fun addNewCar() {
+        if (isValidCar()) {
             addNewCarViewModel.addCar(
                 Brand = binding.carBrandAddText.text.toString(),
                 YearStartProduction = binding.carYearAddText.text.toString().toInt(),
@@ -143,11 +145,11 @@ class AddNewCarFragment : Fragment() {
                 .actionAddNewCarFragmentToNavigationSell()
             findNavController().navigate(action)
         } else {
-            showToastAddCar("Input fields not valid, please retry.",Toast.LENGTH_LONG)
+            showToastAddCar(getString(R.string.error_add_car_toast), Toast.LENGTH_LONG)
         }
     }
 
-    fun isValidCar():Boolean{
+    private fun isValidCar(): Boolean {
         return try {
             addNewCarViewModel.checkInputEditTextNewCar(
                 binding.carBrandAddText.text.toString(),
@@ -158,17 +160,22 @@ class AddNewCarFragment : Fragment() {
                 binding.carSeatsAddText.text.toString().toInt(),
                 price
             )
-        } catch (e: Exception){
-            showToastAddCar("Input inseriti non validi, controlla e riprova.", Toast.LENGTH_LONG)
+        } catch (e: Exception) {
+            showToastAddCar(getString(R.string.error_add_car_toast), Toast.LENGTH_SHORT)
             false
         }
     }
 
-    private fun showToastAddCar(text:String, length: Int){
+    private fun showToastAddCar(text: String, length: Int) {
         val toast = Toast.makeText(requireContext(), text, length)
         toast.show()
     }
-    fun EditText.transformIntoDatePicker(context: Context, format: String, maxDate: Date? = null) {
+
+    private fun EditText.transformIntoDatePicker(
+        context: Context,
+        format: String,
+        maxDate: Date? = null
+    ) {
         isFocusableInTouchMode = false
         isClickable = true
         isFocusable = false
@@ -183,8 +190,10 @@ class AddNewCarFragment : Fragment() {
 
         setOnClickListener {
             DatePickerDialog(
-                context, datePickerOnDataSetListener, myCalendar
-                    .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                context, datePickerOnDataSetListener,
+                myCalendar
+                    .get(Calendar.YEAR),
+                myCalendar.get(Calendar.MONTH),
                 myCalendar.get(Calendar.DAY_OF_MONTH),
             ).run {
                 maxDate?.time?.also { datePicker.maxDate = it }
@@ -192,14 +201,16 @@ class AddNewCarFragment : Fragment() {
             }
         }
     }
+
     private fun openGalleryForImage() {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
         startActivityForResult(intent, REQUEST_CODE)
     }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE){
+        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE) {
             binding.carImage1.setImageURI(data?.data) // handle chosen image
             selectedImage = data?.data
         }

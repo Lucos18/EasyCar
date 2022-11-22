@@ -1,15 +1,11 @@
 package com.example.myapplication.ui.search
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.myapplication.data.CarDao
-import com.example.myapplication.ui.home.HomeViewModel
 
-class SearchViewModel(private val CarDao: CarDao) : ViewModel() {
+class SearchViewModel(private val CarDao: CarDao) : ViewModel()
 
-}
 class SearchViewModelFactory(private val carDao: CarDao) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(SearchViewModel::class.java)) {
