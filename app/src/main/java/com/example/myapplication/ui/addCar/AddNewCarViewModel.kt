@@ -1,11 +1,14 @@
 package com.example.myapplication.ui.addCar
 
+import android.graphics.Bitmap
+import android.media.Image
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.myapplication.data.CarDao
 import com.example.myapplication.model.Car
 import kotlinx.coroutines.launch
+import java.io.ByteArrayOutputStream
 
 class AddNewCarViewModel(private val carDao: CarDao) : ViewModel() {
     fun checkInputEditTextNewCar(
@@ -28,7 +31,8 @@ class AddNewCarViewModel(private val carDao: CarDao) : ViewModel() {
         Seats: Int,
         CarPower: Int,
         FuelType: String,
-        Price: Double
+        Price: Double,
+        Image: Bitmap?
     ) {
         val car = Car(
             brand = Brand,
@@ -39,7 +43,7 @@ class AddNewCarViewModel(private val carDao: CarDao) : ViewModel() {
             carPower = CarPower,
             fuelType = FuelType,
             price = Price,
-            image = null
+            image = Image?.toByteArray()
         )
 
         viewModelScope.launch {
@@ -49,6 +53,11 @@ class AddNewCarViewModel(private val carDao: CarDao) : ViewModel() {
 
     fun convertKwToCv(kw: Int): Int {
         return (kw * 1.36).toInt()
+    }
+    private fun Bitmap.toByteArray(quality: Int = 100): ByteArray {
+        val stream = ByteArrayOutputStream()
+        compress(Bitmap.CompressFormat.JPEG, quality, stream)
+        return stream.toByteArray()
     }
 }
 

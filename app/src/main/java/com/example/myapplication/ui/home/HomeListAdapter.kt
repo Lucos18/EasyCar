@@ -1,12 +1,16 @@
 package com.example.myapplication.ui.home
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.myapplication.R
 import com.example.myapplication.databinding.CarItemCardBinding
 import com.example.myapplication.model.*
+import com.squareup.picasso.Picasso
 
 class HomeListAdapter(
     private val clickListener: (Car) -> Unit
@@ -15,12 +19,22 @@ class HomeListAdapter(
     class HomeViewHolder(
         private var binding: CarItemCardBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        //TODO change car power
         fun bind(car: Car) {
             binding.car = car
             binding.carPrice.text = car.formatPriceToCurrency(car.price)
             binding.carPower.text = car.carPowerWithUnitString(car.carPower)
             binding.carYearProduction.text = car.yearStartProduction.toString()
+            if (car.image != null) {
+                binding.carImage.setImageBitmap(
+                    Bitmap.createScaledBitmap(
+                        BitmapFactory.decodeByteArray(
+                            car.image, 0, car.image.size
+                        ), 100, 80, false
+                    )
+                )
+            } else {
+                binding.carImage.setImageResource(R.drawable.ic_baseline_directions_car_24)
+            }
             binding.executePendingBindings()
         }
 

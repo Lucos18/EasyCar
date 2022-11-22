@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -26,7 +27,7 @@ import java.util.*
 class AddNewCarFragment : Fragment() {
     private var kw: Int = 0
     private var price: Double = 0.0
-    private var selectedImage: Uri? = null
+    private var selectedImageGallery: Uri? = null
     private val REQUEST_CODE = 100
     private val addNewCarViewModel: AddNewCarViewModel by viewModels {
         AddNewCarViewModelFactory(
@@ -48,7 +49,7 @@ class AddNewCarFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        addNewCarViewModel.addCar("FIAT", "Abarth", 2021, 2022, 5, 8, "diesel", 8.0)
+        //addNewCarViewModel.addCar("FIAT", "Abarth", 2021, 2022, 5, 8, "diesel", 8.0, R.drawable.ic_baseline_add_24.)
         val navBar: BottomNavigationView = requireActivity().findViewById(R.id.nav_view)
         navBar.visibility = View.GONE
         binding.apply {
@@ -88,14 +89,15 @@ class AddNewCarFragment : Fragment() {
             }
             binding.carImage1.setOnClickListener {
                 openGalleryForImage()
-                selectedImage = null
-                carImage1.setImageURI(selectedImage)
             }
+            /*
             binding.carImage2.setOnClickListener {
                 openGalleryForImage()
                 selectedImage = null
                 carImage2.setImageURI(selectedImage)
             }
+
+             */
             /*
             binding.carFuelTypeAddText.onFocusChangeListener = View.OnFocusChangeListener { _, b ->
                 if (b){
@@ -140,6 +142,7 @@ class AddNewCarFragment : Fragment() {
                 Seats = binding.carSeatsAddText.text.toString().toInt(),
                 CarPower = kw,
                 Price = price,
+                Image = checkIfInsertIsNull(createBitmapFromView(binding.carImage1)),
             )
             val action = AddNewCarFragmentDirections
                 .actionAddNewCarFragmentToNavigationSell()
@@ -211,8 +214,25 @@ class AddNewCarFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE) {
-            binding.carImage1.setImageURI(data?.data) // handle chosen image
-            selectedImage = data?.data
+            val selectedImage = data?.data
+            if (selectedImage != null)
+            {
+                // handle chosen image
+                binding.carImage1.setImageURI(data.data)
+                binding.carImage1.tag = "is_not_null"
+            }
+        }
+    }
+    private fun createBitmapFromView(view: View): Bitmap {
+        view.isDrawingCacheEnabled = true
+        view.buildDrawingCache()
+        return view.drawingCache
+    }
+    private fun checkIfInsertIsNull(image: Bitmap): Bitmap? {
+        return if (binding.carImage1.tag == "is_not_null") {
+            image
+        } else {
+            null
         }
     }
 }

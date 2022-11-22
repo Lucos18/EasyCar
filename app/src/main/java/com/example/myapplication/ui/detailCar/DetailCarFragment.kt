@@ -1,6 +1,8 @@
 package com.example.myapplication.ui.detailCar
 
 import android.app.AlertDialog
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -103,6 +105,17 @@ class DetailCarFragment : Fragment() {
             carYearProductionDetail.text =
                 getString(R.string.car_year_detail_string, car.yearStartProduction.toString())
             carNotesDetailLabel.text = getString(R.string.car_notes_detail_string_label)
+            if (car.image != null) {
+                binding.carImageDetail.setImageBitmap(
+                    Bitmap.createScaledBitmap(
+                        BitmapFactory.decodeByteArray(
+                            car.image, 0, car.image.size
+                        ), 600, 250, false
+                    )
+                )
+            } else {
+                binding.carImageDetail.setImageResource(R.drawable.ic_baseline_directions_car_24)
+            }
         }
     }
 }
