@@ -51,28 +51,55 @@
         android:background="?attr/dividerHorizontal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/car_model_detail" />
-
-    <TextView
-        android:id="@+id/car_price_detail"
+    <ViewSwitcher
+        android:id="@+id/price_switcher"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="16dp"
-        android:textColor="@color/black"
-        android:textSize="26sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@id/car_brand_detail"
-        app:layout_constraintTop_toBottomOf="@id/divider_1"
-        tools:text="PRICE" />
+        app:layout_constraintTop_toBottomOf="@id/divider_1">
+        <TextView
+            android:id="@+id/car_price_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:textColor="@color/black"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/car_brand_detail"
+            app:layout_constraintTop_toBottomOf="@id/divider_1"
+            tools:text="PRICE" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/car_price_edit_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:gravity="center_vertical"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:layout_constraintStart_toStartOf="@id/car_brand_detail"
+            app:layout_constraintTop_toBottomOf="@id/divider_1">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/car_price_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:backgroundTint="@color/white"
+                android:hint="@string/car_price_add"
+                android:inputType="numberDecimal">
+
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
+    </ViewSwitcher>
+
 
     <View
         android:id="@+id/divider_2"
         android:layout_width="match_parent"
         android:layout_height="3dp"
-        android:layout_marginTop="16dp"
+
         android:background="?attr/dividerHorizontal"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/car_price_detail" />
+        app:layout_constraintTop_toBottomOf="@id/price_switcher" />
 
     <TableLayout
         android:id="@+id/table_layout_card"
@@ -82,7 +109,7 @@
         android:layout_marginTop="8dp"
 
         android:stretchColumns="*"
-        app:layout_constraintStart_toStartOf="@id/car_price_detail"
+        app:layout_constraintStart_toStartOf="@id/price_switcher"
         app:layout_constraintTop_toBottomOf="@id/divider_2">
 
         <TableRow
@@ -110,6 +137,7 @@
                     android:id="@+id/car_power_edit_label"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/detail_car_height"
+                    android:layout_marginEnd="16dp"
                     android:gravity="center_vertical"
                     app:layout_constraintStart_toStartOf="@id/car_image"
                     app:layout_constraintTop_toBottomOf="@id/car_image">
@@ -182,6 +210,7 @@
                     android:id="@+id/car_year_production_edit_label"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/detail_car_height"
+                    android:layout_marginEnd="16dp"
                     android:gravity="center_vertical"
                     app:layout_constraintStart_toStartOf="@id/car_image"
                     app:layout_constraintTop_toBottomOf="@id/car_image">
@@ -272,7 +301,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        android:visibility="gone"
         android:backgroundTint="@color/red"
         android:src="@drawable/ic_baseline_delete_forever_24"
         app:layout_constraintEnd_toEndOf="parent"
@@ -285,9 +313,21 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        android:visibility="gone"
         android:backgroundTint="@color/blue"
         android:src="@drawable/ic_baseline_edit_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/delete_car_fab"
+        android:contentDescription="@string/add_new_car_content_description" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/save_car_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:visibility="gone"
+        android:backgroundTint="@color/green"
+        android:src="@drawable/ic_baseline_check_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/delete_car_fab"
         android:contentDescription="@string/add_new_car_content_description" />

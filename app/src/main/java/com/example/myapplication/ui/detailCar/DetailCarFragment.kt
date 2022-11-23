@@ -103,32 +103,32 @@ class DetailCarFragment : Fragment() {
     private fun bindCar(car: Car) {
         binding.apply {
             editCarFab.setOnClickListener {
-                binding.powerSwitcher.showNext()
-                binding.seatsSwitcher.showNext()
-                binding.yearProductionSwitcher.showNext()
-                binding.fuelTypeSwitcher.showNext()
-                if (!editCar) {
-                    editCar = true
-                    setEditTextBinding()
-                    deleteCarFab.visibility = View.GONE
-                    editCarFab.setImageResource(R.drawable.ic_baseline_check_24)
+                switchBetweenEditAndSave()
+
+                editCar = true
+                setEditTextBinding()
+                deleteCarFab.visibility = View.GONE
+                editCarFab.visibility = View.GONE
+                saveCarFab.visibility = View.VISIBLE
                     //editCarFab.backgroundTint.ColorStateList.valueOf(Color.rgb(50, 255, 50))
                     //editCarFab.setBackgroundColor(Color.parseColor(@color/gr))
-                } else {
-                    editCar = false
-                    deleteCarFab.visibility = View.VISIBLE
-                    editCarFab.setImageResource(R.drawable.ic_baseline_edit_24)
-                    detailCarViewModel.updateCar(
-                        car,
-                        power = carPowerEditText.text.toString(),
-                        seats = carSeatsEditText.text.toString(),
-                        fuelType = carFuelTypeEditText.text.toString(),
-                        year = carYearProductionEditText.text.toString(),
-                    )
-                    val action = DetailCarFragmentDirections
-                        .actionDetailCarFragmentToNavigationHome()
-                    findNavController().navigate(action)
-                }
+            }
+            saveCarFab.setOnClickListener {
+                switchBetweenEditAndSave()
+                editCar = false
+                deleteCarFab.visibility = View.VISIBLE
+                editCarFab.visibility = View.VISIBLE
+                saveCarFab.visibility = View.GONE
+                editCarFab.setImageResource(R.drawable.ic_baseline_edit_24)
+                detailCarViewModel.updateCar(
+                    car,
+                    power = carPowerEditText.text.toString(),
+                    seats = carSeatsEditText.text.toString(),
+                    fuelType = carFuelTypeEditText.text.toString(),
+                    year = carYearProductionEditText.text.toString(),
+                    price = carPriceEditText.text.toString(),
+                )
+
             }
             carBrandDetail.text = car.brand
             carModelDetail.text = car.model
@@ -180,6 +180,13 @@ class DetailCarFragment : Fragment() {
         binding.carPowerEditText.setText(car.carPower.toString())
         binding.carSeatsEditText.setText(car.seats.toString())
         binding.carFuelTypeEditText.setText(car.fuelType)
+        binding.carPriceEditText.setText(car.price.toString())
     }
-
+    fun switchBetweenEditAndSave(){
+        binding.powerSwitcher.showNext()
+        binding.seatsSwitcher.showNext()
+        binding.yearProductionSwitcher.showNext()
+        binding.fuelTypeSwitcher.showNext()
+        binding.priceSwitcher.showNext()
+    }
 }

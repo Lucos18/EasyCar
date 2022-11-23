@@ -28,7 +28,8 @@ class DetailCarViewModel(private val carDao: CarDao) : ViewModel() {
         year: String,
         power: String,
         seats: String,
-        fuelType: String
+        fuelType: String,
+        price: String,
     ): Boolean {
         val updatedCar = Car(
             id = car.id,
@@ -39,14 +40,14 @@ class DetailCarViewModel(private val carDao: CarDao) : ViewModel() {
             seats = seats.toInt(),
             carPower = power.toInt(),
             fuelType = fuelType,
-            price = car.price,
+            price = price.toDouble(),
             image = car.image,
         )
-        updateCar(updatedCar)
+        updateCarDatabase(updatedCar)
         return true
     }
 
-    fun updateCar(car: Car) {
+    fun updateCarDatabase(car: Car) {
         CoroutineScope(Dispatchers.IO).launch {
             carDao.update(car)
         }
