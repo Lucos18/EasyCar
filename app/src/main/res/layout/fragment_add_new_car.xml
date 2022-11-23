@@ -39,6 +39,7 @@
             android:layout_height="wrap_content"
             android:backgroundTint="@color/white"
             android:hint="@string/car_year_add"
+            android:enabled="false"
             android:inputType="number">
 
         </com.google.android.material.textfield.TextInputEditText>
@@ -56,6 +57,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/white"
+            android:enabled="false"
             android:hint="@string/car_model_add"
             android:inputType="text">
 

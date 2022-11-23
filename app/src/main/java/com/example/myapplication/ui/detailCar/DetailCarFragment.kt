@@ -1,12 +1,16 @@
 package com.example.myapplication.ui.detailCar
 
 import android.app.AlertDialog
+import android.content.res.ColorStateList
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -17,10 +21,12 @@ import com.example.myapplication.databinding.FragmentDetailCarBinding
 import com.example.myapplication.model.Car
 import com.example.myapplication.model.carPowerWithUnitString
 import com.example.myapplication.model.formatPriceToCurrency
+import com.example.myapplication.ui.addCar.AddNewCarFragmentDirections
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class DetailCarFragment : Fragment() {
     private val detailCarArgs: DetailCarFragmentArgs by navArgs()
+    private var editCar: Boolean = false
     private lateinit var car: Car
     private val detailCarViewModel: DetailCarViewModel by viewModels {
         DetailViewModelFactory(
@@ -43,6 +49,7 @@ class DetailCarFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupViewSwitcher()
         val navBar: BottomNavigationView =
             requireActivity().findViewById(R.id.nav_view)
         navBar.visibility = View.GONE
@@ -81,6 +88,7 @@ class DetailCarFragment : Fragment() {
                 alertDialog.setCancelable(false)
                 alertDialog.show()
             }
+            binding.editCarFab.visibility = View.VISIBLE
         }
     }
 
@@ -94,6 +102,34 @@ class DetailCarFragment : Fragment() {
 
     private fun bindCar(car: Car) {
         binding.apply {
+            editCarFab.setOnClickListener {
+                binding.powerSwitcher.showNext()
+                binding.seatsSwitcher.showNext()
+                binding.yearProductionSwitcher.showNext()
+                binding.fuelTypeSwitcher.showNext()
+                if (!editCar) {
+                    editCar = true
+                    setEditTextBinding()
+                    deleteCarFab.visibility = View.GONE
+                    editCarFab.setImageResource(R.drawable.ic_baseline_check_24)
+                    //editCarFab.backgroundTint.ColorStateList.valueOf(Color.rgb(50, 255, 50))
+                    //editCarFab.setBackgroundColor(Color.parseColor(@color/gr))
+                } else {
+                    editCar = false
+                    deleteCarFab.visibility = View.VISIBLE
+                    editCarFab.setImageResource(R.drawable.ic_baseline_edit_24)
+                    detailCarViewModel.updateCar(
+                        car,
+                        power = carPowerEditText.text.toString(),
+                        seats = carSeatsEditText.text.toString(),
+                        fuelType = carFuelTypeEditText.text.toString(),
+                        year = carYearProductionEditText.text.toString(),
+                    )
+                    val action = DetailCarFragmentDirections
+                        .actionDetailCarFragmentToNavigationHome()
+                    findNavController().navigate(action)
+                }
+            }
             carBrandDetail.text = car.brand
             carModelDetail.text = car.model
             carPriceDetail.text = car.formatPriceToCurrency(car.price)
@@ -118,4 +154,32 @@ class DetailCarFragment : Fragment() {
             }
         }
     }
+
+    private fun setupViewSwitcher() {
+        val inAnim = AnimationUtils.loadAnimation(requireContext(), android.R.anim.slide_in_left)
+        binding.apply {
+            yearProductionSwitcher.inAnimation = inAnim
+            fuelTypeSwitcher.inAnimation = inAnim
+            seatsSwitcher.inAnimation = inAnim
+            powerSwitcher.inAnimation = inAnim
+        }
+
+
+        val out = AnimationUtils.loadAnimation(requireContext(), android.R.anim.slide_out_right)
+        binding.apply {
+            yearProductionSwitcher.outAnimation = out
+            fuelTypeSwitcher.outAnimation = out
+            seatsSwitcher.outAnimation = out
+            powerSwitcher.outAnimation = out
+        }
+
+    }
+
+    fun setEditTextBinding() {
+        binding.carYearProductionEditText.setText(car.yearStartProduction.toString())
+        binding.carPowerEditText.setText(car.carPower.toString())
+        binding.carSeatsEditText.setText(car.seats.toString())
+        binding.carFuelTypeEditText.setText(car.fuelType)
+    }
+
 }
