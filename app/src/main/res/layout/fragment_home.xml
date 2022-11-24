@@ -13,7 +13,6 @@
         android:text="@string/search"
         android:textColor="@color/black"
         android:layout_marginHorizontal="16dp"
-        android:backgroundTint="@color/white"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/recycler_view"
         android:drawableStart="@drawable/ic_baseline_search_24dp"

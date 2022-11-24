@@ -41,5 +41,6 @@
     <string name="car_power_convert">%s kW (%s CV)</string>
     <string name="add_new_car">Add new car</string>
     <string name="error_add_car_toast">Input not valid, please retry.</string>
+    <string name="search_box_brand_query_hint">Search brand car</string>
 
 </resources>

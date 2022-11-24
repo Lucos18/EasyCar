@@ -24,7 +24,7 @@
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="8dp"
         android:textSize="26sp"
-        android:textColor="@color/black"
+        android:textColor="@color/primaryLightColor"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/car_image_detail"
@@ -61,9 +61,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            android:textColor="@color/black"
+            android:layout_marginVertical="16dp"
             android:textSize="26sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@id/car_brand_detail"
@@ -83,7 +81,6 @@
                 android:id="@+id/car_price_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:backgroundTint="@color/white"
                 android:hint="@string/car_price_add"
                 android:inputType="numberDecimal">
 
@@ -137,7 +134,7 @@
                     android:id="@+id/car_power_edit_label"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/detail_car_height"
-                    android:layout_marginEnd="16dp"
+                    android:layout_marginEnd="24dp"
                     android:gravity="center_vertical"
                     app:layout_constraintStart_toStartOf="@id/car_image"
                     app:layout_constraintTop_toBottomOf="@id/car_image">
@@ -146,7 +143,7 @@
                         android:id="@+id/car_power_edit_text"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:backgroundTint="@color/white"
+
                         android:hint="@string/car_power_add"
                         android:inputType="text">
 
@@ -181,7 +178,7 @@
                         android:id="@+id/car_fuel_type_edit_text"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:backgroundTint="@color/white"
+
                         android:hint="@string/car_fuel_type_add"
                         android:inputType="text">
 
@@ -210,7 +207,7 @@
                     android:id="@+id/car_year_production_edit_label"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/detail_car_height"
-                    android:layout_marginEnd="16dp"
+                    android:layout_marginEnd="24dp"
                     android:gravity="center_vertical"
                     app:layout_constraintStart_toStartOf="@id/car_image"
                     app:layout_constraintTop_toBottomOf="@id/car_image">
@@ -219,7 +216,6 @@
                         android:id="@+id/car_year_production_edit_text"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:backgroundTint="@color/white"
                         android:hint="@string/car_year_add"
                         android:inputType="text">
 
@@ -253,7 +249,7 @@
                         android:id="@+id/car_seats_edit_text"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:backgroundTint="@color/white"
+
                         android:hint="@string/car_seats_add"
                         android:inputType="text">
 
@@ -313,7 +309,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        android:backgroundTint="@color/blue"
+        android:tint="@color/secondaryColor"
         android:src="@drawable/ic_baseline_edit_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/delete_car_fab"

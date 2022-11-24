@@ -10,4 +10,14 @@
     <color name="red">#FFDC3535</color>
     <color name="green">#FF00FF00</color>
     <color name="blue">#FF0000FF</color>
+    <color name="backgroundColorAdd">#FFFFFFFF</color>
+
+    <color name="primaryColor">#bf360c</color>
+    <color name="primaryLightColor">#f9683a</color>
+    <color name="primaryDarkColor">#870000</color>
+    <color name="secondaryColor">#ffab00</color>
+    <color name="secondaryLightColor">#ffdd4b</color>
+    <color name="secondaryDarkColor">#c67c00</color>
+    <color name="primaryTextColor">#ffffff</color>
+    <color name="secondaryTextColor">#000000</color>
 </resources>

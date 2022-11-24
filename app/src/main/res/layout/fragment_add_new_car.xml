@@ -5,13 +5,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.addCar.AddNewCarFragment">
+    tools:context=".ui.addCar.AddNewCarFragment"
+    android:padding="8dp">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/car_brand_add_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -19,7 +19,6 @@
             android:id="@+id/car_brand_add_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/white"
             android:hint="@string/car_brand_add"
             android:inputType="text">
 
@@ -37,7 +36,6 @@
             android:id="@+id/car_year_add_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/white"
             android:hint="@string/car_year_add"
             android:enabled="false"
             android:inputType="number">
@@ -56,7 +54,6 @@
             android:id="@+id/car_model_add_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/white"
             android:enabled="false"
             android:hint="@string/car_model_add"
             android:inputType="text">
@@ -76,7 +73,6 @@
             android:id="@+id/car_fuel_type_add_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/white"
             android:focusable="false"
             android:hint="@string/car_fuel_type_add"
             android:inputType="text">
@@ -95,7 +91,6 @@
             android:id="@+id/car_power_add_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/white"
             android:hint="@string/car_power_add"
             android:inputType="number">
 
@@ -113,7 +108,6 @@
             android:id="@+id/car_seats_add_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/white"
             android:hint="@string/car_seats_add"
             android:maxLength="2"
             android:inputType="numberDecimal">
@@ -132,7 +126,6 @@
             android:id="@+id/car_price_add_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/white"
             android:hint="@string/car_price_add"
             android:inputType="numberDecimal">
 

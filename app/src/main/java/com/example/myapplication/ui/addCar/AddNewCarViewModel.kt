@@ -76,7 +76,6 @@ class AddNewCarViewModel(private val carDao: CarDao) : ViewModel() {
             {
                 //TODO change to do only one request
                 _playlist.value = VehicleApi.retrofitService.getCarInfo()
-                Log.d("ciaos", "fatta richiesta")
             }
 
             _eventNetworkError.value = false
@@ -87,16 +86,16 @@ class AddNewCarViewModel(private val carDao: CarDao) : ViewModel() {
         }
     }
     fun getDistinctBrandNames(): List<String>{
-        return _playlist.value!!.map { e -> e.maker }.distinct()
+        return _playlist.value!!.map { e -> e.maker }.distinct().sorted()
     }
     fun getDistinctMaxYearCarByBrand(maker: String): String? {
         val makerList = _playlist.value!!.filter { e -> e.maker == maker }
         return makerList.maxOfOrNull { e -> e.year }
     }
-    fun getDistinctModelByBrandAndYear(maker: String, year:String){
+    fun getDistinctModelByBrandAndYear(maker: String, year:String):List<String>{
         val makerList = _playlist.value!!.filter { e -> e.maker == maker }
         val yearList = makerList.filter { e -> e.year == year }
-
+        return yearList.map { e -> e.fullModelName }.distinct().sorted()
     }
 
     fun convertKwToCv(kw: Int): Int {

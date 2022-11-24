@@ -9,17 +9,12 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
-import android.text.Editable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.HorizontalScrollView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.core.widget.doOnTextChanged
-import androidx.databinding.adapters.TextViewBindingAdapter.setText
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -29,17 +24,19 @@ import com.example.myapplication.databinding.FragmentAddNewCarBinding
 import com.example.myapplication.model.fuelType
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.textfield.TextInputEditText
+import kotlinx.coroutines.NonDisposableHandle.parent
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
 
 class AddNewCarFragment : Fragment() {
+
     private var kw: Int = 0
     private var price: Double = 0.0
     private var selectedImageGallery: Uri? = null
     private val REQUEST_CODE = 100
-
+    private lateinit var adapter: ArrayAdapter<*>
     private val addNewCarViewModel: AddNewCarViewModel by viewModels {
         AddNewCarViewModelFactory(
             (activity?.application as BaseApplication).database.CarDao()
@@ -73,73 +70,90 @@ class AddNewCarFragment : Fragment() {
                 addNewCar()
             }
         }
+        binding.carSeatsAddText.setOnClickListener {
+
+        }
         binding.carBrandAddText.setOnClickListener {
-            val listItems = addNewCarViewModel.getDistinctBrandNames()
-            val items = arrayOfNulls<CharSequence>(listItems.size)
-            for (i in listItems.indices) {
-                items[i] = listItems[i]
-            }
-            val builder: AlertDialog.Builder = AlertDialog.Builder(context)
-            builder.setTitle("choose brand")
-            builder.setSingleChoiceItems(
-                items,
-                addNewCarViewModel.checkedItemBrand
-            ) { _: DialogInterface, which ->
-                addNewCarViewModel.checkedItemBrand = which
-            }
-            builder.setItems(items) { _: DialogInterface, which ->
-                addNewCarViewModel.checkedItemBrand = which
-            }
-            builder.setPositiveButton("Ok") { _: DialogInterface, _ ->
-                binding.carBrandAddText.setText(items[addNewCarViewModel.checkedItemBrand].toString())
+            val builder = AlertDialog.Builder(requireContext())
+                .create()
+            val view = layoutInflater.inflate(R.layout.alert_dialog_brand, null)
+            val searchText = view.findViewById<SearchView>(R.id.search_view)
+            val listViewBrand = view.findViewById<ListView>(R.id.listView)
+            adapter = ArrayAdapter(
+                requireContext(),
+                android.R.layout.simple_list_item_1,
+                addNewCarViewModel.getDistinctBrandNames()
+            )
+            listViewBrand.adapter = adapter
+            listViewBrand.onItemClickListener = AdapterView.OnItemClickListener { adapterView, view, position, l ->
+                binding.carBrandAddText.setText(listViewBrand.getItemAtPosition(position).toString())
                 binding.carYearAddText.isEnabled = true
+                builder.dismiss()
             }
-            builder.setNegativeButton("Cancel") { _: DialogInterface, _ ->
-                binding.carBrandAddText.setText("")
+            listViewBrand.emptyView = view.findViewById(R.id.empty_text_view_search)
+            searchText.setOnClickListener {
+                searchText.isIconified = false
             }
+            searchText.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
+                override fun onQueryTextSubmit(p0: String?): Boolean {
+                    return false
+                }
+
+                override fun onQueryTextChange(p0: String?): Boolean {
+                    adapter.filter.filter(p0)
+                    return true
+                }
+            })
+            builder.setView(view)
+            builder.setCanceledOnTouchOutside(false)
             builder.show()
         }
 
         binding.carYearAddText.transformIntoDatePicker(requireContext(), "yyyy", Date())
         binding.carYearAddText.doOnTextChanged { text, start, before, count ->
-            if (binding.carYearAddText.text?.isEmpty() == true)
-            {
+            if (binding.carYearAddText.text?.isEmpty() == true) {
                 binding.carModelAddText.isEnabled = false
                 binding.carModelAddText.setText("")
             } else binding.carModelAddText.isEnabled = true
         }
-/*
+
         binding.carModelAddText.setOnClickListener {
-            val listItems = addNewCarViewModel.getDistinctModelByBrandAndYear(
-                binding.carBrandAddText.text.toString(),
-                binding.carYearAddText.text.toString()
+            val builder = AlertDialog.Builder(requireContext())
+                .create()
+            val view = layoutInflater.inflate(R.layout.alert_dialog_brand, null)
+            val searchText = view.findViewById<SearchView>(R.id.search_view)
+            val listViewBrand = view.findViewById<ListView>(R.id.listView)
+            adapter = ArrayAdapter(
+                requireContext(),
+                android.R.layout.simple_list_item_1,
+                addNewCarViewModel.getDistinctModelByBrandAndYear(
+                    binding.carBrandAddText.text.toString(),
+                    binding.carYearAddText.text.toString()
+                )
             )
-            val items = arrayOfNulls<CharSequence>(listItems.size)
-            for (i in listItems.indices) {
-                items[i] = listItems[i]
+            listViewBrand.adapter = adapter
+            listViewBrand.onItemClickListener = AdapterView.OnItemClickListener { adapterView, view, position, l ->
+                binding.carModelAddText.setText(listViewBrand.getItemAtPosition(position).toString())
+                builder.dismiss()
             }
-            val builder: AlertDialog.Builder = AlertDialog.Builder(context)
-            builder.setTitle("choose brand")
-            builder.setSingleChoiceItems(
-                items,
-                addNewCarViewModel.checkedItemBrand
-            ) { _: DialogInterface, which ->
-                addNewCarViewModel.checkedItemBrand = which
+            listViewBrand.emptyView = view.findViewById(R.id.empty_text_view_search)
+            searchText.setOnClickListener {
+                searchText.isIconified = false
             }
-            builder.setItems(items) { _: DialogInterface, which ->
-                addNewCarViewModel.checkedItemBrand = which
-            }
-            builder.setPositiveButton("Ok") { _: DialogInterface, _ ->
-                binding.carBrandAddText.setText(items[addNewCarViewModel.checkedItemBrand].toString())
-                binding.carYearAddText.isEnabled = true
-            }
-            builder.setNegativeButton("Cancel") { _: DialogInterface, _ ->
-                binding.carBrandAddText.setText("")
-            }
+            searchText.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
+                override fun onQueryTextSubmit(p0: String?): Boolean {
+                    return false
+                }
+
+                override fun onQueryTextChange(p0: String?): Boolean {
+                    adapter.filter.filter(p0)
+                    return true
+                }
+            })
+            builder.setView(view)
+            builder.setCanceledOnTouchOutside(false)
             builder.show()
         }
-
- */
 
         binding.carPowerAddText.onFocusChangeListener = View.OnFocusChangeListener { _, b ->
             if (!b) {
