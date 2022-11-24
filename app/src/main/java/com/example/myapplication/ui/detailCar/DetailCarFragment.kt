@@ -1,12 +1,9 @@
 package com.example.myapplication.ui.detailCar
 
 import android.app.AlertDialog
-import android.content.res.ColorStateList
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,12 +18,13 @@ import com.example.myapplication.databinding.FragmentDetailCarBinding
 import com.example.myapplication.model.Car
 import com.example.myapplication.model.carPowerWithUnitString
 import com.example.myapplication.model.formatPriceToCurrency
-import com.example.myapplication.ui.addCar.AddNewCarFragmentDirections
+import com.example.myapplication.model.fuelType
+import com.example.myapplication.ui.transformIntoDatePicker
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import java.util.*
 
 class DetailCarFragment : Fragment() {
     private val detailCarArgs: DetailCarFragmentArgs by navArgs()
-    private var editCar: Boolean = false
     private lateinit var car: Car
     private val detailCarViewModel: DetailCarViewModel by viewModels {
         DetailViewModelFactory(
@@ -62,6 +60,7 @@ class DetailCarFragment : Fragment() {
         }
         if (detailCarArgs.isUserCreated) {
             binding.deleteCarFab.visibility = View.VISIBLE
+            binding.editCarFab.visibility = View.VISIBLE
             binding.deleteCarFab.setOnClickListener {
                 val builder = AlertDialog.Builder(requireContext())
                 //set title for alert dialog
@@ -88,7 +87,7 @@ class DetailCarFragment : Fragment() {
                 alertDialog.setCancelable(false)
                 alertDialog.show()
             }
-            binding.editCarFab.visibility = View.VISIBLE
+
         }
     }
 
@@ -102,33 +101,39 @@ class DetailCarFragment : Fragment() {
 
     private fun bindCar(car: Car) {
         binding.apply {
+            binding.carYearProductionEditText.transformIntoDatePicker(
+                requireContext(),
+                "yyyy",
+                Date()
+            )
             editCarFab.setOnClickListener {
                 switchBetweenEditAndSave()
-
-                editCar = true
                 setEditTextBinding()
                 deleteCarFab.visibility = View.GONE
                 editCarFab.visibility = View.GONE
                 saveCarFab.visibility = View.VISIBLE
-                    //editCarFab.backgroundTint.ColorStateList.valueOf(Color.rgb(50, 255, 50))
-                    //editCarFab.setBackgroundColor(Color.parseColor(@color/gr))
             }
             saveCarFab.setOnClickListener {
-                switchBetweenEditAndSave()
-                editCar = false
-                deleteCarFab.visibility = View.VISIBLE
-                editCarFab.visibility = View.VISIBLE
-                saveCarFab.visibility = View.GONE
-                editCarFab.setImageResource(R.drawable.ic_baseline_edit_24)
-                detailCarViewModel.updateCar(
-                    car,
-                    power = carPowerEditText.text.toString(),
-                    seats = carSeatsEditText.text.toString(),
-                    fuelType = carFuelTypeEditText.text.toString(),
-                    year = carYearProductionEditText.text.toString(),
-                    price = carPriceEditText.text.toString(),
-                )
-
+                if (checkInput()) {
+                    switchBetweenEditAndSave()
+                    deleteCarFab.visibility = View.VISIBLE
+                    editCarFab.visibility = View.VISIBLE
+                    saveCarFab.visibility = View.GONE
+                    editCarFab.setImageResource(R.drawable.ic_baseline_edit_24)
+                    detailCarViewModel.updateCar(
+                        car,
+                        power = carPowerEditText.text.toString(),
+                        seats = carSeatsEditText.text.toString(),
+                        fuelType = carFuelTypeEditText.text.toString(),
+                        year = carYearProductionEditText.text.toString(),
+                        price = carPriceEditText.text.toString(),
+                    )
+                } else {
+                    showCustomSnackBar(
+                        getString(R.string.error_validation_edit),
+                        com.google.android.material.snackbar.Snackbar.LENGTH_LONG
+                    )
+                }
             }
             carBrandDetail.text = car.brand
             carModelDetail.text = car.model
@@ -176,17 +181,42 @@ class DetailCarFragment : Fragment() {
     }
 
     fun setEditTextBinding() {
-        binding.carYearProductionEditText.setText(car.yearStartProduction.toString())
-        binding.carPowerEditText.setText(car.carPower.toString())
-        binding.carSeatsEditText.setText(car.seats.toString())
-        binding.carFuelTypeEditText.setText(car.fuelType)
-        binding.carPriceEditText.setText(car.price.toString())
+        binding.apply {
+            carYearProductionEditText.setText(car.yearStartProduction.toString())
+            carPowerEditText.setText(car.carPower.toString())
+            carSeatsEditText.setText(car.seats.toString())
+            carFuelTypeEditText.setText(car.fuelType)
+            carPriceEditText.setText(car.price.toString())
+        }
     }
-    fun switchBetweenEditAndSave(){
-        binding.powerSwitcher.showNext()
-        binding.seatsSwitcher.showNext()
-        binding.yearProductionSwitcher.showNext()
-        binding.fuelTypeSwitcher.showNext()
-        binding.priceSwitcher.showNext()
+
+    fun switchBetweenEditAndSave() {
+        binding.apply {
+            powerSwitcher.showNext()
+            seatsSwitcher.showNext()
+            yearProductionSwitcher.showNext()
+            fuelTypeSwitcher.showNext()
+            priceSwitcher.showNext()
+        }
+    }
+
+    fun showCustomSnackBar(text: String, length: Int) {
+        val snackbar = com.google.android.material.snackbar.Snackbar
+            .make(
+                binding.coordinatorDetailCar,
+                text,
+                length
+            )
+        snackbar.show()
+    }
+
+    fun checkInput():Boolean{
+        return detailCarViewModel.checkInputEditTextNewCar(
+            power = binding.carPowerEditText.text.toString().toInt(),
+            seats = binding.carSeatsEditText.text.toString().toInt(),
+            fuelType = binding.carFuelTypeEditText.text.toString(),
+            year = binding.carYearProductionEditText.text.toString().toInt(),
+            price = binding.carPriceEditText.text.toString().toDouble()
+        )
     }
 }

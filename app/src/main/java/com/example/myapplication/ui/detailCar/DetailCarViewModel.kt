@@ -52,6 +52,17 @@ class DetailCarViewModel(private val carDao: CarDao) : ViewModel() {
             carDao.update(car)
         }
     }
+
+    fun checkInputEditTextNewCar(
+        year: Int,
+        fuelType: String,
+        power: Int,
+        seats: Int,
+        price: Double
+    ): Boolean {
+        return year != 0 && fuelType.isNotBlank() && power != 0 && seats != 0 && price != 0.0
+    }
+
 }
 
 class DetailViewModelFactory(private val carDao: CarDao) : ViewModelProvider.Factory {

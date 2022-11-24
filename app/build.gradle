@@ -80,7 +80,5 @@ dependencies {
     kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshi_version"
 
     implementation 'com.google.code.gson:gson:2.8.5'
-
-
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
 }

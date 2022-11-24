@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/coordinator_detail_car"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -143,9 +145,8 @@
                         android:id="@+id/car_power_edit_text"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-
                         android:hint="@string/car_power_add"
-                        android:inputType="text">
+                        android:inputType="number">
 
                     </com.google.android.material.textfield.TextInputEditText>
                 </com.google.android.material.textfield.TextInputLayout>
@@ -178,7 +179,7 @@
                         android:id="@+id/car_fuel_type_edit_text"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-
+                         android:focusable="false"
                         android:hint="@string/car_fuel_type_add"
                         android:inputType="text">
 
@@ -217,7 +218,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:hint="@string/car_year_add"
-                        android:inputType="text">
+                        android:inputType="number">
 
                     </com.google.android.material.textfield.TextInputEditText>
                 </com.google.android.material.textfield.TextInputLayout>
@@ -249,9 +250,9 @@
                         android:id="@+id/car_seats_edit_text"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-
+                        android:maxLength="2"
                         android:hint="@string/car_seats_add"
-                        android:inputType="text">
+                        android:inputType="number">
 
                     </com.google.android.material.textfield.TextInputEditText>
                 </com.google.android.material.textfield.TextInputLayout>
@@ -297,6 +298,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
+        android:visibility="gone"
         android:backgroundTint="@color/red"
         android:src="@drawable/ic_baseline_delete_forever_24"
         app:layout_constraintEnd_toEndOf="parent"
@@ -310,6 +312,7 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         android:tint="@color/secondaryColor"
+        android:visibility="gone"
         android:src="@drawable/ic_baseline_edit_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/delete_car_fab"

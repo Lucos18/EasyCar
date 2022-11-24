@@ -2,14 +2,10 @@ package com.example.myapplication.ui.addCar
 
 import android.app.Activity
 import android.app.AlertDialog
-import android.app.DatePickerDialog
-import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Bitmap
-import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,19 +18,19 @@ import com.example.myapplication.BaseApplication
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentAddNewCarBinding
 import com.example.myapplication.model.fuelType
+import com.example.myapplication.ui.transformIntoDatePicker
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.textfield.TextInputEditText
-import kotlinx.coroutines.NonDisposableHandle.parent
 import java.text.NumberFormat
-import java.text.SimpleDateFormat
 import java.util.*
 
 
+@Suppress("DEPRECATION")
 class AddNewCarFragment : Fragment() {
+
 
     private var kw: Int = 0
     private var price: Double = 0.0
-    private var selectedImageGallery: Uri? = null
     private val REQUEST_CODE = 100
     private lateinit var adapter: ArrayAdapter<*>
     private val addNewCarViewModel: AddNewCarViewModel by viewModels {
@@ -50,7 +46,7 @@ class AddNewCarFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentAddNewCarBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -61,7 +57,6 @@ class AddNewCarFragment : Fragment() {
         //addNewCarViewModel.addCar("FIAT", "Abarth", 2021, 2022, 5, 8, "diesel", 8.0, R.drawable.ic_baseline_add_24.)
         val navBar: BottomNavigationView = requireActivity().findViewById(R.id.nav_view)
         navBar.visibility = View.GONE
-
         binding.apply {
 
             //TODO change when the button will be invisible
@@ -76,7 +71,7 @@ class AddNewCarFragment : Fragment() {
         binding.carBrandAddText.setOnClickListener {
             val builder = AlertDialog.Builder(requireContext())
                 .create()
-            val view = layoutInflater.inflate(R.layout.alert_dialog_brand, null)
+            val view = layoutInflater.inflate(R.layout.alert_dialog, null)
             val searchText = view.findViewById<SearchView>(R.id.search_view)
             val listViewBrand = view.findViewById<ListView>(R.id.listView)
             adapter = ArrayAdapter(
@@ -85,16 +80,20 @@ class AddNewCarFragment : Fragment() {
                 addNewCarViewModel.getDistinctBrandNames()
             )
             listViewBrand.adapter = adapter
-            listViewBrand.onItemClickListener = AdapterView.OnItemClickListener { adapterView, view, position, l ->
-                binding.carBrandAddText.setText(listViewBrand.getItemAtPosition(position).toString())
-                binding.carYearAddText.isEnabled = true
-                builder.dismiss()
-            }
+            listViewBrand.onItemClickListener =
+                AdapterView.OnItemClickListener { adapterView, view, position, l ->
+                    binding.carBrandAddText.setText(
+                        listViewBrand.getItemAtPosition(position).toString()
+                    )
+                    resetText(binding.carYearAddText)
+                    binding.carYearAddText.isEnabled = true
+                    builder.dismiss()
+                }
             listViewBrand.emptyView = view.findViewById(R.id.empty_text_view_search)
             searchText.setOnClickListener {
                 searchText.isIconified = false
             }
-            searchText.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
+            searchText.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(p0: String?): Boolean {
                     return false
                 }
@@ -108,19 +107,18 @@ class AddNewCarFragment : Fragment() {
             builder.setCanceledOnTouchOutside(false)
             builder.show()
         }
-
         binding.carYearAddText.transformIntoDatePicker(requireContext(), "yyyy", Date())
         binding.carYearAddText.doOnTextChanged { text, start, before, count ->
             if (binding.carYearAddText.text?.isEmpty() == true) {
                 binding.carModelAddText.isEnabled = false
-                binding.carModelAddText.setText("")
+                resetText(binding.carModelAddText)
             } else binding.carModelAddText.isEnabled = true
         }
 
         binding.carModelAddText.setOnClickListener {
             val builder = AlertDialog.Builder(requireContext())
                 .create()
-            val view = layoutInflater.inflate(R.layout.alert_dialog_brand, null)
+            val view = layoutInflater.inflate(R.layout.alert_dialog, null)
             val searchText = view.findViewById<SearchView>(R.id.search_view)
             val listViewBrand = view.findViewById<ListView>(R.id.listView)
             adapter = ArrayAdapter(
@@ -132,15 +130,18 @@ class AddNewCarFragment : Fragment() {
                 )
             )
             listViewBrand.adapter = adapter
-            listViewBrand.onItemClickListener = AdapterView.OnItemClickListener { adapterView, view, position, l ->
-                binding.carModelAddText.setText(listViewBrand.getItemAtPosition(position).toString())
-                builder.dismiss()
-            }
+            listViewBrand.onItemClickListener =
+                AdapterView.OnItemClickListener { _, view, position, _ ->
+                    binding.carModelAddText.setText(
+                        listViewBrand.getItemAtPosition(position).toString()
+                    )
+                    builder.dismiss()
+                }
             listViewBrand.emptyView = view.findViewById(R.id.empty_text_view_search)
             searchText.setOnClickListener {
                 searchText.isIconified = false
             }
-            searchText.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
+            searchText.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(p0: String?): Boolean {
                     return false
                 }
@@ -185,14 +186,6 @@ class AddNewCarFragment : Fragment() {
         binding.carImage1.setOnClickListener {
             openGalleryForImage()
         }
-        /*
-        binding.carImage2.setOnClickListener {
-            openGalleryForImage()
-            selectedImage = null
-            carImage2.setImageURI(selectedImage)
-        }
-
-         */
 
         binding.carFuelTypeAddText.setOnClickListener {
             val values: Array<fuelType> = fuelType.values()
@@ -272,37 +265,6 @@ class AddNewCarFragment : Fragment() {
         toast.show()
     }
 
-    private fun EditText.transformIntoDatePicker(
-        context: Context,
-        format: String,
-        maxDate: Date? = null
-    ) {
-        //val maxYearCar = addNewCarViewModel.getDistinctMaxYearCarByBrand(binding.carBrandAddText.text.toString())
-        isFocusableInTouchMode = false
-        isClickable = true
-        isFocusable = false
-        val myCalendar = Calendar.getInstance()
-        val datePickerOnDataSetListener =
-            DatePickerDialog.OnDateSetListener { _, year, monthOfYear, _ ->
-                myCalendar.set(Calendar.YEAR, year)
-                myCalendar.set(Calendar.MONTH, monthOfYear)
-                val sdf = SimpleDateFormat(format, Locale.ITALY)
-                setText(sdf.format(myCalendar.time))
-            }
-
-        setOnClickListener {
-            DatePickerDialog(
-                context, datePickerOnDataSetListener,
-                myCalendar
-                    .get(Calendar.YEAR),
-                myCalendar.get(Calendar.MONTH),
-                myCalendar.get(Calendar.DAY_OF_MONTH),
-            ).run {
-                maxDate?.time?.also { datePicker.maxDate = it }
-                show()
-            }
-        }
-    }
 
     private fun openGalleryForImage() {
         val intent = Intent(Intent.ACTION_PICK)
@@ -336,14 +298,7 @@ class AddNewCarFragment : Fragment() {
         }
     }
 
-    private fun createSingleChoiceAlertDialog(
-        title: String,
-        positiveButtonText: String,
-        negativeButtonText: String,
-        listItems: List<String>,
-        bindingText: TextInputEditText,
-        enableBinding: TextInputEditText?
-    ) {
-
+    private fun resetText(binding: TextInputEditText) {
+        binding.setText("")
     }
 }
