@@ -1,6 +1,7 @@
 package com.example.myapplication.ui.detailCar
 
 import android.app.AlertDialog
+import android.content.DialogInterface
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
@@ -8,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -20,6 +22,8 @@ import com.example.myapplication.model.carPowerWithUnitString
 import com.example.myapplication.model.formatPriceToCurrency
 import com.example.myapplication.model.fuelType
 import com.example.myapplication.ui.transformIntoDatePicker
+import com.example.myapplication.utils.FuelTypeAlertDialog
+import com.example.myapplication.utils.showCustomSnackBar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.util.*
 
@@ -106,6 +110,9 @@ class DetailCarFragment : Fragment() {
                 "yyyy",
                 Date()
             )
+            binding.carFuelTypeEditText.setOnClickListener {
+                FuelTypeAlertDialog(requireContext(), binding.carFuelTypeEditText)
+            }
             editCarFab.setOnClickListener {
                 switchBetweenEditAndSave()
                 setEditTextBinding()
@@ -130,6 +137,7 @@ class DetailCarFragment : Fragment() {
                     )
                 } else {
                     showCustomSnackBar(
+                        binding.coordinatorDetailCar,
                         getString(R.string.error_validation_edit),
                         com.google.android.material.snackbar.Snackbar.LENGTH_LONG
                     )
@@ -198,16 +206,6 @@ class DetailCarFragment : Fragment() {
             fuelTypeSwitcher.showNext()
             priceSwitcher.showNext()
         }
-    }
-
-    fun showCustomSnackBar(text: String, length: Int) {
-        val snackbar = com.google.android.material.snackbar.Snackbar
-            .make(
-                binding.coordinatorDetailCar,
-                text,
-                length
-            )
-        snackbar.show()
     }
 
     fun checkInput():Boolean{

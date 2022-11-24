@@ -10,6 +10,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.app.ActivityCompat.startActivityForResult
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -17,9 +19,14 @@ import androidx.navigation.fragment.findNavController
 import com.example.myapplication.BaseApplication
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentAddNewCarBinding
+import com.example.myapplication.databinding.FragmentHomeBinding
 import com.example.myapplication.model.fuelType
 import com.example.myapplication.ui.transformIntoDatePicker
+import com.example.myapplication.utils.FuelTypeAlertDialog
+import com.example.myapplication.utils.checkForInternet
+import com.example.myapplication.utils.showCustomSnackBar
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import java.text.NumberFormat
 import java.util.*
@@ -28,11 +35,12 @@ import java.util.*
 @Suppress("DEPRECATION")
 class AddNewCarFragment : Fragment() {
 
-
     private var kw: Int = 0
     private var price: Double = 0.0
     private val REQUEST_CODE = 100
+
     private lateinit var adapter: ArrayAdapter<*>
+
     private val addNewCarViewModel: AddNewCarViewModel by viewModels {
         AddNewCarViewModelFactory(
             (activity?.application as BaseApplication).database.CarDao()
@@ -43,30 +51,27 @@ class AddNewCarFragment : Fragment() {
 
     private val binding get() = _binding!!
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentAddNewCarBinding.inflate(inflater, container, false)
-        return binding.root
+            addNewCarViewModel.refreshDataFromNetwork()
+            _binding = FragmentAddNewCarBinding.inflate(inflater, container, false)
+            return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        addNewCarViewModel.refreshDataFromNetwork()
         //addNewCarViewModel.addCar("FIAT", "Abarth", 2021, 2022, 5, 8, "diesel", 8.0, R.drawable.ic_baseline_add_24.)
         val navBar: BottomNavigationView = requireActivity().findViewById(R.id.nav_view)
         navBar.visibility = View.GONE
         binding.apply {
-
             //TODO change when the button will be invisible
             buttonAddNewCar.visibility = View.VISIBLE
             buttonAddNewCar.setOnClickListener {
                 addNewCar()
             }
-        }
-        binding.carSeatsAddText.setOnClickListener {
-
         }
         binding.carBrandAddText.setOnClickListener {
             val builder = AlertDialog.Builder(requireContext())
@@ -188,33 +193,11 @@ class AddNewCarFragment : Fragment() {
         }
 
         binding.carFuelTypeAddText.setOnClickListener {
-            val values: Array<fuelType> = fuelType.values()
-            val items = arrayOfNulls<CharSequence>(values.size)
-            for (i in values.indices) {
-                items[i] = values[i].toString()
-            }
-            val builder: AlertDialog.Builder = AlertDialog.Builder(context)
-            builder.setTitle("Choose fuel type")
-            builder.setSingleChoiceItems(items, 0) { dialogInterface: DialogInterface, which ->
-                binding.carFuelTypeAddText.setText(items[which].toString())
-            }
-            builder.setItems(items) { _: DialogInterface, which ->
-                binding.carFuelTypeAddText.setText(items[which].toString())
-            }
-            builder.setPositiveButton("OK") { _: DialogInterface, _ ->
-
-            }
-            builder.setNegativeButton("Cancel") { _: DialogInterface, _ ->
-                binding.carFuelTypeAddText.setText("")
-            }
-            builder.show()
+            FuelTypeAlertDialog(requireContext(), binding.carFuelTypeAddText)
         }
-
-
     }
 
     override fun onDestroyView() {
-        //TODO change to better function or method
         val navBar: BottomNavigationView = requireActivity().findViewById(R.id.nav_view)
         navBar.visibility = View.VISIBLE
         super.onDestroyView()
@@ -239,7 +222,11 @@ class AddNewCarFragment : Fragment() {
                 .actionAddNewCarFragmentToNavigationSell()
             findNavController().navigate(action)
         } else {
-            showToastAddCar(getString(R.string.error_add_car_toast), Toast.LENGTH_LONG)
+            showCustomSnackBar(
+                binding.constraintLayoutAddNewCar,
+                getString(R.string.error_add_car_toast),
+                Snackbar.LENGTH_LONG
+            )
         }
     }
 
@@ -255,16 +242,14 @@ class AddNewCarFragment : Fragment() {
                 price
             )
         } catch (e: Exception) {
-            showToastAddCar(getString(R.string.error_add_car_toast), Toast.LENGTH_SHORT)
+            showCustomSnackBar(
+                binding.constraintLayoutAddNewCar,
+                getString(R.string.error_add_car_toast),
+                Snackbar.LENGTH_LONG
+            )
             false
         }
     }
-
-    private fun showToastAddCar(text: String, length: Int) {
-        val toast = Toast.makeText(requireContext(), text, length)
-        toast.show()
-    }
-
 
     private fun openGalleryForImage() {
         val intent = Intent(Intent.ACTION_PICK)

@@ -1,7 +1,10 @@
 package com.example.myapplication.ui.addCar
 
+import android.content.Context
 import android.graphics.Bitmap
-import android.util.Log
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.os.Build
 import androidx.lifecycle.*
 import com.example.myapplication.data.CarDao
 import com.example.myapplication.model.Car
@@ -12,13 +15,10 @@ import java.io.ByteArrayOutputStream
 import java.io.IOException
 
 class AddNewCarViewModel(private val carDao: CarDao) : ViewModel() {
-
-    private val _playlist = MutableLiveData<List<CarInfo>>()
-
-    var checkedItemBrand = -1
+    private val _carList = MutableLiveData<List<CarInfo>>()
 
     val playlist: LiveData<List<CarInfo>>
-        get() = _playlist
+        get() = _carList
 
     private var _eventNetworkError = MutableLiveData<Boolean>(false)
 
@@ -70,14 +70,10 @@ class AddNewCarViewModel(private val carDao: CarDao) : ViewModel() {
         }
     }
 
-    fun refreshDataFromNetwork() = viewModelScope.launch {
+    fun refreshDataFromNetwork()
+        = viewModelScope.launch {
         try {
-            if (_playlist.value == null)
-            {
-                //TODO change to do only one request
-                _playlist.value = VehicleApi.retrofitService.getCarInfo()
-            }
-
+            _carList.value = VehicleApi.retrofitService.getCarInfo()
             _eventNetworkError.value = false
             _isNetworkErrorShown.value = false
 
@@ -85,15 +81,18 @@ class AddNewCarViewModel(private val carDao: CarDao) : ViewModel() {
             _eventNetworkError.value = true
         }
     }
-    fun getDistinctBrandNames(): List<String>{
-        return _playlist.value!!.map { e -> e.maker }.distinct().sorted()
+
+    fun getDistinctBrandNames(): List<String> {
+        return _carList.value!!.map { e -> e.maker }.distinct().sorted()
     }
+
     fun getDistinctMaxYearCarByBrand(maker: String): String? {
-        val makerList = _playlist.value!!.filter { e -> e.maker == maker }
+        val makerList = _carList.value!!.filter { e -> e.maker == maker }
         return makerList.maxOfOrNull { e -> e.year }
     }
-    fun getDistinctModelByBrandAndYear(maker: String, year:String):List<String>{
-        val makerList = _playlist.value!!.filter { e -> e.maker == maker }
+
+    fun getDistinctModelByBrandAndYear(maker: String, year: String): List<String> {
+        val makerList = _carList.value!!.filter { e -> e.maker == maker }
         val yearList = makerList.filter { e -> e.year == year }
         return yearList.map { e -> e.fullModelName }.distinct().sorted()
     }
@@ -101,11 +100,13 @@ class AddNewCarViewModel(private val carDao: CarDao) : ViewModel() {
     fun convertKwToCv(kw: Int): Int {
         return (kw * 1.36).toInt()
     }
+
     private fun Bitmap.toByteArray(quality: Int = 100): ByteArray {
         val stream = ByteArrayOutputStream()
         compress(Bitmap.CompressFormat.JPEG, quality, stream)
         return stream.toByteArray()
     }
+
 }
 
 class AddNewCarViewModelFactory(private val carDao: CarDao) : ViewModelProvider.Factory {
