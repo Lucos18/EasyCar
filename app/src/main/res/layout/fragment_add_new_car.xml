@@ -115,7 +115,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/car_seats_add"
             android:maxLength="2"
-            android:inputType="numberDecimal">
+            android:inputType="number">
 
         </com.google.android.material.textfield.TextInputEditText>
     </com.google.android.material.textfield.TextInputLayout>

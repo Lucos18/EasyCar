@@ -2,8 +2,6 @@ package com.example.myapplication.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
-import androidx.room.ForeignKey
-import androidx.room.ForeignKey.CASCADE
 import androidx.room.PrimaryKey
 import java.text.NumberFormat
 import java.util.*
@@ -23,21 +21,6 @@ data class Car(
     @ColumnInfo(typeAffinity = ColumnInfo.BLOB) val image: ByteArray?,
     @ColumnInfo val favorite: Boolean = false
 )
-/*
-@Entity(
-    tableName = FavoriteCar,
-    foreignKeys = [ForeignKey(
-        entity = Car::class,
-        parentColumns = arrayOf("id"),
-        childColumns = arrayOf("userId"),
-        onDelete = CASCADE
-    )]
-)
-data class FavoriteCar(
-    @PrimaryKey val id: Int
-)
-
- */
 
 fun Car.formatPriceToCurrency(price:Double): String{
     val format: NumberFormat = NumberFormat.getCurrencyInstance(Locale.getDefault())
