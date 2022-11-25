@@ -44,7 +44,7 @@ class FavoritesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val adapter = FavoritesListAdapter(context = requireContext(), clickListener = { car ->
+        val adapter = FavoritesListAdapter(clickListener = { car ->
             val action = FavoritesFragmentDirections
                 .actionNavigationFavoritesToDetailCarFragment(car.id)
             findNavController().navigate(action)

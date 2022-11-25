@@ -94,7 +94,7 @@ class AddNewCarViewModel(private val carDao: CarDao) : ViewModel() {
     fun getDistinctModelByBrandAndYear(maker: String, year: String): List<String> {
         val makerList = _carList.value!!.filter { e -> e.maker == maker }
         val yearList = makerList.filter { e -> e.year == year }
-        return yearList.map { e -> e.fullModelName }.distinct().sorted()
+        return yearList.map { e -> e.model }.distinct().sorted()
     }
 
     fun convertKwToCv(kw: Int): Int {

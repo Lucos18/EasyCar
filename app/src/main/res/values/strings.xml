@@ -37,14 +37,15 @@
     <string name="car_fuel_type_add">Fuel Type</string>
     <string name="car_seats_add">Seats</string>
     <string name="car_price_add">Price</string>
-    <string name="car_power_add">Power</string>
+    <string name="car_power_add">Power (kW)</string>
     <string name="car_power_convert">%s kW (%s CV)</string>
-    <string name="add_new_car">Add new car</string>
+    <string name="add_new_car">ADD NEW CAR</string>
     <string name="error_add_car_toast">Input not valid, please retry.</string>
     <string name="search_box_brand_query_hint">Search brand car</string>
     <string name="error_validation_edit">Error, please check your inputs and retry.</string>
     <string name="remove_success_favorites_car">Removed successfully: %s</string>
     <string name="car_favorites_number">%s Favorites Car</string>
     <string name="undo">UNDO</string>
+    <string name="check_auto_share_dialog">Check this new auto!</string>
 
 </resources>

@@ -3,12 +3,17 @@ package com.example.myapplication.ui.home
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.Drawable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.myapplication.BaseApplication
 import com.example.myapplication.R
+import com.example.myapplication.data.CarDao
 import com.example.myapplication.databinding.CarItemCardBinding
 import com.example.myapplication.model.*
 import com.squareup.picasso.Picasso
@@ -18,7 +23,7 @@ class HomeListAdapter(
 ) : ListAdapter<Car, HomeListAdapter.HomeViewHolder>(DiffCallback) {
 
     class HomeViewHolder(
-        private var binding: CarItemCardBinding
+        private var binding: CarItemCardBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
         //TODO Check from database if already favorite
         fun bind(car: Car) {
@@ -28,6 +33,7 @@ class HomeListAdapter(
             binding.carYearProduction.text = car.yearStartProduction.toString()
             binding.favoritesButtonImage.setImageResource(getImageResource(car.favorite))
             binding.favoritesButtonImage.setOnClickListener {
+                //TODO update car favorite
                 binding.favoritesButtonImage.setImageResource(getImageResource(car.favorite))
             }
             if (car.image != null) {
@@ -71,7 +77,8 @@ class HomeListAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         return HomeViewHolder(
-            CarItemCardBinding.inflate(layoutInflater, parent, false)
+            CarItemCardBinding.inflate(layoutInflater, parent, false),
         )
     }
+
 }
