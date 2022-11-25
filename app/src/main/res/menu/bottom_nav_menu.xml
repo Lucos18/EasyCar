@@ -12,7 +12,7 @@
         android:title="@string/title_search" />
 
     <item
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/navigation_favorites"
         android:icon="@drawable/ic_baseline_star_border_24dp"
         android:title="@string/title_favorites" />
 

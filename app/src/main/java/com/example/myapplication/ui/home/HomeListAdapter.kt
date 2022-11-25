@@ -2,6 +2,7 @@ package com.example.myapplication.ui.home
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -19,13 +20,15 @@ class HomeListAdapter(
     class HomeViewHolder(
         private var binding: CarItemCardBinding
     ) : RecyclerView.ViewHolder(binding.root) {
+        //TODO Check from database if already favorite
         fun bind(car: Car) {
             binding.car = car
             binding.carPrice.text = car.formatPriceToCurrency(car.price)
             binding.carPower.text = car.carPowerWithUnitString(car.carPower)
             binding.carYearProduction.text = car.yearStartProduction.toString()
+            binding.favoritesButtonImage.setImageResource(getImageResource(car.favorite))
             binding.favoritesButtonImage.setOnClickListener {
-                binding.favoritesButtonImage.setImageResource(R.drawable.ic_baseline_star_24)
+                binding.favoritesButtonImage.setImageResource(getImageResource(car.favorite))
             }
             if (car.image != null) {
                 binding.carImage.setImageBitmap(
@@ -40,7 +43,10 @@ class HomeListAdapter(
             }
             binding.executePendingBindings()
         }
-
+        fun getImageResource(isFavorite: Boolean): Int{
+            return if (isFavorite) R.drawable.ic_baseline_star_24
+            else R.drawable.ic_baseline_star_border_24dp
+        }
     }
 
     companion object DiffCallback : DiffUtil.ItemCallback<Car>() {

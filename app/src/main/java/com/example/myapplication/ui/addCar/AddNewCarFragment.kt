@@ -108,8 +108,8 @@ class AddNewCarFragment : Fragment() {
                     return true
                 }
             })
+            builder.setCanceledOnTouchOutside(true)
             builder.setView(view)
-            builder.setCanceledOnTouchOutside(false)
             builder.show()
         }
         binding.carYearAddText.transformIntoDatePicker(requireContext(), "yyyy", Date())
@@ -156,8 +156,8 @@ class AddNewCarFragment : Fragment() {
                     return true
                 }
             })
+            builder.setCanceledOnTouchOutside(true)
             builder.setView(view)
-            builder.setCanceledOnTouchOutside(false)
             builder.show()
         }
 
@@ -195,6 +195,13 @@ class AddNewCarFragment : Fragment() {
         binding.carFuelTypeAddText.setOnClickListener {
             FuelTypeAlertDialog(requireContext(), binding.carFuelTypeAddText)
         }
+        //TODO 4 Add more information to details card of the car
+        //TODO Add Error fragment if internet connection is not on
+        //TODO Fix Item card with new informations
+        //TODO 5 Fix Price on focus listener that shows error if not changed
+        //TODO Change calendar function to show only year options
+        //TODO 3 Change Button style on add new car
+        //TODO 2 Do favorites tab with custom adapter and database
     }
 
     override fun onDestroyView() {

@@ -33,10 +33,16 @@
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/navigation_favorites"
         android:name="com.example.myapplication.ui.favorites.FavoritesFragment"
         android:label="@string/title_favorites"
-        tools:layout="@layout/fragment_favorites" />
+        tools:layout="@layout/fragment_favorites" >
+        <action
+            android:id="@+id/action_navigation_favorites_to_detailCarFragment"
+            app:destination="@id/detailCarFragment"
+            app:popUpTo="@id/detailCarFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_sell"
@@ -70,6 +76,11 @@
             android:name="isUserCreated"
             android:defaultValue="false"
             app:argType="boolean" />
+        <action
+            android:id="@+id/action_detailCarFragment_to_navigation_favorites"
+            app:destination="@id/navigation_favorites"
+            app:popUpTo="@id/navigation_favorites"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/addNewCarFragment"

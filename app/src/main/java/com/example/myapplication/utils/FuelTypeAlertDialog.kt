@@ -14,7 +14,7 @@ fun FuelTypeAlertDialog(context: Context,text: TextInputEditText){
     }
     val builder: AlertDialog.Builder = AlertDialog.Builder(context)
     builder.setTitle("Choose fuel type")
-    builder.setSingleChoiceItems(items, 0) { dialogInterface: DialogInterface, which ->
+    builder.setSingleChoiceItems(items, -1) { dialogInterface: DialogInterface, which ->
         text.setText(items[which].toString())
     }
     builder.setItems(items) { _: DialogInterface, which ->

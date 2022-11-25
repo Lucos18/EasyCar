@@ -6,10 +6,28 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import com.example.myapplication.BaseApplication
+import com.example.myapplication.R
+import com.example.myapplication.databinding.FragmentDetailCarBinding
 import com.example.myapplication.databinding.FragmentFavoritesBinding
+import com.example.myapplication.ui.detailCar.DetailCarViewModel
+import com.example.myapplication.ui.detailCar.DetailViewModelFactory
+import com.example.myapplication.ui.home.HomeFragmentDirections
+import com.example.myapplication.ui.home.HomeListAdapter
+import com.example.myapplication.utils.showCustomSnackBar
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 class FavoritesFragment : Fragment() {
+
+    private val favoritesViewModel: FavoritesViewModel by viewModels {
+        FavoritesViewModelFactory(
+            (activity?.application as BaseApplication).database.CarDao()
+        )
+    }
 
     private var _binding: FragmentFavoritesBinding? = null
 
@@ -20,21 +38,41 @@ class FavoritesFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val notificationsViewModel =
-            ViewModelProvider(this).get(FavoritesViewModel::class.java)
-
         _binding = FragmentFavoritesBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+        return binding.root
+    }
 
-        val textView: TextView = binding.textNotifications
-        notificationsViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val adapter = FavoritesListAdapter(context = requireContext(), clickListener = { car ->
+            val action = FavoritesFragmentDirections
+                .actionNavigationFavoritesToDetailCarFragment(car.id)
+            findNavController().navigate(action)
+        })
+        favoritesViewModel.allFavoritesCar.observe(this.viewLifecycleOwner) { carSelected ->
+            carSelected.let {
+                adapter.submitList(it)
+            }
         }
-        return root
+
+        favoritesViewModel.favoritesCarNumber.observe(this.viewLifecycleOwner) {
+            binding.numberOfFavorites.text =
+                getString(R.string.car_favorites_number, it.toString())
+        }
+
+        binding.apply {
+            recyclerView.adapter = adapter
+        }
+
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
+
+    fun text() {
+
+    }
+
 }

@@ -43,5 +43,8 @@
     <string name="error_add_car_toast">Input not valid, please retry.</string>
     <string name="search_box_brand_query_hint">Search brand car</string>
     <string name="error_validation_edit">Error, please check your inputs and retry.</string>
+    <string name="remove_success_favorites_car">Removed successfully: %s</string>
+    <string name="car_favorites_number">%s Favorites Car</string>
+    <string name="undo">UNDO</string>
 
 </resources>

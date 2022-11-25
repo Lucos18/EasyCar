@@ -126,6 +126,7 @@
                     android:layout_height="@dimen/detail_car_height"
                     android:gravity="center_vertical"
                     android:textSize="16sp"
+
                     app:drawableLeftCompat="@drawable/engine"
                     app:layout_constraintStart_toStartOf="@id/car_image"
                     app:layout_constraintTop_toBottomOf="@id/car_image"
@@ -145,6 +146,7 @@
                         android:id="@+id/car_power_edit_text"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:maxLength="4"
                         android:hint="@string/car_power_add"
                         android:inputType="number">
 
