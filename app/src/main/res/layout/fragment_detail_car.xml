@@ -147,6 +147,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:maxLength="4"
+                        android:drawablePadding="8dp"
+                        android:drawableStart="@drawable/engine"
                         android:hint="@string/car_power_add"
                         android:inputType="number">
 
@@ -182,7 +184,9 @@
                         android:id="@+id/car_fuel_type_edit_text"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                         android:focusable="false"
+                        android:drawablePadding="8dp"
+                        android:drawableLeft="@drawable/icons8_benzina_50"
+                        android:focusable="false"
                         android:hint="@string/car_fuel_type_add"
                         android:inputType="text">
 
@@ -221,6 +225,8 @@
                         android:id="@+id/car_year_production_edit_text"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:drawablePadding="8dp"
+                        android:drawableLeft="@drawable/ic_baseline_calendar_today_24"
                         android:hint="@string/car_year_add"
                         android:inputType="number">
 
@@ -256,6 +262,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:maxLength="2"
+                        android:drawablePadding="8dp"
+                        android:drawableLeft="@drawable/car"
                         android:hint="@string/car_seats_add"
                         android:inputType="number">
 
@@ -303,7 +311,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:stretchColumns="*"
-        android:layout_marginHorizontal="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="32dp"
         app:layout_constraintTop_toBottomOf="@+id/car_notes_detail_icon"
         app:layout_constraintStart_toStartOf="@+id/car_notes_detail_icon">
         <TableRow
@@ -326,21 +335,37 @@
         </TableRow>
 
         <TableRow
-            android:layout_marginTop="16dp">
+            android:layout_marginTop="16dp"
+            android:gravity="center">
             <TextView
                 android:id="@+id/car_mileage_detail_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/vehicle_mileage_label"
-
                 android:textSize="16sp"
                 tools:text="Vehicle Mileage" />
-            <TextView
-                android:id="@+id/car_mileage_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                tools:text="68.000km" />
+            <ViewSwitcher
+                android:id="@+id/mileage_switcher"
+                android:layout_width="match_parent"
+                android:layout_height="55dp">
+                <TextView
+                    android:id="@+id/car_mileage_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textSize="16sp"
+                    tools:text="68.000km" />
+                <EditText
+                    android:id="@+id/car_mileage_text_edit"
+                    android:layout_width="120dp"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:maxLength="10"
+                    android:layout_height="match_parent">
+
+                </EditText>
+            </ViewSwitcher>
+
         </TableRow>
 
         <TableRow

@@ -5,6 +5,7 @@ import android.content.DialogInterface
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,17 +18,18 @@ import androidx.navigation.fragment.navArgs
 import com.example.myapplication.BaseApplication
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentDetailCarBinding
-import com.example.myapplication.model.Car
-import com.example.myapplication.model.carPowerWithUnitString
-import com.example.myapplication.model.formatPriceToCurrency
-import com.example.myapplication.model.fuelType
+import com.example.myapplication.model.*
 import com.example.myapplication.ui.transformIntoDatePicker
 import com.example.myapplication.utils.FuelTypeAlertDialog
 import com.example.myapplication.utils.showCustomSnackBar
+import com.example.myapplication.workers.CarWorkerViewModel
+import com.example.myapplication.workers.CarWorkerViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 class DetailCarFragment : Fragment() {
+    var oldCarMileage: Double = 0.0
     private val detailCarArgs: DetailCarFragmentArgs by navArgs()
     private lateinit var car: Car
     private val detailCarViewModel: DetailCarViewModel by viewModels {
@@ -35,7 +37,9 @@ class DetailCarFragment : Fragment() {
             (activity?.application as BaseApplication).database.CarDao()
         )
     }
-
+    private val viewModel: CarWorkerViewModel by viewModels {
+        CarWorkerViewModelFactory(requireActivity().application)
+    }
     private var _binding: FragmentDetailCarBinding? = null
 
     private val binding get() = _binding!!
@@ -114,6 +118,8 @@ class DetailCarFragment : Fragment() {
                 FuelTypeAlertDialog(requireContext(), binding.carFuelTypeEditText)
             }
             editCarFab.setOnClickListener {
+                oldCarMileage = car.mileage
+                Log.d("Old", oldCarMileage.toString())
                 switchBetweenEditAndSave()
                 setEditTextBinding()
                 deleteCarFab.visibility = View.GONE
@@ -134,7 +140,11 @@ class DetailCarFragment : Fragment() {
                         fuelType = carFuelTypeEditText.text.toString(),
                         year = carYearProductionEditText.text.toString(),
                         price = carPriceEditText.text.toString(),
+                        mileage = carMileageTextEdit.text.toString()
                     )
+                    val checkMileage = binding.carMileageTextEdit.text.toString().toDouble() - oldCarMileage
+                    Log.d("ciaoss", checkMileage.toString())
+                    if (checkMileage >= 1000) viewModel.scheduleReminder(5, TimeUnit.SECONDS,"La tua macchina e' stata rubata", "chiama il 112", car.id,car.brand,car.model,car.image)
                 } else {
                     showCustomSnackBar(
                         binding.coordinatorDetailCar,
@@ -147,7 +157,7 @@ class DetailCarFragment : Fragment() {
             carModelDetail.text = car.model
             carPriceDetail.text = car.formatPriceToCurrency(car.price)
             carPowerDetail.text = car.carPowerWithUnitString(car.carPower)
-
+            carMileageText.text = car.carMileageWithUnitString(car.mileage)
             carFuelTypeDetail.text = getString(R.string.car_fuel_type_detail_string, car.fuelType)
             carSeatsTypeDetail.text =
                 getString(R.string.car_seats_detail_string, car.seats.toString())
@@ -174,6 +184,7 @@ class DetailCarFragment : Fragment() {
             fuelTypeSwitcher.inAnimation = inAnim
             seatsSwitcher.inAnimation = inAnim
             powerSwitcher.inAnimation = inAnim
+            mileageSwitcher.inAnimation = inAnim
         }
 
 
@@ -183,6 +194,7 @@ class DetailCarFragment : Fragment() {
             fuelTypeSwitcher.outAnimation = out
             seatsSwitcher.outAnimation = out
             powerSwitcher.outAnimation = out
+            mileageSwitcher.outAnimation = out
         }
 
     }
@@ -194,6 +206,7 @@ class DetailCarFragment : Fragment() {
             carSeatsEditText.setText(car.seats.toString())
             carFuelTypeEditText.setText(car.fuelType)
             carPriceEditText.setText(car.price.toString())
+            carMileageTextEdit.setText(car.mileage.toString())
         }
     }
 
@@ -204,6 +217,7 @@ class DetailCarFragment : Fragment() {
             yearProductionSwitcher.showNext()
             fuelTypeSwitcher.showNext()
             priceSwitcher.showNext()
+            mileageSwitcher.showNext()
         }
     }
 

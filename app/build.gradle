@@ -78,7 +78,8 @@ dependencies {
     implementation "com.squareup.moshi:moshi:$moshi_version"
     implementation "com.squareup.moshi:moshi-kotlin:$moshi_version"
     kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshi_version"
-
+    implementation "androidx.media:media:1.6.0"
+    implementation("androidx.work:work-runtime-ktx:2.7.0")
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
 }

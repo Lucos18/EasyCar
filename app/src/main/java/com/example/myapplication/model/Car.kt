@@ -32,6 +32,9 @@ fun Car.formatPriceToCurrency(price:Double): String{
 fun Car.carPowerWithUnitString(kw: Int): String {
     return "$kw kW (${convertKwToCv(kw)}CV)"
 }
+fun Car.carMileageWithUnitString(mileage: Double): String{
+    return "$mileage Km"
+}
 fun Car.convertKwToCv(kw: Int): Int {
     return (kw * 1.36).toInt()
 }

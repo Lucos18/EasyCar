@@ -30,6 +30,7 @@ class DetailCarViewModel(private val carDao: CarDao) : ViewModel() {
         seats: String,
         fuelType: String,
         price: String,
+        mileage: String
     ): Boolean {
         val updatedCar = Car(
             id = car.id,
@@ -41,7 +42,7 @@ class DetailCarViewModel(private val carDao: CarDao) : ViewModel() {
             carPower = power.toInt(),
             fuelType = fuelType,
             price = price.toDouble(),
-            mileage = car.mileage,
+            mileage = mileage.toDouble(),
             image = car.image,
         )
         updateCarDatabase(updatedCar)

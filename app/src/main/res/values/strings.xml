@@ -36,6 +36,7 @@
     <string name="car_model_add">Model</string>
     <string name="car_fuel_type_add">Fuel Type</string>
     <string name="car_seats_add">Seats</string>
+    <string name="car_mileage_add">Mileage</string>
     <string name="car_price_add">Price</string>
     <string name="car_power_add">Power (kW)</string>
     <string name="car_power_convert">%s kW (%s CV)</string>
