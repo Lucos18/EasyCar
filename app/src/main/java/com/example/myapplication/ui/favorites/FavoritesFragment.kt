@@ -13,6 +13,7 @@ import com.example.myapplication.BaseApplication
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentDetailCarBinding
 import com.example.myapplication.databinding.FragmentFavoritesBinding
+import com.example.myapplication.model.Car
 import com.example.myapplication.ui.detailCar.DetailCarViewModel
 import com.example.myapplication.ui.detailCar.DetailViewModelFactory
 import com.example.myapplication.ui.home.HomeFragmentDirections
@@ -48,7 +49,8 @@ class FavoritesFragment : Fragment() {
             val action = FavoritesFragmentDirections
                 .actionNavigationFavoritesToDetailCarFragment(car.id)
             findNavController().navigate(action)
-        })
+        }, functionFavorites =  { favoritesViewModel.updateFavorites(it) }, undoRemovedFavorites = {favoritesViewModel.restoreFavorite(it)}  )
+
         favoritesViewModel.allFavoritesCar.observe(this.viewLifecycleOwner) { carSelected ->
             carSelected.let {
                 adapter.submitList(it)
@@ -70,9 +72,4 @@ class FavoritesFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
-    fun text() {
-
-    }
-
 }

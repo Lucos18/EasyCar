@@ -136,12 +136,28 @@
 
         </com.google.android.material.textfield.TextInputEditText>
     </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/car_mileage_add_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/car_price_add_label">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/car_mileage_add_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/mileage_add_text"
+            android:inputType="numberDecimal">
+
+        </com.google.android.material.textfield.TextInputEditText>
+    </com.google.android.material.textfield.TextInputLayout>
     <LinearLayout
         android:layout_width="100dp"
         android:layout_height="80dp"
         android:orientation="horizontal"
         android:layout_margin="8dp"
-        app:layout_constraintTop_toBottomOf="@id/car_price_add_label"
+        app:layout_constraintTop_toBottomOf="@id/car_mileage_add_label"
         app:layout_constraintStart_toStartOf="parent">
         <ImageView
 

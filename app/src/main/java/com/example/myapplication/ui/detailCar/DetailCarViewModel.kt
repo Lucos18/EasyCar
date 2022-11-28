@@ -41,6 +41,7 @@ class DetailCarViewModel(private val carDao: CarDao) : ViewModel() {
             carPower = power.toInt(),
             fuelType = fuelType,
             price = price.toDouble(),
+            mileage = car.mileage,
             image = car.image,
         )
         updateCarDatabase(updatedCar)

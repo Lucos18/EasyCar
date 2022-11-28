@@ -153,7 +153,6 @@ class DetailCarFragment : Fragment() {
                 getString(R.string.car_seats_detail_string, car.seats.toString())
             carYearProductionDetail.text =
                 getString(R.string.car_year_detail_string, car.yearStartProduction.toString())
-            carNotesDetailLabel.text = getString(R.string.car_notes_detail_string_label)
             if (car.image != null) {
                 binding.carImageDetail.setImageBitmap(
                     Bitmap.createScaledBitmap(

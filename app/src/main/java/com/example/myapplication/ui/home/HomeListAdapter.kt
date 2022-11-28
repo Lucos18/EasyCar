@@ -19,21 +19,22 @@ import com.example.myapplication.model.*
 import com.squareup.picasso.Picasso
 
 class HomeListAdapter(
-    private val clickListener: (Car) -> Unit
+    private val clickListener: (Car) -> Unit,
+    private val functionFavorites: (Car) -> Unit,
 ) : ListAdapter<Car, HomeListAdapter.HomeViewHolder>(DiffCallback) {
 
     class HomeViewHolder(
         private var binding: CarItemCardBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
         //TODO Check from database if already favorite
-        fun bind(car: Car) {
+        fun bind(car: Car, functionFavorites: (Car) -> Unit) {
             binding.car = car
             binding.carPrice.text = car.formatPriceToCurrency(car.price)
             binding.carPower.text = car.carPowerWithUnitString(car.carPower)
             binding.carYearProduction.text = car.yearStartProduction.toString()
             binding.favoritesButtonImage.setImageResource(getImageResource(car.favorite))
             binding.favoritesButtonImage.setOnClickListener {
-                //TODO update car favorite
+                functionFavorites(car)
                 binding.favoritesButtonImage.setImageResource(getImageResource(car.favorite))
             }
             if (car.image != null) {
@@ -71,7 +72,7 @@ class HomeListAdapter(
         holder.itemView.setOnClickListener {
             clickListener(car)
         }
-        holder.bind(car)
+        holder.bind(car, functionFavorites)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeViewHolder {

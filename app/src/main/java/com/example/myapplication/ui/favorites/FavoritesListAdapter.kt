@@ -19,14 +19,15 @@ import com.google.android.material.snackbar.Snackbar
 
 class FavoritesListAdapter(
     private val clickListener: (Car) -> Unit,
-    //private val function: (Car) -> Unit,
+    private val functionFavorites: (Car) -> Unit,
+    private val undoRemovedFavorites: (Car) -> Unit,
 ) : ListAdapter<Car, FavoritesListAdapter.FavoritesViewHolder>(DiffCallback) {
 
     class FavoritesViewHolder(
         private var binding: CarItemCardBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         //TODO ADD PARAMETER HERE
-        fun bind(car: Car) {
+        fun bind(car: Car, functionFavorites: (Car) -> Unit, undoRemovedFavorites: (Car) -> Unit) {
             binding.car = car
             binding.apply {
                 carPrice.text = car.formatPriceToCurrency(car.price)
@@ -34,9 +35,8 @@ class FavoritesListAdapter(
                 carYearProduction.text = car.yearStartProduction.toString()
                 shareButtonCarItem.visibility = View.VISIBLE
                 favoritesButtonImage.setImageResource(R.drawable.ic_baseline_star_24)
-
                 favoritesButtonImage.setOnClickListener {
-                    //function(car)
+                    functionFavorites(car)
                     showCustomSnackBarWithUndo(
                         carItemConstraintLayout,
                         itemView.context.getString(
@@ -46,7 +46,8 @@ class FavoritesListAdapter(
                         Snackbar.LENGTH_LONG,
                         itemView.context.getString(
                             R.string.undo
-                        )
+                        ),
+                        {undoRemovedFavorites(car)}
                     )
                 }
 
@@ -88,21 +89,21 @@ class FavoritesListAdapter(
 
     }
 
-    override fun onBindViewHolder(holder: FavoritesListAdapter.FavoritesViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: FavoritesViewHolder, position: Int) {
         val car = getItem(position)
         holder.itemView.setOnClickListener {
             clickListener(car)
         }
         //TODO ADD PARAMETER HERE
-        if (car.favorite) holder.bind(car)
+        if (car.favorite) holder.bind(car, functionFavorites, undoRemovedFavorites)
     }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): FavoritesListAdapter.FavoritesViewHolder {
+    ): FavoritesViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        return FavoritesListAdapter.FavoritesViewHolder(
+        return FavoritesViewHolder(
             CarItemCardBinding.inflate(layoutInflater, parent, false)
         )
     }

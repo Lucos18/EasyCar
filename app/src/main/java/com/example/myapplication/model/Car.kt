@@ -18,6 +18,9 @@ data class Car(
     @ColumnInfo val seats: Int,
     @ColumnInfo(name="fuel_type") val fuelType: String,
     @ColumnInfo val price: Double,
+    @ColumnInfo val mileage: Double,
+    //@ColumnInfo val color: Double,
+    //@ColumnInfo val state: Double,
     @ColumnInfo(typeAffinity = ColumnInfo.BLOB) val image: ByteArray?,
     @ColumnInfo val favorite: Boolean = false
 )
@@ -33,8 +36,10 @@ fun Car.convertKwToCv(kw: Int): Int {
     return (kw * 1.36).toInt()
 }
 enum class fuelType{
+    Petrol,
     Diesel,
     Electric,
     Gas,
+    Other
 }
 

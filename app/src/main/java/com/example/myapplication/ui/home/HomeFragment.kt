@@ -34,11 +34,11 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val adapter = HomeListAdapter { car ->
+        val adapter = HomeListAdapter (clickListener = { car ->
             val action = HomeFragmentDirections
                 .actionNavigationHomeToDetailCarFragment(car.id)
             findNavController().navigate(action)
-        }
+        }, functionFavorites = {homeViewModel.updateFavorites(it)})
         homeViewModel.allCars.observe(this.viewLifecycleOwner) { carSelected ->
             carSelected.let {
                 adapter.submitList(it)

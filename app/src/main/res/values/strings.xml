@@ -47,5 +47,10 @@
     <string name="car_favorites_number">%s Favorites Car</string>
     <string name="undo">UNDO</string>
     <string name="check_auto_share_dialog">Check this new auto!</string>
+    <string name="vehicle_detail_label">Vehicle Detail</string>
+    <string name="vehicle_state_label">Vehicle State</string>
+    <string name="vehicle_mileage_label">Vehicle Mileage</string>
+    <string name="vehicle_color_label">Vehicle Color</string>
+    <string name="mileage_add_text">Mileage</string>
 
 </resources>

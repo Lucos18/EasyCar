@@ -126,7 +126,7 @@
                     android:layout_height="@dimen/detail_car_height"
                     android:gravity="center_vertical"
                     android:textSize="16sp"
-
+                    android:drawablePadding="4dp"
                     app:drawableLeftCompat="@drawable/engine"
                     app:layout_constraintStart_toStartOf="@id/car_image"
                     app:layout_constraintTop_toBottomOf="@id/car_image"
@@ -163,6 +163,7 @@
                     android:layout_height="@dimen/detail_car_height"
                     android:textSize="16sp"
                     android:gravity="center_vertical"
+                    android:drawablePadding="4dp"
                     app:drawableLeftCompat="@drawable/icons8_benzina_50"
                     app:layout_constraintStart_toStartOf="@id/car_image"
                     app:layout_constraintTop_toBottomOf="@id/car_image"
@@ -199,6 +200,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/detail_car_height"
                     android:textSize="16sp"
+                    android:drawablePadding="4dp"
                     android:gravity="center_vertical"
                     app:drawableLeftCompat="@drawable/ic_baseline_calendar_today_24"
                     app:layout_constraintStart_toStartOf="@id/car_image"
@@ -236,6 +238,7 @@
                     android:textSize="16sp"
                     android:gravity="center_vertical"
                     app:drawableLeftCompat="@drawable/car"
+                    android:drawablePadding="4dp"
                     app:layout_constraintStart_toStartOf="@id/car_image"
                     app:layout_constraintTop_toBottomOf="@id/car_image"
                     tools:text=" Seats: ">
@@ -277,7 +280,8 @@
         android:layout_height="25dp"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="8dp"
-        android:src="@drawable/ic_baseline_notes_24"
+
+        android:src="@drawable/icons8_car_roof_box_90"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/divider_3">
 
@@ -289,11 +293,73 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:textSize="18sp"
+        android:text="@string/vehicle_detail_label"
         app:layout_constraintBottom_toBottomOf="@id/car_notes_detail_icon"
         app:layout_constraintStart_toEndOf="@+id/car_notes_detail_icon"
         app:layout_constraintTop_toTopOf="@id/car_notes_detail_icon"
-        tools:text="Notes"/>
+        tools:text="Vehicle Details"/>
+    <TableLayout
+        android:id="@+id/vehicle_details_car_table"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stretchColumns="*"
+        android:layout_marginHorizontal="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/car_notes_detail_icon"
+        app:layout_constraintStart_toStartOf="@+id/car_notes_detail_icon">
+        <TableRow
+            android:id="@+id/vehicle_status_row">
+            <TextView
+                android:id="@+id/car_status_detail_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/vehicle_state_label"
+                android:layout_marginTop="16dp"
+                android:textSize="16sp"
+                tools:text="Vehicle Status"/>
+            <TextView
+                android:id="@+id/car_status_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:textSize="16sp"
+                tools:text="Used"/>
+        </TableRow>
 
+        <TableRow
+            android:layout_marginTop="16dp">
+            <TextView
+                android:id="@+id/car_mileage_detail_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/vehicle_mileage_label"
+
+                android:textSize="16sp"
+                tools:text="Vehicle Mileage" />
+            <TextView
+                android:id="@+id/car_mileage_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                tools:text="68.000km" />
+        </TableRow>
+
+        <TableRow
+            android:layout_marginTop="16dp">
+            <TextView
+                android:id="@+id/car_color_detail_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/vehicle_color_label"
+                android:textSize="16sp"
+                tools:text="Vehicle Color" />
+            <TextView
+                android:id="@+id/car_color_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                tools:text="Red" />
+        </TableRow>
+    </TableLayout>
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/delete_car_fab"
         android:layout_width="wrap_content"

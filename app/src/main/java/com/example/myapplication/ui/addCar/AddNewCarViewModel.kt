@@ -37,9 +37,10 @@ class AddNewCarViewModel(private val carDao: CarDao) : ViewModel() {
         fuelType: String,
         power: Int,
         seats: Int,
-        price: Double
+        price: Double,
+        mileage: Double
     ): Boolean {
-        return brand.isNotBlank() && year != 0 && model.isNotBlank() && fuelType.isNotBlank() && power != 0 && power.toString().length <= 4 && seats != 0 && price != 0.0
+        return brand.isNotBlank() && year != 0 && model.isNotBlank() && fuelType.isNotBlank() && power != 0 && power.toString().length <= 4 && seats != 0 && price != 0.0 && mileage != 0.0 && mileage.toString().length < 10
     }
 
     fun addCar(
@@ -51,7 +52,8 @@ class AddNewCarViewModel(private val carDao: CarDao) : ViewModel() {
         CarPower: Int,
         FuelType: String,
         Price: Double,
-        Image: Bitmap?
+        Image: Bitmap?,
+        Mileage: Double
     ) {
         val car = Car(
             brand = Brand,
@@ -62,7 +64,8 @@ class AddNewCarViewModel(private val carDao: CarDao) : ViewModel() {
             carPower = CarPower,
             fuelType = FuelType,
             price = Price,
-            image = Image?.toByteArray()
+            image = Image?.toByteArray(),
+            mileage = Mileage
         )
 
         viewModelScope.launch {

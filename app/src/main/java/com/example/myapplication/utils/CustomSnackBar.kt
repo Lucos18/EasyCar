@@ -2,12 +2,13 @@ package com.example.myapplication.utils
 
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
-import com.example.myapplication.R
+import com.example.myapplication.model.Car
 import com.google.android.material.snackbar.Snackbar
 
 fun showCustomSnackBar(constraintLayout: ConstraintLayout, text: String, length: Int) {
-    val snackbar = com.google.android.material.snackbar.Snackbar
+    val snackbar = Snackbar
         .make(
             constraintLayout,
             text,
@@ -16,18 +17,21 @@ fun showCustomSnackBar(constraintLayout: ConstraintLayout, text: String, length:
     snackbar.show()
 }
 
-fun showCustomSnackBarWithUndo(constraintLayout: ConstraintLayout, textOnClick: String, length: Int, textOnUndo:String) {
+fun showCustomSnackBarWithUndo(
+    constraintLayout: ConstraintLayout,
+    textOnClick: String,
+    length: Int,
+    textOnUndo: String,
+    functionUndo: () -> Unit
+) {
     val snackbar = Snackbar.make(
         constraintLayout,
         textOnClick,
         length
-    )
-    snackbar.setAction(textOnUndo, MyUndoListener())
+    ).setAction(textOnUndo){
+        functionUndo()
+    }
     snackbar.show()
 }
-class MyUndoListener : View.OnClickListener {
-    override fun onClick(v: View) {
-        Log.d("testsnack", "testsnackundo")
-    }
-}
+
 

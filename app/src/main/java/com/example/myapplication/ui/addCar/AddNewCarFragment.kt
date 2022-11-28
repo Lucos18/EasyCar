@@ -217,7 +217,8 @@ class AddNewCarFragment : Fragment() {
                 Seats = binding.carSeatsAddText.text.toString().toInt(),
                 CarPower = kw,
                 Price = price,
-                Image = checkIfInsertIsNull(createBitmapFromView(binding.carImage1)),
+                Mileage = binding.carMileageAddText.text.toString().toDouble(),
+                Image = checkIfInsertIsNull(createBitmapFromView(binding.carImage1))
             )
             val action = AddNewCarFragmentDirections
                 .actionAddNewCarFragmentToNavigationSell()
@@ -240,7 +241,8 @@ class AddNewCarFragment : Fragment() {
                 binding.carFuelTypeAddText.text.toString(),
                 kw,
                 binding.carSeatsAddText.text.toString().toInt(),
-                price
+                price,
+                binding.carMileageAddText.text.toString().toDouble()
             )
         } catch (e: Exception) {
             showCustomSnackBar(
