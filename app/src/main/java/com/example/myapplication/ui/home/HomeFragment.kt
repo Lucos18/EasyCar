@@ -1,22 +1,18 @@
 package com.example.myapplication.ui.home
 
-import android.content.ContentValues.TAG
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.myapplication.BaseApplication
 import com.example.myapplication.databinding.FragmentHomeBinding
-import java.lang.Exception
+
 
 class HomeFragment : Fragment() {
-    val homeViewModel: HomeViewModel by activityViewModels {
+    private val homeViewModel: HomeViewModel by viewModels {
         HomeViewModelFactory(
             (activity?.application as BaseApplication).database.CarDao()
         )
@@ -32,39 +28,29 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        try {
-
-            _binding = FragmentHomeBinding.inflate(inflater, container, false)
-            val root: View = binding.root
-
-            val textView: TextView = binding.textHome
-            homeViewModel.text.observe(viewLifecycleOwner) {
-                textView.text = it
-            }
-            return root
-        }catch (e: Exception) {
-            Log.e("ciao", "onCreateView", e);
-            throw e;
-        }
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-/*
-        val adapter = HomeListAdapter { car ->
-            val action = CarListFragmentDirections
-                .actionCarListFragmentToCarDetailsFragment(car.id)
+        val adapter = HomeListAdapter (clickListener = { car ->
+            val action = HomeFragmentDirections
+                .actionNavigationHomeToDetailCarFragment(car.id)
             findNavController().navigate(action)
-        }
+        }, functionFavorites = {homeViewModel.updateFavorites(it)})
         homeViewModel.allCars.observe(this.viewLifecycleOwner) { carSelected ->
             carSelected.let {
                 adapter.submitList(it)
             }
         }
         binding.apply {
-            carRecyclerViewList.adapter = adapter
+            recyclerView.adapter = adapter
         }
-        */
+
+        binding.searchCars.setOnClickListener {
+            findNavController().navigate(HomeFragmentDirections.actionNavigationHomeToNavigationSearch())
+        }
     }
 
     override fun onDestroyView() {

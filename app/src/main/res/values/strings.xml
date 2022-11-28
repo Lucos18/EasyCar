@@ -1,7 +1,57 @@
 <resources>
+    <!-- FRAGMENT TITLES -->
     <string name="app_name">EasyCar</string>
     <string name="title_home">Home</string>
+    <string name="title_car_details">Car Details</string>
     <string name="title_search">Search</string>
     <string name="title_favorites">Favorites</string>
     <string name="title_sell">Sell</string>
+    <string name="title_add_new_car">Add New Car</string>
+    <string name="search">Search</string>
+
+    <!-- IMAGE CONTENT DESCRIPTION -->
+
+    <string name="car_image_content_description">Car Image</string>
+    <string name="add_new_car_content_description">Add new car</string>
+    <string name="add_to_favorites_icon">Add to favorites</string>
+
+    <!-- DETAIL FRAGMENT STRINGS -->
+
+    <string name="car_power_detail_string"> Power: %s kW</string>
+    <string name="car_fuel_type_detail_string"> Fuel Type: %s</string>
+    <string name="car_year_detail_string"> Year production: %s</string>
+    <string name="car_seats_detail_string"> Seats: %s</string>
+    <string name="car_notes_detail_string_label">Notes</string>
+
+    <!-- SEARCH FRAGMENT STRINGS -->
+
+    <string name="car_price_search_string_label">Price &amp; Payment</string>
+    <string name="starting_at_price">Starting at</string>
+    <string name="ending_price">Ending price</string>
+
+    <!-- ADD NEW CAR FRAGMENT STRINGS -->
+
+    <string name="car_brand_add">Brand</string>
+    <string name="car_year_add">Production Year</string>
+    <string name="car_model_add">Model</string>
+    <string name="car_fuel_type_add">Fuel Type</string>
+    <string name="car_seats_add">Seats</string>
+    <string name="car_mileage_add">Mileage</string>
+    <string name="car_price_add">Price</string>
+    <string name="car_power_add">Power (kW)</string>
+    <string name="car_power_convert">%s kW (%s CV)</string>
+    <string name="add_new_car">ADD NEW CAR</string>
+    <string name="error_add_car_toast">Input not valid, please retry.</string>
+    <string name="search_box_brand_query_hint">Search brand car</string>
+    <string name="error_validation_edit">Error, please check your inputs and retry.</string>
+    <string name="remove_success_favorites_car">Removed successfully: %s</string>
+    <string name="car_favorites_number">%s Favorites Car</string>
+    <string name="undo">UNDO</string>
+    <string name="check_auto_share_dialog">Check this new auto!</string>
+    <string name="vehicle_detail_label">Vehicle Detail</string>
+    <string name="vehicle_state_label">Vehicle State</string>
+    <string name="vehicle_mileage_label">Vehicle Mileage</string>
+    <string name="vehicle_color_label">Vehicle Color</string>
+    <string name="mileage_add_text">Mileage</string>
+
 </resources>

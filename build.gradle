@@ -6,7 +6,6 @@ buildscript {
         nav_version = '2.5.3'
         room_version = '2.4.3'
     }
-
     repositories {
         google()
         mavenCentral()

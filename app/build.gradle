@@ -65,4 +65,21 @@ dependencies {
 
     //Sliding panel layout
     implementation "androidx.slidingpanelayout:slidingpanelayout:1.2.0"
+
+    implementation 'com.squareup.picasso:picasso:2.8'
+
+    // retrofit for networking
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2'
+    implementation 'com.squareup.retrofit2:converter-moshi:2.9.0'
+
+    // moshi for parsing the JSON format
+    def moshi_version = "1.13.0"
+    implementation "com.squareup.moshi:moshi:$moshi_version"
+    implementation "com.squareup.moshi:moshi-kotlin:$moshi_version"
+    kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshi_version"
+    implementation "androidx.media:media:1.6.0"
+    implementation("androidx.work:work-runtime-ktx:2.7.0")
+    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
 }
