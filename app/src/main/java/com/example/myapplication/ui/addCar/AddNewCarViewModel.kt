@@ -73,8 +73,7 @@ class AddNewCarViewModel(private val carDao: CarDao) : ViewModel() {
         }
     }
 
-    fun refreshDataFromNetwork()
-        = viewModelScope.launch {
+    fun refreshDataFromNetwork() = viewModelScope.launch {
         try {
             _carList.value = VehicleApi.retrofitService.getCarInfo()
             _eventNetworkError.value = false

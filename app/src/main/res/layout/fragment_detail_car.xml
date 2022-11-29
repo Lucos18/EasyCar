@@ -22,7 +22,7 @@
 
     <TextView
         android:id="@+id/car_brand_detail"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="8dp"
@@ -34,7 +34,17 @@
         tools:text="BRAND">
 
     </TextView>
+    <ImageView
+        android:id="@+id/car_logo_detail"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="16dp"
+        android:src="@drawable/icons8_benzina_50"
+        app:layout_constraintStart_toEndOf="@id/car_brand_detail"
+        app:layout_constraintTop_toTopOf="@id/car_brand_detail"
+        app:layout_constraintBottom_toBottomOf="@id/car_brand_detail">
 
+    </ImageView>
     <TextView
         android:id="@+id/car_model_detail"
         android:layout_width="match_parent"

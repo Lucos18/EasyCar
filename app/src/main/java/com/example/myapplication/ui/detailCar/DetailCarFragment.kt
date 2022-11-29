@@ -10,18 +10,24 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.bumptech.glide.Glide
 import com.example.myapplication.BaseApplication
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentDetailCarBinding
 import com.example.myapplication.model.*
 import com.example.myapplication.ui.transformIntoDatePicker
 import com.example.myapplication.utils.FuelTypeAlertDialog
+import com.example.myapplication.utils.setAndGetUriByBrandParsingListOfLogoAndImageView
 import com.example.myapplication.utils.showCustomSnackBar
 import com.example.myapplication.workers.CarWorkerViewModel
 import com.example.myapplication.workers.CarWorkerViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.squareup.picasso.Picasso
+import java.lang.System.load
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -29,6 +35,7 @@ class DetailCarFragment : Fragment() {
     var oldCarMileage: Double = 0.0
     private val detailCarArgs: DetailCarFragmentArgs by navArgs()
     private lateinit var car: Car
+    private var carLogo = MutableLiveData<List<CarLogo>>()
     private val detailCarViewModel: DetailCarViewModel by viewModels {
         DetailViewModelFactory(
             (activity?.application as BaseApplication).database.CarDao()
@@ -46,6 +53,7 @@ class DetailCarFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        detailCarViewModel.refreshDataFromNetwork()
         _binding = FragmentDetailCarBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -189,6 +197,14 @@ class DetailCarFragment : Fragment() {
             } else {
                 binding.carImageDetail.setImageResource(R.drawable.ic_baseline_directions_car_24)
             }
+            val observer = Observer<List<CarLogo>> { list ->
+                setAndGetUriByBrandParsingListOfLogoAndImageView(
+                    list,
+                    car.brand,
+                    binding.carLogoDetail
+                )
+            }
+            detailCarViewModel.carLogos.observe(viewLifecycleOwner,observer)
         }
     }
 

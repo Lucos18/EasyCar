@@ -5,13 +5,31 @@ import android.media.Image
 import androidx.lifecycle.*
 import com.example.myapplication.data.CarDao
 import com.example.myapplication.model.Car
+import com.example.myapplication.model.CarInfo
+import com.example.myapplication.model.CarLogo
 import com.example.myapplication.model.fuelType
+import com.example.myapplication.network.VehicleApi
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.io.IOException
 import java.time.Year
 
 class DetailCarViewModel(private val carDao: CarDao) : ViewModel() {
+    private val _carLogo = MutableLiveData<List<CarLogo>>()
+
+    val carLogos: LiveData<List<CarLogo>>
+        get() = _carLogo
+
+    private var _eventNetworkError = MutableLiveData<Boolean>(false)
+
+    val eventNetworkError: LiveData<Boolean>
+        get() = _eventNetworkError
+
+    private var _isNetworkErrorShown = MutableLiveData<Boolean>(false)
+
+    val isNetworkErrorShown: LiveData<Boolean>
+        get() = _isNetworkErrorShown
 
     fun getCarById(id: Long): LiveData<Car> {
         return carDao.getCarById(id).asLiveData()
@@ -20,6 +38,19 @@ class DetailCarViewModel(private val carDao: CarDao) : ViewModel() {
     fun deleteCarById(id: Long) {
         viewModelScope.launch {
             carDao.deleteCarById(id)
+        }
+    }
+    init {
+        refreshDataFromNetwork()
+    }
+    fun refreshDataFromNetwork() = viewModelScope.launch {
+        try {
+            _carLogo.value = VehicleApi.retrofitServiceLogos.getCarLogos()
+            _eventNetworkError.value = false
+            _isNetworkErrorShown.value = false
+
+        } catch (networkError: IOException) {
+            _eventNetworkError.value = true
         }
     }
 

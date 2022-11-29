@@ -1,19 +1,17 @@
 package com.example.myapplication.ui.home
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.asLiveData
+import androidx.lifecycle.*
 import com.example.myapplication.data.CarDao
 import com.example.myapplication.model.Car
+import com.example.myapplication.model.CarLogo
+import com.example.myapplication.network.VehicleApi
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.io.IOException
 
 class HomeViewModel(private val CarDao: CarDao) : ViewModel() {
     val allCars: LiveData<List<Car>> = CarDao.getCars().asLiveData()
-
-    fun getYearToString(year: Int): String = year.toString()
 
     fun updateFavorites(car: Car) {
         val updatedCar = Car(
@@ -38,7 +36,6 @@ class HomeViewModel(private val CarDao: CarDao) : ViewModel() {
             CarDao.update(car)
         }
     }
-
 }
 
 class HomeViewModelFactory(private val carDao: CarDao) : ViewModelProvider.Factory {
