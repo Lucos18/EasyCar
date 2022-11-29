@@ -3,7 +3,9 @@ package com.example.myapplication.workers
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.resources.Compatibility.Api18Impl.setAutoCancel
+import android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP
+import android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP
+import android.graphics.BitmapFactory
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.work.Worker
@@ -11,6 +13,8 @@ import androidx.work.WorkerParameters
 import com.example.myapplication.BaseApplication
 import com.example.myapplication.MainActivity
 import com.example.myapplication.R
+import java.io.File
+
 
 class CarReminderWorker(
     context: Context,
@@ -20,37 +24,49 @@ class CarReminderWorker(
     val notificationId = 17
 
     override fun doWork(): Result {
-        val intent = Intent(applicationContext, MainActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        }
 
-        val pendingIntent: PendingIntent = PendingIntent
-            .getActivity(applicationContext, 0, intent, PendingIntent.FLAG_MUTABLE)
-
+        //Get values in input from CarWorkerViewModel
         val carModel = inputData.getString(carModel)
         val carBrand = inputData.getString(carBrand)
-        val carId = inputData.getLong(carId, 0)
+        val carIdLong = inputData.getLong(carId, 0)
         val title = inputData.getString(title)
         val content = inputData.getString(content)
+        val path = inputData.getString(carImage)
+        val imagePath = "$path/$IMAGE_NAME$carIdLong$FORMAT_IMAGE_PNG"
+
+        //Get Bitmap from locally saved image
+        val myBitmap = BitmapFactory.decodeFile(imagePath)
+        //then deletes it from the gallery
+        deleteImage(imagePath)
+        val intent = Intent(applicationContext, MainActivity::class.java).apply {
+            flags = FLAG_ACTIVITY_CLEAR_TOP or FLAG_ACTIVITY_SINGLE_TOP
+            putExtra("ID", carIdLong)
+        }
+        val pendingIntent: PendingIntent = PendingIntent
+            .getActivity(
+                applicationContext,
+                0,
+                intent,
+                PendingIntent.FLAG_MUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+            )
 
         val builder = NotificationCompat.Builder(applicationContext, BaseApplication.CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_baseline_directions_car_24)
-            .setContentTitle("$title $carBrand")
-            .setContentText("$content $carModel")
+            .setContentTitle("$title")
+            .setContentText("$content")
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setContentIntent(pendingIntent)
-                /*
-            .setStyle(NotificationCompat.BigPictureStyle()
-                .bigPicture(R.drawable.ic_baseline_add_24)
-                .bigLargeIcon(null))
-
-                 */
+            .setLargeIcon(myBitmap)
+            .setStyle(
+                NotificationCompat.BigPictureStyle()
+                    .bigPicture(myBitmap)
+                    .bigLargeIcon(null)
+            )
             .setAutoCancel(true)
 
         with(NotificationManagerCompat.from(applicationContext)) {
             notify(notificationId, builder.build())
         }
-
         return Result.success()
     }
 
@@ -61,5 +77,10 @@ class CarReminderWorker(
         const val title = "TITLE"
         const val content = "CONTENT"
         const val carImage = "IMAGE"
+    }
+
+    fun deleteImage(path: String) {
+        val fDelete = File(path)
+        fDelete.delete()
     }
 }

@@ -60,9 +60,10 @@ class DetailCarViewModel(private val carDao: CarDao) : ViewModel() {
         fuelType: String,
         power: Int,
         seats: Int,
-        price: Double
+        price: Double,
+        mileage: Double
     ): Boolean {
-        return year != 0 && fuelType.isNotBlank() && power != 0 && power.toString().length <= 4 && seats != 0 && price != 0.0
+        return year != 0 && fuelType.isNotBlank() && power != 0 && power.toString().length <= 4 && seats != 0 && price != 0.0 && mileage >= 0
     }
 
 }

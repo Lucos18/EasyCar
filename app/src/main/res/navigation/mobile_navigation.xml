@@ -91,5 +91,9 @@
             android:id="@+id/action_addNewCarFragment_to_navigation_sell"
             app:destination="@id/navigation_sell" />
     </fragment>
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="com.example.myapplication.MainActivity"
+        android:label="MainActivity" />
 
 </navigation>

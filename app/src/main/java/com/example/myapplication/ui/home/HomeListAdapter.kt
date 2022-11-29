@@ -32,17 +32,20 @@ class HomeListAdapter(
             binding.carPrice.text = car.formatPriceToCurrency(car.price)
             binding.carPower.text = car.carPowerWithUnitString(car.carPower)
             binding.carYearProduction.text = car.yearStartProduction.toString()
+            binding.carItemState.text = car.carMileageWithUnitString(car.mileage)
             binding.favoritesButtonImage.setImageResource(getImageResource(car.favorite))
             binding.favoritesButtonImage.setOnClickListener {
                 functionFavorites(car)
                 binding.favoritesButtonImage.setImageResource(getImageResource(car.favorite))
             }
             if (car.image != null) {
+                val bmp = BitmapFactory.decodeByteArray(car.image, 0, car.image.size)
                 binding.carImage.setImageBitmap(
                     Bitmap.createScaledBitmap(
-                        BitmapFactory.decodeByteArray(
-                            car.image, 0, car.image.size
-                        ), 100, 80, false
+                        bmp,
+                        1920,
+                        1080,
+                        false
                     )
                 )
             } else {

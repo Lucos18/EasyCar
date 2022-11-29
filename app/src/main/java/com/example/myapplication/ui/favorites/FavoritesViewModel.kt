@@ -10,8 +10,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class FavoritesViewModel(private val CarDao: CarDao) : ViewModel() {
-    //TODO Change it to favorites list item of a new database with a new dao
-    val allCars: LiveData<List<Car>> = CarDao.getCars().asLiveData()
     val allFavoritesCar: LiveData<List<Car>> = CarDao.getAllFavoritesCar().asLiveData()
     val favoritesCarNumber: LiveData<Int> = CarDao.getFavoritesCarNumber().asLiveData()
     fun updateFavorites(car: Car){

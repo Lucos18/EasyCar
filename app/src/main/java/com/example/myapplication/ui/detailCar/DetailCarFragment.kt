@@ -1,16 +1,13 @@
 package com.example.myapplication.ui.detailCar
 
 import android.app.AlertDialog
-import android.content.DialogInterface
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -55,11 +52,14 @@ class DetailCarFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val arg = arguments?.getLong("CarIdNotification")
         setupViewSwitcher()
         val navBar: BottomNavigationView =
             requireActivity().findViewById(R.id.nav_view)
         navBar.visibility = View.GONE
-        val id = detailCarArgs.carId
+        var id = detailCarArgs.carId
+        if (arg != null && arg > 0)
+            id = arg
         if (id > 0) {
             detailCarViewModel.getCarById(id).observe(this.viewLifecycleOwner) { carSelected ->
                 car = carSelected
@@ -72,13 +72,13 @@ class DetailCarFragment : Fragment() {
             binding.deleteCarFab.setOnClickListener {
                 val builder = AlertDialog.Builder(requireContext())
                 //set title for alert dialog
-                builder.setTitle("Delete Car")
+                builder.setTitle(getString(R.string.delete_car_dialog_title))
                 //set message for alert dialog
-                builder.setMessage("Are you sure do you want to delete this car from database?")
+                builder.setMessage(getString(R.string.delete_car_dialog_message))
                 builder.setIcon(android.R.drawable.ic_dialog_alert)
 
                 //performing positive action
-                builder.setPositiveButton("Yes") { _, _ ->
+                builder.setPositiveButton(getString(R.string.delete_car_dialog_positive_button)) { _, _ ->
                     detailCarViewModel.deleteCarById(detailCarArgs.carId)
                     val action = DetailCarFragmentDirections
                         .actionDetailCarFragmentToNavigationSell()
@@ -86,7 +86,7 @@ class DetailCarFragment : Fragment() {
                 }
 
                 //performing negative action
-                builder.setNegativeButton("No") { _, _ ->
+                builder.setNegativeButton(getString(R.string.delete_car_dialog_negative_button)) { _, _ ->
 
                 }
                 // Create the AlertDialog
@@ -119,7 +119,6 @@ class DetailCarFragment : Fragment() {
             }
             editCarFab.setOnClickListener {
                 oldCarMileage = car.mileage
-                Log.d("Old", oldCarMileage.toString())
                 switchBetweenEditAndSave()
                 setEditTextBinding()
                 deleteCarFab.visibility = View.GONE
@@ -142,9 +141,20 @@ class DetailCarFragment : Fragment() {
                         price = carPriceEditText.text.toString(),
                         mileage = carMileageTextEdit.text.toString()
                     )
-                    val checkMileage = binding.carMileageTextEdit.text.toString().toDouble() - oldCarMileage
-                    Log.d("ciaoss", checkMileage.toString())
-                    if (checkMileage >= 1000) viewModel.scheduleReminder(5, TimeUnit.SECONDS,"La tua macchina e' stata rubata", "chiama il 112", car.id,car.brand,car.model,car.image)
+                    val checkMileage =
+                        binding.carMileageTextEdit.text.toString().toDouble() - oldCarMileage
+                    if (checkMileage >= 100000) viewModel.scheduleReminder(
+                        5,
+                        TimeUnit.SECONDS,
+                        getString(
+                            R.string.service_car_expired_text, car.brand
+                        ),
+                        getString(R.string.service_car_context_text, car.brand, car.model),
+                        car.id,
+                        car.brand,
+                        car.model,
+                        car.image
+                    )
                 } else {
                     showCustomSnackBar(
                         binding.coordinatorDetailCar,
@@ -163,12 +173,17 @@ class DetailCarFragment : Fragment() {
                 getString(R.string.car_seats_detail_string, car.seats.toString())
             carYearProductionDetail.text =
                 getString(R.string.car_year_detail_string, car.yearStartProduction.toString())
+            carStateText.text =
+                if (car.mileage > 0) getString(R.string.used_text) else getString(R.string.new_text)
+
             if (car.image != null) {
+                val bmp = BitmapFactory.decodeByteArray(car.image, 0, car.image.size)
                 binding.carImageDetail.setImageBitmap(
                     Bitmap.createScaledBitmap(
-                        BitmapFactory.decodeByteArray(
-                            car.image, 0, car.image.size
-                        ), 600, 250, false
+                        bmp,
+                        1920,
+                        1080,
+                        false
                     )
                 )
             } else {
@@ -221,13 +236,14 @@ class DetailCarFragment : Fragment() {
         }
     }
 
-    fun checkInput():Boolean{
+    fun checkInput(): Boolean {
         return detailCarViewModel.checkInputEditTextNewCar(
             power = binding.carPowerEditText.text.toString().toInt(),
             seats = binding.carSeatsEditText.text.toString().toInt(),
             fuelType = binding.carFuelTypeEditText.text.toString(),
             year = binding.carYearProductionEditText.text.toString().toInt(),
-            price = binding.carPriceEditText.text.toString().toDouble()
+            price = binding.carPriceEditText.text.toString().toDouble(),
+            mileage = binding.carMileageTextEdit.text.toString().toDouble()
         )
     }
 }

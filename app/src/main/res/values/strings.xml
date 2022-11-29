@@ -53,5 +53,13 @@
     <string name="vehicle_mileage_label">Vehicle Mileage</string>
     <string name="vehicle_color_label">Vehicle Color</string>
     <string name="mileage_add_text">Mileage</string>
+    <string name="used_text">Used</string>
+    <string name="new_text">New</string>
+    <string name="service_car_expired_text">Your car service for %s has expired</string>
+    <string name="service_car_context_text">Please do a checkup when possible for the car %s model %s</string>
+    <string name="delete_car_dialog_title">Delete Car</string>
+    <string name="delete_car_dialog_message">Are you sure do you want to delete this car from database?</string>
+    <string name="delete_car_dialog_positive_button">Yes</string>
+    <string name="delete_car_dialog_negative_button">No</string>
 
 </resources>

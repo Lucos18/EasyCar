@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/coordinator_detail_car"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinator_detail_car"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.detailCar.DetailCarFragment">
@@ -137,6 +138,8 @@
                     android:id="@+id/car_power_edit_label"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/detail_car_height"
+                    app:boxBackgroundColor="@android:color/transparent"
+                    android:background="@android:color/transparent"
                     android:layout_marginEnd="24dp"
                     android:gravity="center_vertical"
                     app:layout_constraintStart_toStartOf="@id/car_image"
@@ -176,6 +179,8 @@
                     android:id="@+id/car_fuel_type_edit_label"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/detail_car_height"
+                    app:boxBackgroundColor="@android:color/transparent"
+                    android:background="@android:color/transparent"
                     android:gravity="center_vertical"
                     app:layout_constraintStart_toStartOf="@id/car_image"
                     app:layout_constraintTop_toBottomOf="@id/car_image">
@@ -185,7 +190,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:drawablePadding="8dp"
-                        android:drawableLeft="@drawable/icons8_benzina_50"
+                        android:drawableStart="@drawable/icons8_benzina_50"
                         android:focusable="false"
                         android:hint="@string/car_fuel_type_add"
                         android:inputType="text">
@@ -216,6 +221,8 @@
                     android:id="@+id/car_year_production_edit_label"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/detail_car_height"
+                    app:boxBackgroundColor="@android:color/transparent"
+                    android:background="@android:color/transparent"
                     android:layout_marginEnd="24dp"
                     android:gravity="center_vertical"
                     app:layout_constraintStart_toStartOf="@id/car_image"
@@ -226,7 +233,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:drawablePadding="8dp"
-                        android:drawableLeft="@drawable/ic_baseline_calendar_today_24"
+                        android:drawableStart="@drawable/ic_baseline_calendar_today_24"
                         android:hint="@string/car_year_add"
                         android:inputType="number">
 
@@ -253,6 +260,8 @@
                     android:id="@+id/car_seats_edit_label"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/detail_car_height"
+                    app:boxBackgroundColor="@android:color/transparent"
+                    android:background="@android:color/transparent"
                     android:gravity="center_vertical"
                     app:layout_constraintStart_toStartOf="@id/car_image"
                     app:layout_constraintTop_toBottomOf="@id/car_image">
@@ -263,7 +272,7 @@
                         android:layout_height="match_parent"
                         android:maxLength="2"
                         android:drawablePadding="8dp"
-                        android:drawableLeft="@drawable/car"
+                        android:drawableStart="@drawable/car"
                         android:hint="@string/car_seats_add"
                         android:inputType="number">
 
@@ -288,10 +297,10 @@
         android:layout_height="25dp"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="8dp"
-
         android:src="@drawable/icons8_car_roof_box_90"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/divider_3">
+        app:layout_constraintTop_toBottomOf="@id/divider_3"
+        tools:ignore="ContentDescription">
 
     </ImageView>
 
@@ -318,15 +327,15 @@
         <TableRow
             android:id="@+id/vehicle_status_row">
             <TextView
-                android:id="@+id/car_status_detail_label"
+                android:id="@+id/car_state_detail_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/vehicle_state_label"
                 android:layout_marginTop="16dp"
                 android:textSize="16sp"
-                tools:text="Vehicle Status"/>
+                tools:text="Vehicle State"/>
             <TextView
-                android:id="@+id/car_status_text"
+                android:id="@+id/car_state_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -361,8 +370,8 @@
                     android:gravity="center"
                     android:inputType="number"
                     android:maxLength="10"
-                    android:layout_height="match_parent">
-
+                    android:layout_height="match_parent"
+                    android:hint="@string/mileage_add_text">
                 </EditText>
             </ViewSwitcher>
 
@@ -392,7 +401,7 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         android:visibility="gone"
-        android:backgroundTint="@color/red"
+        android:backgroundTint="@color/primaryColor"
         android:src="@drawable/ic_baseline_delete_forever_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -423,4 +432,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/delete_car_fab"
         android:contentDescription="@string/add_new_car_content_description" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import com.example.myapplication.databinding.CarItemCardBinding
 import com.example.myapplication.model.Car
+import com.example.myapplication.model.carMileageWithUnitString
 import com.example.myapplication.model.carPowerWithUnitString
 import com.example.myapplication.model.formatPriceToCurrency
 import com.example.myapplication.utils.ShareDialog
@@ -26,13 +27,13 @@ class FavoritesListAdapter(
     class FavoritesViewHolder(
         private var binding: CarItemCardBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        //TODO ADD PARAMETER HERE
         fun bind(car: Car, functionFavorites: (Car) -> Unit, undoRemovedFavorites: (Car) -> Unit) {
             binding.car = car
             binding.apply {
                 carPrice.text = car.formatPriceToCurrency(car.price)
                 carPower.text = car.carPowerWithUnitString(car.carPower)
                 carYearProduction.text = car.yearStartProduction.toString()
+                carItemState.text = car.carMileageWithUnitString(car.mileage)
                 shareButtonCarItem.visibility = View.VISIBLE
                 favoritesButtonImage.setImageResource(R.drawable.ic_baseline_star_24)
                 favoritesButtonImage.setOnClickListener {
@@ -63,11 +64,13 @@ class FavoritesListAdapter(
             }
 
             if (car.image != null) {
+                val bmp = BitmapFactory.decodeByteArray(car.image, 0, car.image.size)
                 binding.carImage.setImageBitmap(
                     Bitmap.createScaledBitmap(
-                        BitmapFactory.decodeByteArray(
-                            car.image, 0, car.image.size
-                        ), 100, 80, false
+                        bmp,
+                        1920,
+                        1080,
+                        false
                     )
                 )
             } else {
@@ -94,7 +97,6 @@ class FavoritesListAdapter(
         holder.itemView.setOnClickListener {
             clickListener(car)
         }
-        //TODO ADD PARAMETER HERE
         if (car.favorite) holder.bind(car, functionFavorites, undoRemovedFavorites)
     }
 

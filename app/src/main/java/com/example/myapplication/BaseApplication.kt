@@ -11,8 +11,8 @@ class BaseApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val name = "water_channel"
-            val descriptionText = "water_reminder"
+            val name = "car_notification_channel"
+            val descriptionText = "car_check_reminder"
             val importance = NotificationManager.IMPORTANCE_DEFAULT
             val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
                 description = descriptionText
