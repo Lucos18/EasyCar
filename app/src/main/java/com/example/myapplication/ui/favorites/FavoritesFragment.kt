@@ -49,7 +49,7 @@ class FavoritesFragment : Fragment() {
             val action = FavoritesFragmentDirections
                 .actionNavigationFavoritesToDetailCarFragment(car.id)
             findNavController().navigate(action)
-        }, functionFavorites =  { favoritesViewModel.updateFavorites(it) }, undoRemovedFavorites = {favoritesViewModel.restoreFavorite(it)}  )
+        }, functionFavorites =  { favoritesViewModel.updateFavorites(it) }, undoRemovedFavorites = {favoritesViewModel.restoreFavorite(it)}, favoritesViewModel.carLogos  )
 
         favoritesViewModel.allFavoritesCar.observe(this.viewLifecycleOwner) { carSelected ->
             carSelected.let {

@@ -4,12 +4,30 @@ import android.view.View
 import androidx.lifecycle.*
 import com.example.myapplication.data.CarDao
 import com.example.myapplication.model.Car
+import com.example.myapplication.model.CarLogo
+import com.example.myapplication.network.VehicleApi
 import com.example.myapplication.ui.home.HomeViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.io.IOException
 
 class FavoritesViewModel(private val CarDao: CarDao) : ViewModel() {
+    private val _carLogo = MutableLiveData<List<CarLogo>>()
+
+    val carLogos: LiveData<List<CarLogo>>
+        get() = _carLogo
+
+    init {
+        refreshDataFromNetwork()
+    }
+    fun refreshDataFromNetwork() = viewModelScope.launch {
+        try {
+            _carLogo.value = VehicleApi.retrofitServiceLogos.getCarLogos()
+        } catch (networkError: IOException) {
+        }
+    }
+
     val allFavoritesCar: LiveData<List<Car>> = CarDao.getAllFavoritesCar().asLiveData()
     val favoritesCarNumber: LiveData<Int> = CarDao.getFavoritesCarNumber().asLiveData()
     fun updateFavorites(car: Car){

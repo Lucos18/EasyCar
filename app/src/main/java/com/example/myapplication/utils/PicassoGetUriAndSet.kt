@@ -16,7 +16,5 @@ fun setAndGetUriByBrandParsingListOfLogoAndImageView(
         Picasso.get()
             .load(logoDataApiMap[brand.lowercase()])
             .into(logo)
-    } else {
-        logo.setImageResource(R.drawable.icons8_benzina_50)
     }
 }

@@ -13,6 +13,21 @@ import java.io.IOException
 class HomeViewModel(private val CarDao: CarDao) : ViewModel() {
     val allCars: LiveData<List<Car>> = CarDao.getCars().asLiveData()
 
+    private val _carLogo = MutableLiveData<List<CarLogo>>()
+
+    val carLogos: LiveData<List<CarLogo>>
+        get() = _carLogo
+
+    init {
+        refreshDataFromNetwork()
+    }
+    fun refreshDataFromNetwork() = viewModelScope.launch {
+        try {
+            _carLogo.value = VehicleApi.retrofitServiceLogos.getCarLogos()
+        } catch (networkError: IOException) {
+        }
+    }
+
     fun updateFavorites(car: Car) {
         val updatedCar = Car(
             id = car.id,

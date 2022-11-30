@@ -5,16 +5,15 @@ import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import com.example.myapplication.databinding.CarItemCardBinding
-import com.example.myapplication.model.Car
-import com.example.myapplication.model.carMileageWithUnitString
-import com.example.myapplication.model.carPowerWithUnitString
-import com.example.myapplication.model.formatPriceToCurrency
+import com.example.myapplication.model.*
 import com.example.myapplication.utils.ShareDialog
+import com.example.myapplication.utils.setAndGetUriByBrandParsingListOfLogoAndImageView
 import com.example.myapplication.utils.showCustomSnackBarWithUndo
 import com.google.android.material.snackbar.Snackbar
 
@@ -22,12 +21,18 @@ class FavoritesListAdapter(
     private val clickListener: (Car) -> Unit,
     private val functionFavorites: (Car) -> Unit,
     private val undoRemovedFavorites: (Car) -> Unit,
+    private val listLogo: LiveData<List<CarLogo>>,
 ) : ListAdapter<Car, FavoritesListAdapter.FavoritesViewHolder>(DiffCallback) {
 
     class FavoritesViewHolder(
         private var binding: CarItemCardBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(car: Car, functionFavorites: (Car) -> Unit, undoRemovedFavorites: (Car) -> Unit) {
+        fun bind(
+            car: Car,
+            functionFavorites: (Car) -> Unit,
+            undoRemovedFavorites: (Car) -> Unit,
+            listLogo: LiveData<List<CarLogo>>
+        ) {
             binding.car = car
             binding.apply {
                 carPrice.text = car.formatPriceToCurrency(car.price)
@@ -61,6 +66,11 @@ class FavoritesListAdapter(
                         "Share With"
                     )
                 }
+                setAndGetUriByBrandParsingListOfLogoAndImageView(
+                    listLogo.value,
+                    car.brand,
+                    binding.carItemLogo
+                )
             }
 
             if (car.image != null) {
@@ -97,7 +107,7 @@ class FavoritesListAdapter(
         holder.itemView.setOnClickListener {
             clickListener(car)
         }
-        if (car.favorite) holder.bind(car, functionFavorites, undoRemovedFavorites)
+        if (car.favorite) holder.bind(car, functionFavorites, undoRemovedFavorites, listLogo)
     }
 
     override fun onCreateViewHolder(

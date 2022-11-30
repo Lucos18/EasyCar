@@ -17,7 +17,7 @@ import java.io.IOException
 class AddNewCarViewModel(private val carDao: CarDao) : ViewModel() {
     private val _carList = MutableLiveData<List<CarInfo>>()
 
-    val playlist: LiveData<List<CarInfo>>
+    val carList: LiveData<List<CarInfo>>
         get() = _carList
 
     private var _eventNetworkError = MutableLiveData<Boolean>(false)
