@@ -6,9 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.myapplication.BaseApplication
 import com.example.myapplication.databinding.FragmentSellBinding
+import com.example.myapplication.model.CarLogo
 
 class SellFragment : Fragment() {
 
@@ -39,11 +41,15 @@ class SellFragment : Fragment() {
                 findNavController().navigate(action)
             }
         }
-        val adapter = SellListAdapter { car ->
+        val adapter = SellListAdapter ({ car ->
             val action = SellFragmentDirections
                 .actionNavigationSellToDetailCarFragment(car.id, true)
             findNavController().navigate(action)
+        }, sellViewModel.carLogos)
+        val observer = Observer<List<CarLogo>> {
+            binding.recyclerView.adapter = adapter
         }
+        sellViewModel.carLogos.observe(viewLifecycleOwner,observer)
         sellViewModel.allCars.observe(this.viewLifecycleOwner) { carSelected ->
             carSelected.let {
                 adapter.submitList(it)

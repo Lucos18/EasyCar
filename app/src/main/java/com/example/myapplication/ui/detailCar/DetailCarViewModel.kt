@@ -1,19 +1,14 @@
 package com.example.myapplication.ui.detailCar
 
-import android.graphics.ColorSpace
-import android.media.Image
 import androidx.lifecycle.*
 import com.example.myapplication.data.CarDao
 import com.example.myapplication.model.Car
-import com.example.myapplication.model.CarInfo
 import com.example.myapplication.model.CarLogo
-import com.example.myapplication.model.fuelType
 import com.example.myapplication.network.VehicleApi
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.IOException
-import java.time.Year
 
 class DetailCarViewModel(private val carDao: CarDao) : ViewModel() {
     private val _carLogo = MutableLiveData<List<CarLogo>>()
@@ -40,9 +35,11 @@ class DetailCarViewModel(private val carDao: CarDao) : ViewModel() {
             carDao.deleteCarById(id)
         }
     }
+
     init {
         refreshDataFromNetwork()
     }
+
     fun refreshDataFromNetwork() = viewModelScope.launch {
         try {
             _carLogo.value = VehicleApi.retrofitServiceLogos.getCarLogos()

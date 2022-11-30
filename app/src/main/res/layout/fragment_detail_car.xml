@@ -1,445 +1,471 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/coordinator_detail_car"
+    android:fillViewport="true"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.detailCar.DetailCarFragment">
+    android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/car_image_detail"
+    <androidx.constraintlayout.widget.ConstraintLayout
+
+        android:id="@+id/coordinator_detail_car"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        app:layout_constraintStart_toStartOf="parent"
-        android:scaleType="fitXY"
-        app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="@string/car_image_content_description">
+        android:layout_height="match_parent"
+        tools:context=".ui.detailCar.DetailCarFragment">
 
-    </ImageView>
+        <ImageView
+            android:id="@+id/car_image_detail"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:contentDescription="@string/car_image_content_description"
+            android:scaleType="fitXY"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/car_brand_detail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="8dp"
-        android:textSize="26sp"
-        android:textColor="@color/primaryLightColor"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/car_image_detail"
-        tools:text="BRAND">
+        </ImageView>
 
-    </TextView>
-    <ImageView
-        android:id="@+id/car_logo_detail"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="16dp"
-        app:layout_constraintStart_toEndOf="@id/car_brand_detail"
-        app:layout_constraintTop_toTopOf="@id/car_brand_detail"
-        app:layout_constraintBottom_toBottomOf="@id/car_brand_detail">
-
-    </ImageView>
-    <TextView
-        android:id="@+id/car_model_detail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:textSize="18sp"
-        android:layout_marginTop="4dp"
-        app:layout_constraintStart_toStartOf="@id/car_brand_detail"
-        app:layout_constraintTop_toBottomOf="@id/car_brand_detail"
-        tools:text="MODEL" />
-
-    <View
-        android:id="@+id/divider_1"
-        android:layout_width="match_parent"
-        android:layout_height="3dp"
-        android:layout_marginTop="8dp"
-        android:background="?attr/dividerHorizontal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/car_model_detail" />
-    <ViewSwitcher
-        android:id="@+id/price_switcher"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/divider_1">
         <TextView
-            android:id="@+id/car_price_detail"
+            android:id="@+id/car_brand_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/primaryLightColor"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/car_image_detail"
+            tools:text="BRAND">
+
+        </TextView>
+
+        <ImageView
+            android:id="@+id/car_logo_detail"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_marginEnd="24dp"
+            app:layout_constraintBottom_toBottomOf="@id/divider_1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/car_image_detail">
+
+        </ImageView>
+
+        <TextView
+            android:id="@+id/car_model_detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
-            android:layout_marginVertical="16dp"
-            android:textSize="26sp"
-            android:textStyle="bold"
+            android:layout_marginTop="4dp"
+            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="@id/car_brand_detail"
-            app:layout_constraintTop_toBottomOf="@id/divider_1"
-            tools:text="PRICE" />
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/car_price_edit_label"
+            app:layout_constraintTop_toBottomOf="@id/car_brand_detail"
+            tools:text="MODEL" />
+
+        <View
+            android:id="@+id/divider_1"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_marginTop="8dp"
+            android:background="?attr/dividerHorizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/car_model_detail" />
+
+        <ViewSwitcher
+            android:id="@+id/price_switcher"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="8dp"
-            android:gravity="center_vertical"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            app:layout_constraintStart_toStartOf="@id/car_brand_detail"
             app:layout_constraintTop_toBottomOf="@id/divider_1">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/car_price_edit_text"
+            <TextView
+                android:id="@+id/car_price_detail"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="@string/car_price_add"
-                android:inputType="numberDecimal">
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginVertical="16dp"
+                android:textSize="26sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@id/car_brand_detail"
+                app:layout_constraintTop_toBottomOf="@id/divider_1"
+                tools:text="PRICE" />
 
-            </com.google.android.material.textfield.TextInputEditText>
-        </com.google.android.material.textfield.TextInputLayout>
-    </ViewSwitcher>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/car_price_edit_label"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:gravity="center_vertical"
+                app:layout_constraintStart_toStartOf="@id/car_brand_detail"
+                app:layout_constraintTop_toBottomOf="@id/divider_1">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/car_price_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="@string/car_price_add"
+                    android:inputType="numberDecimal">
+
+                </com.google.android.material.textfield.TextInputEditText>
+            </com.google.android.material.textfield.TextInputLayout>
+        </ViewSwitcher>
 
 
-    <View
-        android:id="@+id/divider_2"
-        android:layout_width="match_parent"
-        android:layout_height="3dp"
-
-        android:background="?attr/dividerHorizontal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/price_switcher" />
-
-    <TableLayout
-        android:id="@+id/table_layout_card"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="8dp"
-
-        android:stretchColumns="*"
-        app:layout_constraintStart_toStartOf="@id/price_switcher"
-        app:layout_constraintTop_toBottomOf="@id/divider_2">
-
-        <TableRow
-            android:id="@+id/firstRow"
+        <View
+            android:id="@+id/divider_2"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/detail_car_height"
-            android:layout_marginBottom="8dp">
-            <ViewSwitcher
-                android:id="@+id/power_switcher"
-                android:layout_width="match_parent">
+            android:layout_height="3dp"
 
-                <TextView
-                    android:id="@+id/car_power_detail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/detail_car_height"
-                    android:gravity="center_vertical"
-                    android:textSize="16sp"
-                    android:drawablePadding="4dp"
-                    app:drawableLeftCompat="@drawable/engine"
-                    app:layout_constraintStart_toStartOf="@id/car_image"
-                    app:layout_constraintTop_toBottomOf="@id/car_image"
-                    tools:text="Power: ">
+            android:background="?attr/dividerHorizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/price_switcher" />
 
-                </TextView>
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/car_power_edit_label"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/detail_car_height"
-                    app:boxBackgroundColor="@android:color/transparent"
-                    android:background="@android:color/transparent"
-                    android:layout_marginEnd="24dp"
-                    android:gravity="center_vertical"
-                    app:layout_constraintStart_toStartOf="@id/car_image"
-                    app:layout_constraintTop_toBottomOf="@id/car_image">
+        <TableLayout
+            android:id="@+id/table_layout_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="8dp"
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/car_power_edit_text"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:maxLength="4"
-                        android:drawablePadding="8dp"
-                        android:drawableStart="@drawable/engine"
-                        android:hint="@string/car_power_add"
-                        android:inputType="number">
+            android:stretchColumns="*"
+            app:layout_constraintStart_toStartOf="@id/price_switcher"
+            app:layout_constraintTop_toBottomOf="@id/divider_2">
 
-                    </com.google.android.material.textfield.TextInputEditText>
-                </com.google.android.material.textfield.TextInputLayout>
-            </ViewSwitcher>
-
-            <ViewSwitcher
-                android:id="@+id/fuel_type_switcher"
-                android:layout_width="match_parent">
-                <TextView
-                    android:id="@+id/car_fuel_type_detail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/detail_car_height"
-                    android:textSize="16sp"
-                    android:gravity="center_vertical"
-                    android:drawablePadding="4dp"
-                    app:drawableLeftCompat="@drawable/icons8_benzina_50"
-                    app:layout_constraintStart_toStartOf="@id/car_image"
-                    app:layout_constraintTop_toBottomOf="@id/car_image"
-                    tools:text="Fuel type: ">
-
-                </TextView>
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/car_fuel_type_edit_label"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/detail_car_height"
-                    app:boxBackgroundColor="@android:color/transparent"
-                    android:background="@android:color/transparent"
-                    android:gravity="center_vertical"
-                    app:layout_constraintStart_toStartOf="@id/car_image"
-                    app:layout_constraintTop_toBottomOf="@id/car_image">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/car_fuel_type_edit_text"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:drawablePadding="8dp"
-                        android:drawableStart="@drawable/icons8_benzina_50"
-                        android:focusable="false"
-                        android:hint="@string/car_fuel_type_add"
-                        android:inputType="text">
-
-                    </com.google.android.material.textfield.TextInputEditText>
-                </com.google.android.material.textfield.TextInputLayout>
-            </ViewSwitcher>
-        </TableRow>
-
-        <TableRow>
-            <ViewSwitcher
-                android:id="@+id/year_production_switcher"
-                android:layout_width="match_parent">
-                <TextView
-                    android:id="@+id/car_year_production_detail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/detail_car_height"
-                    android:textSize="16sp"
-                    android:drawablePadding="4dp"
-                    android:gravity="center_vertical"
-                    app:drawableLeftCompat="@drawable/ic_baseline_calendar_today_24"
-                    app:layout_constraintStart_toStartOf="@id/car_image"
-                    app:layout_constraintTop_toBottomOf="@id/car_image"
-                    tools:text="Year Production: ">
-
-                </TextView>
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/car_year_production_edit_label"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/detail_car_height"
-                    app:boxBackgroundColor="@android:color/transparent"
-                    android:background="@android:color/transparent"
-                    android:layout_marginEnd="24dp"
-                    android:gravity="center_vertical"
-                    app:layout_constraintStart_toStartOf="@id/car_image"
-                    app:layout_constraintTop_toBottomOf="@id/car_image">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/car_year_production_edit_text"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:drawablePadding="8dp"
-                        android:drawableStart="@drawable/ic_baseline_calendar_today_24"
-                        android:hint="@string/car_year_add"
-                        android:inputType="number">
-
-                    </com.google.android.material.textfield.TextInputEditText>
-                </com.google.android.material.textfield.TextInputLayout>
-            </ViewSwitcher>
-
-            <ViewSwitcher
-                android:id="@+id/seats_switcher"
-                android:layout_width="match_parent">
-                <TextView
-                    android:id="@+id/car_seats_type_detail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/detail_car_height"
-                    android:textSize="16sp"
-                    android:gravity="center_vertical"
-                    app:drawableLeftCompat="@drawable/car"
-                    android:drawablePadding="4dp"
-                    app:layout_constraintStart_toStartOf="@id/car_image"
-                    app:layout_constraintTop_toBottomOf="@id/car_image"
-                    tools:text=" Seats: ">
-                </TextView>
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/car_seats_edit_label"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/detail_car_height"
-                    app:boxBackgroundColor="@android:color/transparent"
-                    android:background="@android:color/transparent"
-                    android:gravity="center_vertical"
-                    app:layout_constraintStart_toStartOf="@id/car_image"
-                    app:layout_constraintTop_toBottomOf="@id/car_image">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/car_seats_edit_text"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:maxLength="2"
-                        android:drawablePadding="8dp"
-                        android:drawableStart="@drawable/car"
-                        android:hint="@string/car_seats_add"
-                        android:inputType="number">
-
-                    </com.google.android.material.textfield.TextInputEditText>
-                </com.google.android.material.textfield.TextInputLayout>
-            </ViewSwitcher>
-        </TableRow>
-    </TableLayout>
-
-    <View
-        android:id="@+id/divider_3"
-        android:layout_width="match_parent"
-        android:layout_height="3dp"
-        android:layout_marginTop="16dp"
-        android:background="?attr/dividerHorizontal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/table_layout_card" />
-
-    <ImageView
-        android:id="@+id/car_notes_detail_icon"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="8dp"
-        android:src="@drawable/icons8_car_roof_box_90"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/divider_3"
-        tools:ignore="ContentDescription">
-
-    </ImageView>
-
-    <TextView
-        android:id="@+id/car_notes_detail_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:textSize="18sp"
-        android:text="@string/vehicle_detail_label"
-        app:layout_constraintBottom_toBottomOf="@id/car_notes_detail_icon"
-        app:layout_constraintStart_toEndOf="@+id/car_notes_detail_icon"
-        app:layout_constraintTop_toTopOf="@id/car_notes_detail_icon"
-        tools:text="Vehicle Details"/>
-    <TableLayout
-        android:id="@+id/vehicle_details_car_table"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:stretchColumns="*"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="32dp"
-        app:layout_constraintTop_toBottomOf="@+id/car_notes_detail_icon"
-        app:layout_constraintStart_toStartOf="@+id/car_notes_detail_icon">
-        <TableRow
-            android:id="@+id/vehicle_status_row">
-            <TextView
-                android:id="@+id/car_state_detail_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/vehicle_state_label"
-                android:layout_marginTop="16dp"
-                android:textSize="16sp"
-                tools:text="Vehicle State"/>
-            <TextView
-                android:id="@+id/car_state_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:textSize="16sp"
-                tools:text="Used"/>
-        </TableRow>
-
-        <TableRow
-            android:layout_marginTop="16dp"
-            android:gravity="center">
-            <TextView
-                android:id="@+id/car_mileage_detail_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/vehicle_mileage_label"
-                android:textSize="16sp"
-                tools:text="Vehicle Mileage" />
-            <ViewSwitcher
-                android:id="@+id/mileage_switcher"
+            <TableRow
+                android:id="@+id/firstRow"
                 android:layout_width="match_parent"
-                android:layout_height="55dp">
+                android:layout_height="@dimen/detail_car_height"
+                android:layout_marginBottom="8dp">
+
+                <ViewSwitcher
+                    android:id="@+id/power_switcher"
+                    android:layout_width="match_parent">
+
+                    <TextView
+                        android:id="@+id/car_power_detail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/detail_car_height"
+                        android:drawablePadding="4dp"
+                        android:gravity="center_vertical"
+                        android:textSize="16sp"
+                        app:drawableLeftCompat="@drawable/engine"
+                        app:layout_constraintStart_toStartOf="@id/car_image"
+                        app:layout_constraintTop_toBottomOf="@id/car_image"
+                        tools:text="Power: ">
+
+                    </TextView>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/car_power_edit_label"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/detail_car_height"
+                        android:layout_marginEnd="24dp"
+                        android:background="@android:color/transparent"
+                        android:gravity="center_vertical"
+                        app:boxBackgroundColor="@android:color/transparent"
+                        app:layout_constraintStart_toStartOf="@id/car_image"
+                        app:layout_constraintTop_toBottomOf="@id/car_image">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/car_power_edit_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:drawableStart="@drawable/engine"
+                            android:drawablePadding="8dp"
+                            android:hint="@string/car_power_add"
+                            android:inputType="number"
+                            android:maxLength="4">
+
+                        </com.google.android.material.textfield.TextInputEditText>
+                    </com.google.android.material.textfield.TextInputLayout>
+                </ViewSwitcher>
+
+                <ViewSwitcher
+                    android:id="@+id/fuel_type_switcher"
+                    android:layout_width="match_parent">
+
+                    <TextView
+                        android:id="@+id/car_fuel_type_detail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/detail_car_height"
+                        android:drawablePadding="4dp"
+                        android:gravity="center_vertical"
+                        android:textSize="16sp"
+                        app:drawableLeftCompat="@drawable/icons8_benzina_50"
+                        app:layout_constraintStart_toStartOf="@id/car_image"
+                        app:layout_constraintTop_toBottomOf="@id/car_image"
+                        tools:text="Fuel type: ">
+
+                    </TextView>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/car_fuel_type_edit_label"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/detail_car_height"
+                        android:background="@android:color/transparent"
+                        android:gravity="center_vertical"
+                        app:boxBackgroundColor="@android:color/transparent"
+                        app:layout_constraintStart_toStartOf="@id/car_image"
+                        app:layout_constraintTop_toBottomOf="@id/car_image">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/car_fuel_type_edit_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:drawableStart="@drawable/icons8_benzina_50"
+                            android:drawablePadding="8dp"
+                            android:focusable="false"
+                            android:hint="@string/car_fuel_type_add"
+                            android:inputType="text">
+
+                        </com.google.android.material.textfield.TextInputEditText>
+                    </com.google.android.material.textfield.TextInputLayout>
+                </ViewSwitcher>
+            </TableRow>
+
+            <TableRow>
+
+                <ViewSwitcher
+                    android:id="@+id/year_production_switcher"
+                    android:layout_width="match_parent">
+
+                    <TextView
+                        android:id="@+id/car_year_production_detail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/detail_car_height"
+                        android:drawablePadding="4dp"
+                        android:gravity="center_vertical"
+                        android:textSize="16sp"
+                        app:drawableLeftCompat="@drawable/ic_baseline_calendar_today_24"
+                        app:layout_constraintStart_toStartOf="@id/car_image"
+                        app:layout_constraintTop_toBottomOf="@id/car_image"
+                        tools:text="Year Production: ">
+
+                    </TextView>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/car_year_production_edit_label"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/detail_car_height"
+                        android:layout_marginEnd="24dp"
+                        android:background="@android:color/transparent"
+                        android:gravity="center_vertical"
+                        app:boxBackgroundColor="@android:color/transparent"
+                        app:layout_constraintStart_toStartOf="@id/car_image"
+                        app:layout_constraintTop_toBottomOf="@id/car_image">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/car_year_production_edit_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:drawableStart="@drawable/ic_baseline_calendar_today_24"
+                            android:drawablePadding="8dp"
+                            android:hint="@string/car_year_add"
+                            android:inputType="number">
+
+                        </com.google.android.material.textfield.TextInputEditText>
+                    </com.google.android.material.textfield.TextInputLayout>
+                </ViewSwitcher>
+
+                <ViewSwitcher
+                    android:id="@+id/seats_switcher"
+                    android:layout_width="match_parent">
+
+                    <TextView
+                        android:id="@+id/car_seats_type_detail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/detail_car_height"
+                        android:drawablePadding="4dp"
+                        android:gravity="center_vertical"
+                        android:textSize="16sp"
+                        app:drawableLeftCompat="@drawable/car"
+                        app:layout_constraintStart_toStartOf="@id/car_image"
+                        app:layout_constraintTop_toBottomOf="@id/car_image"
+                        tools:text=" Seats: " />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/car_seats_edit_label"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/detail_car_height"
+                        android:background="@android:color/transparent"
+                        android:gravity="center_vertical"
+                        app:boxBackgroundColor="@android:color/transparent"
+                        app:layout_constraintStart_toStartOf="@id/car_image"
+                        app:layout_constraintTop_toBottomOf="@id/car_image">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/car_seats_edit_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:drawableStart="@drawable/car"
+                            android:drawablePadding="8dp"
+                            android:hint="@string/car_seats_add"
+                            android:inputType="number"
+                            android:maxLength="2">
+
+                        </com.google.android.material.textfield.TextInputEditText>
+                    </com.google.android.material.textfield.TextInputLayout>
+                </ViewSwitcher>
+            </TableRow>
+        </TableLayout>
+
+        <View
+            android:id="@+id/divider_3"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_marginTop="16dp"
+            android:background="?attr/dividerHorizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/table_layout_card" />
+
+        <ImageView
+            android:id="@+id/car_notes_detail_icon"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/icons8_car_roof_box_90"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/divider_3"
+            tools:ignore="ContentDescription">
+
+        </ImageView>
+
+        <TextView
+            android:id="@+id/car_notes_detail_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="@string/vehicle_detail_label"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@id/car_notes_detail_icon"
+            app:layout_constraintStart_toEndOf="@+id/car_notes_detail_icon"
+            app:layout_constraintTop_toTopOf="@id/car_notes_detail_icon"
+            tools:text="Vehicle Details" />
+
+        <TableLayout
+            android:id="@+id/vehicle_details_car_table"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="32dp"
+            android:stretchColumns="*"
+            app:layout_constraintStart_toStartOf="@+id/car_notes_detail_icon"
+            app:layout_constraintTop_toBottomOf="@+id/car_notes_detail_icon">
+
+            <TableRow android:id="@+id/vehicle_status_row">
+
                 <TextView
-                    android:id="@+id/car_mileage_text"
+                    android:id="@+id/car_state_detail_label"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/vehicle_state_label"
                     android:textSize="16sp"
-                    tools:text="68.000km" />
-                <EditText
-                    android:id="@+id/car_mileage_text_edit"
-                    android:layout_width="120dp"
-                    android:gravity="center"
-                    android:inputType="number"
-                    android:maxLength="10"
-                    android:layout_height="match_parent"
-                    android:hint="@string/mileage_add_text">
-                </EditText>
-            </ViewSwitcher>
+                    tools:text="Vehicle State" />
 
-        </TableRow>
+                <TextView
+                    android:id="@+id/car_state_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:textSize="16sp"
+                    tools:text="Used" />
+            </TableRow>
 
-        <TableRow
-            android:layout_marginTop="16dp">
-            <TextView
-                android:id="@+id/car_color_detail_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/vehicle_color_label"
-                android:textSize="16sp"
-                tools:text="Vehicle Color" />
-            <TextView
-                android:id="@+id/car_color_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                tools:text="Red" />
-        </TableRow>
-    </TableLayout>
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/delete_car_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        android:visibility="gone"
-        android:backgroundTint="@color/primaryColor"
-        android:src="@drawable/ic_baseline_delete_forever_24"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:contentDescription="@string/add_new_car_content_description" />
+            <TableRow
+                android:layout_marginTop="16dp"
+                android:gravity="center">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/edit_car_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        android:tint="@color/secondaryColor"
-        android:visibility="gone"
-        android:src="@drawable/ic_baseline_edit_24"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/delete_car_fab"
-        android:contentDescription="@string/add_new_car_content_description" />
+                <TextView
+                    android:id="@+id/car_mileage_detail_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/vehicle_mileage_label"
+                    android:textSize="16sp"
+                    tools:text="Vehicle Mileage" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/save_car_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        android:visibility="gone"
-        android:backgroundTint="@color/green"
-        android:src="@drawable/ic_baseline_check_24"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/delete_car_fab"
-        android:contentDescription="@string/add_new_car_content_description" />
+                <ViewSwitcher
+                    android:id="@+id/mileage_switcher"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+                    <TextView
+                        android:id="@+id/car_mileage_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:textSize="16sp"
+                        tools:text="68.000km" />
+
+                    <EditText
+                        android:id="@+id/car_mileage_text_edit"
+                        android:layout_width="120dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:hint="@string/car_mileage_add"
+                        android:inputType="number"
+                        android:maxLength="10" />
+                </ViewSwitcher>
+
+            </TableRow>
+
+            <TableRow android:layout_marginTop="16dp">
+
+                <TextView
+                    android:id="@+id/car_color_detail_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/vehicle_color_label"
+                    android:textSize="16sp"
+                    tools:text="Vehicle Color" />
+
+                <TextView
+                    android:id="@+id/car_color_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    tools:text="Red" />
+            </TableRow>
+        </TableLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/delete_car_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            android:backgroundTint="@color/primaryColor"
+            android:contentDescription="@string/add_new_car_content_description"
+            android:src="@drawable/ic_baseline_delete_forever_24"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/edit_car_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            android:contentDescription="@string/add_new_car_content_description"
+            android:src="@drawable/ic_baseline_edit_24"
+            android:tint="@color/secondaryColor"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@id/delete_car_fab"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/save_car_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            android:backgroundTint="@color/green"
+            android:contentDescription="@string/add_new_car_content_description"
+            android:src="@drawable/ic_baseline_check_24"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@id/delete_car_fab"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

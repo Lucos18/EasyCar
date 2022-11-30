@@ -56,8 +56,6 @@ class FavoritesListAdapter(
                         {undoRemovedFavorites(car)}
                     )
                 }
-
-
                 shareButtonCarItem.setOnClickListener {
                     ShareDialog(
                         itemView.context,

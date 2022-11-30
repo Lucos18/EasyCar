@@ -16,8 +16,11 @@ import androidx.navigation.fragment.findNavController
 import com.example.myapplication.BaseApplication
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentAddNewCarBinding
+import com.example.myapplication.enums.CarColors
+import com.example.myapplication.enums.fuelType
 import com.example.myapplication.ui.transformIntoDatePicker
 import com.example.myapplication.utils.FuelTypeAlertDialog
+import com.example.myapplication.utils.checkForInternet
 import com.example.myapplication.utils.showCustomSnackBar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
@@ -80,7 +83,7 @@ class AddNewCarFragment : Fragment() {
             )
             listViewBrand.adapter = adapter
             listViewBrand.onItemClickListener =
-                AdapterView.OnItemClickListener { adapterView, view, position, l ->
+                AdapterView.OnItemClickListener { _, view, position, _ ->
                     binding.carBrandAddText.setText(
                         listViewBrand.getItemAtPosition(position).toString()
                     )
@@ -107,7 +110,7 @@ class AddNewCarFragment : Fragment() {
             builder.show()
         }
         binding.carYearAddText.transformIntoDatePicker(requireContext(), "yyyy", Date())
-        binding.carYearAddText.doOnTextChanged { text, start, before, count ->
+        binding.carYearAddText.doOnTextChanged { _, _, _, _ ->
             if (binding.carYearAddText.text?.isEmpty() == true) {
                 binding.carModelAddText.isEnabled = false
                 resetText(binding.carModelAddText)
@@ -189,13 +192,57 @@ class AddNewCarFragment : Fragment() {
         binding.carFuelTypeAddText.setOnClickListener {
             FuelTypeAlertDialog(requireContext(), binding.carFuelTypeAddText)
         }
+        binding.carColorAddText.setOnClickListener {
+            /*
+            val values: Array<CarColors> = CarColors.values()
+            val items = arrayOfNulls<CharSequence>(values.size)
+            for (i in values.indices) {
+                items[i] = values[i].nameColor
+            }
+            val builder = AlertDialog.Builder(requireContext())
+                .create()
+            val view = layoutInflater.inflate(R.layout.alert_dialog, null)
+            val searchText = view.findViewById<SearchView>(R.id.search_view)
+            val listViewBrand = view.findViewById<ListView>(R.id.listView)
+            adapter = ArrayAdapter(
+                requireContext(),
+                R.layout.simple_list_item_color,
+                items
+            )
+            listViewBrand.adapter = adapter
+            listViewBrand.onItemClickListener =
+                AdapterView.OnItemClickListener { _, view, position, _ ->
+                    binding.carModelAddText.setText(
+                        listViewBrand.getItemAtPosition(position).toString()
+                    )
+                    builder.dismiss()
+                }
+            listViewBrand.emptyView = view.findViewById(R.id.empty_text_view_search)
+            searchText.setOnClickListener {
+                searchText.isIconified = false
+            }
+            searchText.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(p0: String?): Boolean {
+                    return false
+                }
+
+                override fun onQueryTextChange(p0: String?): Boolean {
+                    adapter.filter.filter(p0)
+                    return true
+                }
+            })
+            builder.setCanceledOnTouchOutside(true)
+            builder.setView(view)
+            builder.show()
+            */
+        }
         //TODO 4 Add more information to details card of the car
         //TODO Add Error fragment if internet connection is not on
-        //TODO Fix Item card with new informations
         //TODO 5 Fix Price on focus listener that shows error if not changed
         //TODO Change calendar function to show only year options
         //TODO 3 Change Button style on add new car
-        //TODO 2 Do favorites tab with custom adapter and database
+        //TODO Fix logo car on homepage when favorites
+        //TODO Add Color for car
     }
 
     override fun onDestroyView() {

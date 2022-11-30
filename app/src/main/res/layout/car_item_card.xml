@@ -72,11 +72,11 @@
 
             <ImageView
                 android:id="@+id/car_item_logo"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                app:layout_constraintTop_toTopOf="@id/car_item_constraint_layout"
-                app:layout_constraintBottom_toBottomOf="@id/car_model"
-                app:layout_constraintEnd_toEndOf="parent">
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/car_image">
 
             </ImageView>
             <TextView

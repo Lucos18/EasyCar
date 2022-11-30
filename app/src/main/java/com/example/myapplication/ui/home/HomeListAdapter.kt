@@ -48,12 +48,12 @@ class HomeListAdapter(
             } else {
                 binding.carImage.setImageResource(R.drawable.ic_baseline_directions_car_24)
             }
-            binding.executePendingBindings()
             setAndGetUriByBrandParsingListOfLogoAndImageView(
                 listLogo.value,
                 car.brand,
                 binding.carItemLogo
             )
+            binding.executePendingBindings()
         }
         fun getImageResource(isFavorite: Boolean): Int{
             return if (isFavorite) R.drawable.ic_baseline_star_24

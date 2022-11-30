@@ -11,7 +11,3 @@ data class CarInfo(
     @SerializedName("PRODUCTION END") val production_end: String,
 )
 
-data class CarLogo(
-    @SerializedName("name") val name: String,
-    @SerializedName("logo") val logo: String,
-)

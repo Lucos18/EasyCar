@@ -5,24 +5,24 @@ import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import com.example.myapplication.databinding.CarItemCardBinding
-import com.example.myapplication.model.Car
-import com.example.myapplication.model.carMileageWithUnitString
-import com.example.myapplication.model.carPowerWithUnitString
-import com.example.myapplication.model.formatPriceToCurrency
+import com.example.myapplication.model.*
+import com.example.myapplication.utils.setAndGetUriByBrandParsingListOfLogoAndImageView
 
 class SellListAdapter(
-    private val clickListener: (Car) -> Unit
+    private val clickListener: (Car) -> Unit,
+    private val listLogo: LiveData<List<CarLogo>>,
 ) : ListAdapter<Car, SellListAdapter.SellViewHolder>(DiffCallback) {
 
     class SellViewHolder(
         private var binding: CarItemCardBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(car: Car) {
+        fun bind(car: Car, listLogo: LiveData<List<CarLogo>>) {
             binding.car = car
             binding.carPrice.text = car.formatPriceToCurrency(car.price)
             binding.carPower.text = car.carPowerWithUnitString(car.carPower)
@@ -42,6 +42,11 @@ class SellListAdapter(
             } else {
                 binding.carImage.setImageResource(R.drawable.ic_baseline_directions_car_24)
             }
+            setAndGetUriByBrandParsingListOfLogoAndImageView(
+                listLogo.value,
+                car.brand,
+                binding.carItemLogo
+            )
             binding.executePendingBindings()
         }
     }
@@ -62,7 +67,7 @@ class SellListAdapter(
         holder.itemView.setOnClickListener {
             clickListener(car)
         }
-        holder.bind(car)
+        holder.bind(car, listLogo)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SellViewHolder {
