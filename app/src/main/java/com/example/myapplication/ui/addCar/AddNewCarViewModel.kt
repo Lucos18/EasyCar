@@ -30,19 +30,6 @@ class AddNewCarViewModel(private val carDao: CarDao) : ViewModel() {
     val isNetworkErrorShown: LiveData<Boolean>
         get() = _isNetworkErrorShown
 
-    fun checkInputEditTextNewCar(
-        brand: String,
-        year: Int,
-        model: String,
-        fuelType: String,
-        power: Int,
-        seats: Int,
-        price: Double,
-        mileage: Double
-    ): Boolean {
-        return brand.isNotBlank() && year != 0 && model.isNotBlank() && fuelType.isNotBlank() && power != 0 && power.toString().length <= 4 && seats != 0 && price != 0.0 && mileage != 0.0 && mileage.toString().length < 10
-    }
-
     fun checkBrandInput(brand: String): Boolean{
         return brand.isNotBlank()
     }
@@ -72,7 +59,7 @@ class AddNewCarViewModel(private val carDao: CarDao) : ViewModel() {
     }
 
     fun checkMileageInput(mileage: Double?): Boolean{
-        return mileage != 0.0 && mileage != null && mileage.toString().length <= 10
+        return mileage != 0.0 && mileage != null
     }
 
     fun addCar(

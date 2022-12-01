@@ -5,6 +5,7 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -287,6 +288,7 @@ class AddNewCarFragment : Fragment() {
         mapInputs[CarAddInputs.Power] = addNewCarViewModel.checkPowerInput(kw)
         mapInputs[CarAddInputs.Seats] = addNewCarViewModel.checkSeatsInput(binding.carSeatsAddText.text.toString().toIntOrNull())
         mapInputs[CarAddInputs.Price] = addNewCarViewModel.checkPriceInput(price)
+        Log.d("mileage", binding.carMileageAddText.text.toString().toDoubleOrNull().toString().length.toString())
         mapInputs[CarAddInputs.Mileage] = addNewCarViewModel.checkMileageInput(binding.carMileageAddText.text.toString().toDoubleOrNull())
         setInputs(mapInputs)
         return !mapInputs.containsValue(false)

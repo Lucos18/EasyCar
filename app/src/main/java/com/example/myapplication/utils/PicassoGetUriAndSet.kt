@@ -14,9 +14,13 @@ fun setAndGetUriByBrandParsingListOfLogoAndImageView(
 ) {
     val logoDataApiMap = logoDataApi?.associate { it.name.lowercase() to it.logo }
     if (logoDataApiMap?.get(brand.lowercase()) != null) {
-        Log.d("picasso", brand)
         Picasso.get()
             .load(logoDataApiMap[brand.lowercase()])
             .into(logo)
+    } else {
+        Picasso.get()
+            .load(R.drawable.car)
+            .into(logo)
+        logo.alpha = 1.0F
     }
 }
