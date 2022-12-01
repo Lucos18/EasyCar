@@ -43,6 +43,38 @@ class AddNewCarViewModel(private val carDao: CarDao) : ViewModel() {
         return brand.isNotBlank() && year != 0 && model.isNotBlank() && fuelType.isNotBlank() && power != 0 && power.toString().length <= 4 && seats != 0 && price != 0.0 && mileage != 0.0 && mileage.toString().length < 10
     }
 
+    fun checkBrandInput(brand: String): Boolean{
+        return brand.isNotBlank()
+    }
+
+    fun checkYearInput(year: Int?): Boolean{
+        return year != 0 && year != null
+    }
+
+    fun checkModelInput(model: String): Boolean{
+        return model.isNotBlank()
+    }
+
+    fun checkFuelInput(fuel: String): Boolean{
+        return fuel.isNotBlank()
+    }
+
+    fun checkPowerInput(power: Int?): Boolean{
+        return power != 0 && power.toString().length <= 4 && power != null
+    }
+
+    fun checkSeatsInput(seats: Int?): Boolean{
+        return seats != 0 && seats != null
+    }
+
+    fun checkPriceInput(price: Double): Boolean{
+        return price != 0.0
+    }
+
+    fun checkMileageInput(mileage: Double?): Boolean{
+        return mileage != 0.0 && mileage != null && mileage.toString().length <= 10
+    }
+
     fun addCar(
         Brand: String,
         Model: String,

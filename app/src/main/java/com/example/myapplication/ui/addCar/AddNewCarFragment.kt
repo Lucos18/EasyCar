@@ -16,18 +16,16 @@ import androidx.navigation.fragment.findNavController
 import com.example.myapplication.BaseApplication
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentAddNewCarBinding
-import com.example.myapplication.enums.CarColors
-import com.example.myapplication.enums.fuelType
+import com.example.myapplication.enums.CarAddInputs
 import com.example.myapplication.ui.transformIntoDatePicker
 import com.example.myapplication.utils.FuelTypeAlertDialog
-import com.example.myapplication.utils.checkForInternet
 import com.example.myapplication.utils.showCustomSnackBar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import java.text.NumberFormat
 import java.util.*
-
 
 @Suppress("DEPRECATION")
 class AddNewCarFragment : Fragment() {
@@ -37,6 +35,8 @@ class AddNewCarFragment : Fragment() {
     private val REQUEST_CODE = 100
 
     private lateinit var adapter: ArrayAdapter<*>
+
+    private val mapInputs = mutableMapOf<CarAddInputs, Boolean>()
 
     private val addNewCarViewModel: AddNewCarViewModel by viewModels {
         AddNewCarViewModelFactory(
@@ -278,35 +278,46 @@ class AddNewCarFragment : Fragment() {
             )
         }
     }
+    private fun isValidCar():Boolean{
 
-    private fun isValidCar(): Boolean {
-        return try {
-            addNewCarViewModel.checkInputEditTextNewCar(
-                binding.carBrandAddText.text.toString(),
-                binding.carYearAddText.text.toString().toInt(),
-                binding.carModelAddText.text.toString(),
-                binding.carFuelTypeAddText.text.toString(),
-                kw,
-                binding.carSeatsAddText.text.toString().toInt(),
-                price,
-                binding.carMileageAddText.text.toString().toDouble()
-            )
-        } catch (e: Exception) {
-            showCustomSnackBar(
-                binding.constraintLayoutAddNewCar,
-                getString(R.string.error_add_car_toast),
-                Snackbar.LENGTH_LONG
-            )
-            false
+        mapInputs[CarAddInputs.Brand] = addNewCarViewModel.checkBrandInput(binding.carBrandAddText.text.toString())
+        mapInputs[CarAddInputs.Year] = addNewCarViewModel.checkYearInput(binding.carYearAddText.text.toString().toIntOrNull())
+        mapInputs[CarAddInputs.Model] = addNewCarViewModel.checkModelInput(binding.carModelAddText.text.toString())
+        mapInputs[CarAddInputs.Fuel] = addNewCarViewModel.checkFuelInput(binding.carFuelTypeAddText.text.toString())
+        mapInputs[CarAddInputs.Power] = addNewCarViewModel.checkPowerInput(kw)
+        mapInputs[CarAddInputs.Seats] = addNewCarViewModel.checkSeatsInput(binding.carSeatsAddText.text.toString().toIntOrNull())
+        mapInputs[CarAddInputs.Price] = addNewCarViewModel.checkPriceInput(price)
+        mapInputs[CarAddInputs.Mileage] = addNewCarViewModel.checkMileageInput(binding.carMileageAddText.text.toString().toDoubleOrNull())
+        setInputs(mapInputs)
+        return !mapInputs.containsValue(false)
+    }
+    private fun setInputs(map: Map<CarAddInputs, Boolean>){
+        map.forEach{ (k, v) ->
+            val errorToShow = if (v) null else "Please check your input"
+            when (k){
+                CarAddInputs.Brand -> setErrorShown(binding.carBrandAddLabel, errorToShow)
+                CarAddInputs.Year -> setErrorShown(binding.carYearAddLabel, errorToShow)
+                CarAddInputs.Model -> setErrorShown(binding.carModelAddLabel, errorToShow)
+                CarAddInputs.Fuel -> setErrorShown(binding.carFuelTypeAddLabel, errorToShow)
+                CarAddInputs.Power -> setErrorShown(binding.carPowerAddLabel, errorToShow)
+                CarAddInputs.Seats -> setErrorShown(binding.carSeatsAddLabel, errorToShow)
+                CarAddInputs.Price -> setErrorShown(binding.carPriceAddLabel, errorToShow)
+                CarAddInputs.Mileage -> setErrorShown(binding.carMileageAddLabel, errorToShow)
+            }
         }
     }
 
+    private fun setErrorShown(text: TextInputLayout, errorToShow: String?){
+        text.error = errorToShow
+        text.isErrorEnabled = errorToShow != null
+    }
     private fun openGalleryForImage() {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
         startActivityForResult(intent, REQUEST_CODE)
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE) {

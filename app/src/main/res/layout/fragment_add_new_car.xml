@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:fillViewport="true"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<androidx.constraintlayout.widget.ConstraintLayout
     android:id="@+id/constraint_layout_add_new_car"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -167,7 +170,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/car_mileage_add"
-            android:inputType="text">
+            android:inputType="numberDecimal">
 
         </com.google.android.material.textfield.TextInputEditText>
     </com.google.android.material.textfield.TextInputLayout>
@@ -191,55 +194,59 @@
 
         </com.google.android.material.textfield.TextInputEditText>
     </com.google.android.material.textfield.TextInputLayout>
+
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="100dp"
         android:layout_height="80dp"
-        android:orientation="horizontal"
         android:layout_margin="8dp"
-        app:layout_constraintTop_toBottomOf="@id/car_color_add_label"
-        app:layout_constraintStart_toStartOf="parent">
-        <ImageView
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/car_color_add_label">
 
+        <ImageView
             android:id="@+id/car_image_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_weight="0.50"
             android:clickable="true"
-            android:layout_gravity="center"
-            android:src="@drawable/add_image_brown"
-            app:layout_constraintTop_toBottomOf="@id/car_price_add_label"
-            app:layout_constraintStart_toStartOf="parent"
+            android:contentDescription="@string/add_car_image_content_description"
             android:focusable="true"
             android:scaleType="fitXY"
-            android:contentDescription="@string/add_car_image_content_description">
-        </ImageView>
+            android:src="@drawable/add_image_brown"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/car_price_add_label" />
+
         <ImageView
             android:id="@+id/car_image_2"
             android:layout_width="0dp"
             android:layout_height="200dp"
-            android:visibility="gone"
+            android:layout_weight="0.50"
             android:clickable="true"
             android:focusable="true"
-            android:layout_weight="0.50"
             android:src="@drawable/add_image_brown"
-            app:layout_constraintTop_toBottomOf="@id/car_price_add_label"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
-            tools:ignore="ContentDescription">
-        </ImageView>
+            app:layout_constraintTop_toBottomOf="@id/car_price_add_label"
+            tools:ignore="ContentDescription" />
     </LinearLayout>
+
     <Button
         android:id="@+id/button_add_new_car"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:backgroundTint="@color/secondaryDarkColor"
-
         android:layout_marginHorizontal="16dp"
-        android:layout_marginVertical="8dp"
+
+        android:layout_marginTop="36dp"
+        android:backgroundTint="@color/secondaryDarkColor"
         android:text="@string/add_new_car"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
     </Button>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
