@@ -1,6 +1,7 @@
 package com.example.myapplication.ui.detailCar
 
 import android.app.AlertDialog
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
@@ -8,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
@@ -135,6 +137,7 @@ class DetailCarFragment : Fragment() {
             saveCarFab.setOnClickListener {
                 if (checkInput()) {
                     switchBetweenEditAndSave()
+                    view?.hideKeyboard()
                     deleteCarFab.visibility = View.VISIBLE
                     editCarFab.visibility = View.VISIBLE
                     saveCarFab.visibility = View.GONE
@@ -260,5 +263,9 @@ class DetailCarFragment : Fragment() {
             price = binding.carPriceEditText.text.toString().toDouble(),
             mileage = binding.carMileageTextEdit.text.toString().toDouble()
         )
+    }
+    fun View.hideKeyboard() {
+        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(windowToken, 0)
     }
 }

@@ -74,4 +74,5 @@
     <!-- FUEL TYPE DIALOG STRINGS -->
     <string name="choose_fuel_type_title">Choose fuel type</string>
     <string name="no_results_text">No Results</string>
+    <string name="error_add_new_car_text">Please check your input</string>
 </resources>

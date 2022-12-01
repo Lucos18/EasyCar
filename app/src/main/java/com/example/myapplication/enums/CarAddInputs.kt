@@ -8,5 +8,6 @@ enum class CarAddInputs{
     Power,
     Seats,
     Price,
-    Mileage
+    Mileage,
+    Colors
 }

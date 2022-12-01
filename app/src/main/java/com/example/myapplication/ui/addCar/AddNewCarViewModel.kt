@@ -62,6 +62,10 @@ class AddNewCarViewModel(private val carDao: CarDao) : ViewModel() {
         return mileage != 0.0 && mileage != null
     }
 
+    fun checkColorInput(color:String): Boolean{
+        return color.isNotEmpty()
+    }
+
     fun addCar(
         Brand: String,
         Model: String,

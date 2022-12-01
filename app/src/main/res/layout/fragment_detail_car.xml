@@ -102,6 +102,7 @@
                     android:id="@+id/car_price_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:maxLength="10"
                     android:hint="@string/car_price_add"
                     android:inputType="numberDecimal">
 
@@ -300,7 +301,7 @@
                             android:drawablePadding="8dp"
                             android:hint="@string/car_seats_add"
                             android:inputType="number"
-                            android:maxLength="2">
+                            android:maxLength="1">
 
                         </com.google.android.material.textfield.TextInputEditText>
                     </com.google.android.material.textfield.TextInputLayout>

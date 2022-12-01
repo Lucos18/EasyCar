@@ -1,11 +1,11 @@
 package com.example.myapplication.ui.addCar
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +18,7 @@ import com.example.myapplication.BaseApplication
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentAddNewCarBinding
 import com.example.myapplication.enums.CarAddInputs
+import com.example.myapplication.enums.CarColors
 import com.example.myapplication.ui.transformIntoDatePicker
 import com.example.myapplication.utils.FuelTypeAlertDialog
 import com.example.myapplication.utils.showCustomSnackBar
@@ -59,6 +60,7 @@ class AddNewCarFragment : Fragment() {
         return binding.root
     }
 
+    @SuppressLint("InflateParams")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         //addNewCarViewModel.addCar("FIAT", "Abarth", 2021, 2022, 5, 8, "diesel", 8.0, R.drawable.ic_baseline_add_24.)
@@ -194,7 +196,7 @@ class AddNewCarFragment : Fragment() {
             FuelTypeAlertDialog(requireContext(), binding.carFuelTypeAddText)
         }
         binding.carColorAddText.setOnClickListener {
-            /*
+
             val values: Array<CarColors> = CarColors.values()
             val items = arrayOfNulls<CharSequence>(values.size)
             for (i in values.indices) {
@@ -207,13 +209,13 @@ class AddNewCarFragment : Fragment() {
             val listViewBrand = view.findViewById<ListView>(R.id.listView)
             adapter = ArrayAdapter(
                 requireContext(),
-                R.layout.simple_list_item_color,
+                android.R.layout.select_dialog_singlechoice,
                 items
             )
             listViewBrand.adapter = adapter
             listViewBrand.onItemClickListener =
                 AdapterView.OnItemClickListener { _, view, position, _ ->
-                    binding.carModelAddText.setText(
+                    binding.carColorAddText.setText(
                         listViewBrand.getItemAtPosition(position).toString()
                     )
                     builder.dismiss()
@@ -235,15 +237,12 @@ class AddNewCarFragment : Fragment() {
             builder.setCanceledOnTouchOutside(true)
             builder.setView(view)
             builder.show()
-            */
+
         }
-        //TODO 4 Add more information to details card of the car
+        //TODO 4 Add more information to details card of the car (Color)
         //TODO Add Error fragment if internet connection is not on
         //TODO 5 Fix Price on focus listener that shows error if not changed
         //TODO Change calendar function to show only year options
-        //TODO 3 Change Button style on add new car
-        //TODO Fix logo car on homepage when favorites
-        //TODO Add Color for car
     }
 
     override fun onDestroyView() {
@@ -279,24 +278,35 @@ class AddNewCarFragment : Fragment() {
             )
         }
     }
-    private fun isValidCar():Boolean{
 
-        mapInputs[CarAddInputs.Brand] = addNewCarViewModel.checkBrandInput(binding.carBrandAddText.text.toString())
-        mapInputs[CarAddInputs.Year] = addNewCarViewModel.checkYearInput(binding.carYearAddText.text.toString().toIntOrNull())
-        mapInputs[CarAddInputs.Model] = addNewCarViewModel.checkModelInput(binding.carModelAddText.text.toString())
-        mapInputs[CarAddInputs.Fuel] = addNewCarViewModel.checkFuelInput(binding.carFuelTypeAddText.text.toString())
+    private fun isValidCar(): Boolean {
+
+        mapInputs[CarAddInputs.Brand] =
+            addNewCarViewModel.checkBrandInput(binding.carBrandAddText.text.toString())
+        mapInputs[CarAddInputs.Year] =
+            addNewCarViewModel.checkYearInput(binding.carYearAddText.text.toString().toIntOrNull())
+        mapInputs[CarAddInputs.Model] =
+            addNewCarViewModel.checkModelInput(binding.carModelAddText.text.toString())
+        mapInputs[CarAddInputs.Fuel] =
+            addNewCarViewModel.checkFuelInput(binding.carFuelTypeAddText.text.toString())
         mapInputs[CarAddInputs.Power] = addNewCarViewModel.checkPowerInput(kw)
-        mapInputs[CarAddInputs.Seats] = addNewCarViewModel.checkSeatsInput(binding.carSeatsAddText.text.toString().toIntOrNull())
+        mapInputs[CarAddInputs.Seats] = addNewCarViewModel.checkSeatsInput(
+            binding.carSeatsAddText.text.toString().toIntOrNull()
+        )
         mapInputs[CarAddInputs.Price] = addNewCarViewModel.checkPriceInput(price)
-        Log.d("mileage", binding.carMileageAddText.text.toString().toDoubleOrNull().toString().length.toString())
-        mapInputs[CarAddInputs.Mileage] = addNewCarViewModel.checkMileageInput(binding.carMileageAddText.text.toString().toDoubleOrNull())
+        mapInputs[CarAddInputs.Mileage] = addNewCarViewModel.checkMileageInput(
+            binding.carMileageAddText.text.toString().toDoubleOrNull()
+        )
+        mapInputs[CarAddInputs.Colors] =
+            addNewCarViewModel.checkColorInput(binding.carColorAddText.text.toString())
         setInputs(mapInputs)
         return !mapInputs.containsValue(false)
     }
-    private fun setInputs(map: Map<CarAddInputs, Boolean>){
-        map.forEach{ (k, v) ->
-            val errorToShow = if (v) null else "Please check your input"
-            when (k){
+
+    private fun setInputs(map: Map<CarAddInputs, Boolean>) {
+        map.forEach { (k, v) ->
+            val errorToShow = if (v) null else getString(R.string.error_add_new_car_text)
+            when (k) {
                 CarAddInputs.Brand -> setErrorShown(binding.carBrandAddLabel, errorToShow)
                 CarAddInputs.Year -> setErrorShown(binding.carYearAddLabel, errorToShow)
                 CarAddInputs.Model -> setErrorShown(binding.carModelAddLabel, errorToShow)
@@ -305,14 +315,16 @@ class AddNewCarFragment : Fragment() {
                 CarAddInputs.Seats -> setErrorShown(binding.carSeatsAddLabel, errorToShow)
                 CarAddInputs.Price -> setErrorShown(binding.carPriceAddLabel, errorToShow)
                 CarAddInputs.Mileage -> setErrorShown(binding.carMileageAddLabel, errorToShow)
+                CarAddInputs.Colors -> setErrorShown(binding.carColorAddLabel, errorToShow)
             }
         }
     }
 
-    private fun setErrorShown(text: TextInputLayout, errorToShow: String?){
+    private fun setErrorShown(text: TextInputLayout, errorToShow: String?) {
         text.error = errorToShow
         text.isErrorEnabled = errorToShow != null
     }
+
     private fun openGalleryForImage() {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"

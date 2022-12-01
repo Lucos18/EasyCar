@@ -132,7 +132,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/car_seats_add"
-            android:maxLength="2"
+            android:maxLength="1"
             android:inputType="number">
 
         </com.google.android.material.textfield.TextInputEditText>
@@ -179,7 +179,6 @@
         android:id="@+id/car_color_add_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
         app:boxBackgroundColor="@android:color/transparent"
         android:background="@android:color/transparent"
         app:layout_constraintStart_toStartOf="parent"
@@ -196,7 +195,6 @@
 
         </com.google.android.material.textfield.TextInputEditText>
     </com.google.android.material.textfield.TextInputLayout>
-
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="100dp"
