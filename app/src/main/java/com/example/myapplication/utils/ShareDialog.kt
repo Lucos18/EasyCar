@@ -28,6 +28,7 @@ fun ShareDialog(context: Context, subject: String, extratext: String, shareWith:
         Intent.createChooser(intent, shareWith),
         null
     )
+    //TODO Delete generated file
     //deleteImage(FileUri)
 }
 fun deleteImage(path: File?) {
