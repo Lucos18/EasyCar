@@ -10,6 +10,7 @@
     <color name="red">#FFDC3535</color>
     <color name="green">#FF00FF00</color>
     <color name="blue">#FF0000FF</color>
+    <color name="blue_retry_again">#FF0077b6</color>
     <color name="backgroundColorAdd">#FFFFFFFF</color>
 
     <color name="primaryColor">#bf360c</color>

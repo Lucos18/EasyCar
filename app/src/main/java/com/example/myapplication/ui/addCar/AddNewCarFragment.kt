@@ -3,6 +3,7 @@ package com.example.myapplication.ui.addCar
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
@@ -21,6 +22,7 @@ import com.example.myapplication.enums.CarAddInputs
 import com.example.myapplication.enums.CarColors
 import com.example.myapplication.ui.transformIntoDatePicker
 import com.example.myapplication.utils.FuelTypeAlertDialog
+import com.example.myapplication.utils.checkForInternet
 import com.example.myapplication.utils.showCustomSnackBar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
@@ -55,7 +57,6 @@ class AddNewCarFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        addNewCarViewModel.refreshDataFromNetwork()
         _binding = FragmentAddNewCarBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -63,7 +64,7 @@ class AddNewCarFragment : Fragment() {
     @SuppressLint("InflateParams")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //addNewCarViewModel.addCar("FIAT", "Abarth", 2021, 2022, 5, 8, "diesel", 8.0, R.drawable.ic_baseline_add_24.)
+        swapConstraintIfInternet(requireContext())
         val navBar: BottomNavigationView = requireActivity().findViewById(R.id.nav_view)
         navBar.visibility = View.GONE
         binding.apply {
@@ -272,7 +273,7 @@ class AddNewCarFragment : Fragment() {
             findNavController().navigate(action)
         } else {
             showCustomSnackBar(
-                binding.constraintLayoutAddNewCar,
+                binding.mainConstraintLayoutAddNewCar,
                 getString(R.string.error_add_car_toast),
                 Snackbar.LENGTH_LONG
             )
@@ -360,5 +361,19 @@ class AddNewCarFragment : Fragment() {
 
     private fun resetText(binding: TextInputEditText) {
         binding.setText("")
+    }
+
+    private fun swapConstraintIfInternet(context: Context){
+        if (checkForInternet(context)){
+            addNewCarViewModel.refreshDataFromNetwork()
+            binding.constraintLayoutAddNewCarWithConnection.visibility = View.VISIBLE
+            binding.constraintLayoutAddNewCarWithoutConnection.visibility = View.GONE
+        }else {
+            binding.constraintLayoutAddNewCarWithConnection.visibility = View.GONE
+            binding.constraintLayoutAddNewCarWithoutConnection.visibility = View.VISIBLE
+            binding.retryAgainErrorConnection.setOnClickListener {
+                swapConstraintIfInternet(context)
+            }
+        }
     }
 }

@@ -75,4 +75,6 @@
     <string name="choose_fuel_type_title">Choose fuel type</string>
     <string name="no_results_text">No Results</string>
     <string name="error_add_new_car_text">Please check your input</string>
+    <string name="error_message_no_connection">Sorry, there was a connection problem. Try later.</string>
+    <string name="retry_again">Retry again</string>
 </resources>
