@@ -178,6 +178,7 @@ class DetailCarFragment : Fragment() {
             carPriceDetail.text = car.formatPriceToCurrency(car.price)
             carPowerDetail.text = car.carPowerWithUnitString(car.carPower)
             carMileageText.text = car.carMileageWithUnitString(car.mileage)
+            carColorText.text   = car.color
             carFuelTypeDetail.text = getString(R.string.car_fuel_type_detail_string, car.fuelType)
             carSeatsTypeDetail.text =
                 getString(R.string.car_seats_detail_string, car.seats.toString())

@@ -72,6 +72,7 @@ class DetailCarViewModel(private val carDao: CarDao) : ViewModel() {
             price = price.toDouble(),
             mileage = mileage.toDouble(),
             image = car.image,
+            color = car.color
         )
         updateCarDatabase(updatedCar)
         return true

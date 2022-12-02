@@ -7,10 +7,16 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.app.ActivityCompat.startActivityForResult
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
+import androidx.core.widget.addTextChangedListener
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -68,7 +74,6 @@ class AddNewCarFragment : Fragment() {
         val navBar: BottomNavigationView = requireActivity().findViewById(R.id.nav_view)
         navBar.visibility = View.GONE
         binding.apply {
-            //TODO change when the button will be invisible
             buttonAddNewCar.visibility = View.VISIBLE
             buttonAddNewCar.setOnClickListener {
                 addNewCar()
@@ -87,7 +92,7 @@ class AddNewCarFragment : Fragment() {
             )
             listViewBrand.adapter = adapter
             listViewBrand.onItemClickListener =
-                AdapterView.OnItemClickListener { _, view, position, _ ->
+                AdapterView.OnItemClickListener { _, _, position, _ ->
                     binding.carBrandAddText.setText(
                         listViewBrand.getItemAtPosition(position).toString()
                     )
@@ -196,6 +201,15 @@ class AddNewCarFragment : Fragment() {
         binding.carFuelTypeAddText.setOnClickListener {
             FuelTypeAlertDialog(requireContext(), binding.carFuelTypeAddText)
         }
+        binding.carColorAddText.addTextChangedListener {
+            val drawable = AppCompatResources.getDrawable(requireContext(),R.drawable.circle_shape)
+            val wrappedDrawable = drawable?.let { DrawableCompat.wrap(it) }
+            wrappedDrawable?.setBounds(0, 0, 70, 70);
+            val color = CarColors.values().first { it.nameColor == binding.carColorAddText.text.toString()}
+            Log.d("color", color.toString())
+            wrappedDrawable?.setTint(color.rgbColor)
+            binding.carColorAddText.setCompoundDrawables(null, null, wrappedDrawable, null)
+        }
         binding.carColorAddText.setOnClickListener {
 
             val values: Array<CarColors> = CarColors.values()
@@ -215,7 +229,7 @@ class AddNewCarFragment : Fragment() {
             )
             listViewBrand.adapter = adapter
             listViewBrand.onItemClickListener =
-                AdapterView.OnItemClickListener { _, view, position, _ ->
+                AdapterView.OnItemClickListener { _, _, position, _ ->
                     binding.carColorAddText.setText(
                         listViewBrand.getItemAtPosition(position).toString()
                     )
@@ -241,7 +255,6 @@ class AddNewCarFragment : Fragment() {
 
         }
         //TODO 4 Add more information to details card of the car (Color)
-        //TODO Add Error fragment if internet connection is not on
         //TODO 5 Fix Price on focus listener that shows error if not changed
         //TODO Change calendar function to show only year options
     }
@@ -266,7 +279,8 @@ class AddNewCarFragment : Fragment() {
                 CarPower = kw,
                 Price = price,
                 Mileage = binding.carMileageAddText.text.toString().toDouble(),
-                Image = checkIfInsertIsNull(createBitmapFromView(binding.carImage1))
+                Image = checkIfInsertIsNull(createBitmapFromView(binding.carImage1)),
+                Color = binding.carColorAddText.text.toString()
             )
             val action = AddNewCarFragmentDirections
                 .actionAddNewCarFragmentToNavigationSell()

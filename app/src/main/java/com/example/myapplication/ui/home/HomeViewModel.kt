@@ -41,7 +41,8 @@ class HomeViewModel(private val CarDao: CarDao) : ViewModel() {
             price = car.price,
             mileage = car.mileage,
             image = car.image,
-            favorite = !car.favorite
+            favorite = !car.favorite,
+            color = car.color
         )
         updateCarDatabase(updatedCar)
     }

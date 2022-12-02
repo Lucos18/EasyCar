@@ -6,9 +6,11 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Environment
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.work.*
+import com.example.myapplication.utils.createBitmapFromCarImage
 import java.io.File
 import java.io.FileOutputStream
 import java.util.*
@@ -27,17 +29,7 @@ class CarWorkerViewModel(val application: Application) : ViewModel() {
         carImage: ByteArray?
 
     ) {
-        val bitmap = carImage?.let { BitmapFactory.decodeByteArray(carImage, 0, it.size) }
-        val path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString()
-        try {
-            val file = File(path, "$IMAGE_NAME$carId$FORMAT_IMAGE_PNG")
-            val fOut = FileOutputStream(file)
-            bitmap?.compress(Bitmap.CompressFormat.PNG, 100, fOut)
-            fOut.flush()
-            fOut.close()
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
+        val path = carImage?.let { createBitmapFromCarImage(it, carId) }
         val dataToWorker: Data =
             workDataOf(
                 CarReminderWorker.title to title,

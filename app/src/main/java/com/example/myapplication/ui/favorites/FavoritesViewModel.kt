@@ -44,7 +44,8 @@ class FavoritesViewModel(private val CarDao: CarDao) : ViewModel() {
             price = car.price,
             mileage = car.mileage,
             image = car.image,
-            favorite = !car.favorite
+            favorite = !car.favorite,
+            color = car.color
         )
         updateCarDatabase(updatedCar)
     }
@@ -68,7 +69,8 @@ class FavoritesViewModel(private val CarDao: CarDao) : ViewModel() {
             price = car.price,
             mileage = car.mileage,
             image = car.image,
-            favorite = true
+            favorite = true,
+            color = car.color
         )
         updateCarDatabase(updatedCar)
     }

@@ -76,7 +76,8 @@ class AddNewCarViewModel(private val carDao: CarDao) : ViewModel() {
         FuelType: String,
         Price: Double,
         Image: Bitmap?,
-        Mileage: Double
+        Mileage: Double,
+        Color:String
     ) {
         val car = Car(
             brand = Brand,
@@ -88,7 +89,8 @@ class AddNewCarViewModel(private val carDao: CarDao) : ViewModel() {
             fuelType = FuelType,
             price = Price,
             image = Image?.toByteArray(),
-            mileage = Mileage
+            mileage = Mileage,
+            color = Color
         )
 
         viewModelScope.launch {

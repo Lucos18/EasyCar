@@ -426,6 +426,8 @@
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
                     tools:text="Red" />
+
+
             </TableRow>
         </TableLayout>
 

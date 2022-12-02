@@ -2,9 +2,13 @@ package com.example.myapplication.ui.favorites
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.net.Uri
+import android.os.Environment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.FileProvider
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -13,9 +17,14 @@ import com.example.myapplication.R
 import com.example.myapplication.databinding.CarItemCardBinding
 import com.example.myapplication.model.*
 import com.example.myapplication.utils.ShareDialog
+import com.example.myapplication.utils.createBitmapFromCarImage
 import com.example.myapplication.utils.setAndGetUriByBrandParsingListOfLogoAndImageView
 import com.example.myapplication.utils.showCustomSnackBarWithUndo
+import com.example.myapplication.workers.CarReminderWorker
+import com.example.myapplication.workers.FORMAT_IMAGE_PNG
+import com.example.myapplication.workers.IMAGE_NAME
 import com.google.android.material.snackbar.Snackbar
+import java.io.File
 
 class FavoritesListAdapter(
     private val clickListener: (Car) -> Unit,
@@ -57,11 +66,17 @@ class FavoritesListAdapter(
                     )
                 }
                 shareButtonCarItem.setOnClickListener {
+                    var file: File? = null
+                    if (car.image != null)
+                    {
+                        file = File(createBitmapFromCarImage(car.image,car.id), "$IMAGE_NAME${car.id}$FORMAT_IMAGE_PNG")
+                    }
                     ShareDialog(
                         itemView.context,
                         itemView.context.getString(R.string.check_auto_share_dialog),
                         "Check this new auto!\nBrand:${car.brand}\nModel:${car.model}\nPrice:${car.price}",
-                        "Share With"
+                        "Share With",
+                        file
                     )
                 }
                 setAndGetUriByBrandParsingListOfLogoAndImageView(
@@ -100,7 +115,7 @@ class FavoritesListAdapter(
 
     }
 
-    override fun onBindViewHolder(holder: FavoritesViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: FavoritesListAdapter.FavoritesViewHolder, position: Int) {
         val car = getItem(position)
         holder.itemView.setOnClickListener {
             clickListener(car)
