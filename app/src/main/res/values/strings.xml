@@ -77,4 +77,10 @@
     <string name="error_add_new_car_text">Please check your input</string>
     <string name="error_message_no_connection">Sorry, there was a connection problem. Try later.</string>
     <string name="retry_again">Retry again</string>
+    <string name="vehicle_basic_informations_label">Vehicle basic informations</string>
+
+    <!-- SEARCH CAR FRAGMENT STRINGS -->
+
+    <string name="button_result_text">%s results</string>
+
 </resources>

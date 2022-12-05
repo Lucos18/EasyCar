@@ -5,11 +5,15 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
+import android.widget.TextView
+import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
@@ -19,6 +23,7 @@ import androidx.navigation.fragment.navArgs
 import com.example.myapplication.BaseApplication
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentDetailCarBinding
+import com.example.myapplication.enums.CarColors
 import com.example.myapplication.model.*
 import com.example.myapplication.ui.transformIntoDatePicker
 import com.example.myapplication.utils.FuelTypeAlertDialog
@@ -179,6 +184,8 @@ class DetailCarFragment : Fragment() {
             carPowerDetail.text = car.carPowerWithUnitString(car.carPower)
             carMileageText.text = car.carMileageWithUnitString(car.mileage)
             carColorText.text   = car.color
+            setColorDrawable(binding.carColorText)
+
             carFuelTypeDetail.text = getString(R.string.car_fuel_type_detail_string, car.fuelType)
             carSeatsTypeDetail.text =
                 getString(R.string.car_seats_detail_string, car.seats.toString())
@@ -268,5 +275,14 @@ class DetailCarFragment : Fragment() {
     fun View.hideKeyboard() {
         val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(windowToken, 0)
+    }
+    fun setColorDrawable(textView: TextView){
+        val drawable = AppCompatResources.getDrawable(requireContext(), R.drawable.circle_shape)
+        val wrappedDrawable = drawable?.let { DrawableCompat.wrap(it) }
+        wrappedDrawable?.setBounds(0, 0, 70, 70)
+        val color =
+            CarColors.values().first { it.nameColor == textView.text.toString() }
+        wrappedDrawable?.setTint(color.rgbColor)
+        textView.setCompoundDrawables(wrappedDrawable, null, null, null)
     }
 }

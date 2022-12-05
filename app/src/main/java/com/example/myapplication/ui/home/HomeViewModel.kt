@@ -1,5 +1,6 @@
 package com.example.myapplication.ui.home
 
+import android.util.Log
 import androidx.lifecycle.*
 import com.example.myapplication.data.CarDao
 import com.example.myapplication.model.Car

@@ -11,10 +11,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.ListView
+import android.widget.SearchView
 import androidx.appcompat.content.res.AppCompatResources
-import androidx.core.app.ActivityCompat.startActivityForResult
-import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.core.widget.doOnTextChanged
@@ -28,6 +29,7 @@ import com.example.myapplication.enums.CarAddInputs
 import com.example.myapplication.enums.CarColors
 import com.example.myapplication.ui.transformIntoDatePicker
 import com.example.myapplication.utils.FuelTypeAlertDialog
+import com.example.myapplication.utils.carListItemsAlertDialog
 import com.example.myapplication.utils.checkForInternet
 import com.example.myapplication.utils.showCustomSnackBar
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -80,43 +82,13 @@ class AddNewCarFragment : Fragment() {
             }
         }
         binding.carBrandAddText.setOnClickListener {
-            val builder = AlertDialog.Builder(requireContext())
-                .create()
-            val view = layoutInflater.inflate(R.layout.alert_dialog, null)
-            val searchText = view.findViewById<SearchView>(R.id.search_view)
-            val listViewBrand = view.findViewById<ListView>(R.id.listView)
-            adapter = ArrayAdapter(
+            carListItemsAlertDialog(
                 requireContext(),
-                android.R.layout.simple_list_item_1,
-                addNewCarViewModel.getDistinctBrandNames()
+                layoutInflater,
+                addNewCarViewModel.getDistinctBrandNames(),
+                binding.carBrandAddText,
+                binding.carYearAddText
             )
-            listViewBrand.adapter = adapter
-            listViewBrand.onItemClickListener =
-                AdapterView.OnItemClickListener { _, _, position, _ ->
-                    binding.carBrandAddText.setText(
-                        listViewBrand.getItemAtPosition(position).toString()
-                    )
-                    resetText(binding.carYearAddText)
-                    binding.carYearAddText.isEnabled = true
-                    builder.dismiss()
-                }
-            listViewBrand.emptyView = view.findViewById(R.id.empty_text_view_search)
-            searchText.setOnClickListener {
-                searchText.isIconified = false
-            }
-            searchText.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-                override fun onQueryTextSubmit(p0: String?): Boolean {
-                    return false
-                }
-
-                override fun onQueryTextChange(p0: String?): Boolean {
-                    adapter.filter.filter(p0)
-                    return true
-                }
-            })
-            builder.setCanceledOnTouchOutside(true)
-            builder.setView(view)
-            builder.show()
         }
         binding.carYearAddText.transformIntoDatePicker(requireContext(), "yyyy", Date())
         binding.carYearAddText.doOnTextChanged { _, _, _, _ ->
@@ -127,44 +99,12 @@ class AddNewCarFragment : Fragment() {
         }
 
         binding.carModelAddText.setOnClickListener {
-            val builder = AlertDialog.Builder(requireContext())
-                .create()
-            val view = layoutInflater.inflate(R.layout.alert_dialog, null)
-            val searchText = view.findViewById<SearchView>(R.id.search_view)
-            val listViewBrand = view.findViewById<ListView>(R.id.listView)
-            adapter = ArrayAdapter(
-                requireContext(),
-                android.R.layout.simple_list_item_1,
-                addNewCarViewModel.getDistinctModelByBrandAndYear(
+            carListItemsAlertDialog(
+                requireContext(), layoutInflater, addNewCarViewModel.getDistinctModelByBrandAndYear(
                     binding.carBrandAddText.text.toString(),
                     binding.carYearAddText.text.toString()
-                )
+                ), binding.carModelAddText, null
             )
-            listViewBrand.adapter = adapter
-            listViewBrand.onItemClickListener =
-                AdapterView.OnItemClickListener { _, view, position, _ ->
-                    binding.carModelAddText.setText(
-                        listViewBrand.getItemAtPosition(position).toString()
-                    )
-                    builder.dismiss()
-                }
-            listViewBrand.emptyView = view.findViewById(R.id.empty_text_view_search)
-            searchText.setOnClickListener {
-                searchText.isIconified = false
-            }
-            searchText.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-                override fun onQueryTextSubmit(p0: String?): Boolean {
-                    return false
-                }
-
-                override fun onQueryTextChange(p0: String?): Boolean {
-                    adapter.filter.filter(p0)
-                    return true
-                }
-            })
-            builder.setCanceledOnTouchOutside(true)
-            builder.setView(view)
-            builder.show()
         }
 
         binding.carPowerAddText.onFocusChangeListener = View.OnFocusChangeListener { _, b ->
@@ -202,10 +142,11 @@ class AddNewCarFragment : Fragment() {
             FuelTypeAlertDialog(requireContext(), binding.carFuelTypeAddText)
         }
         binding.carColorAddText.addTextChangedListener {
-            val drawable = AppCompatResources.getDrawable(requireContext(),R.drawable.circle_shape)
+            val drawable = AppCompatResources.getDrawable(requireContext(), R.drawable.circle_shape)
             val wrappedDrawable = drawable?.let { DrawableCompat.wrap(it) }
-            wrappedDrawable?.setBounds(0, 0, 70, 70);
-            val color = CarColors.values().first { it.nameColor == binding.carColorAddText.text.toString()}
+            wrappedDrawable?.setBounds(0, 0, 70, 70)
+            val color =
+                CarColors.values().first { it.nameColor == binding.carColorAddText.text.toString() }
             Log.d("color", color.toString())
             wrappedDrawable?.setTint(color.rgbColor)
             binding.carColorAddText.setCompoundDrawables(null, null, wrappedDrawable, null)
@@ -224,7 +165,7 @@ class AddNewCarFragment : Fragment() {
             val listViewBrand = view.findViewById<ListView>(R.id.listView)
             adapter = ArrayAdapter(
                 requireContext(),
-                android.R.layout.select_dialog_singlechoice,
+                android.R.layout.simple_list_item_1,
                 items
             )
             listViewBrand.adapter = adapter
@@ -377,12 +318,12 @@ class AddNewCarFragment : Fragment() {
         binding.setText("")
     }
 
-    private fun swapConstraintIfInternet(context: Context){
-        if (checkForInternet(context)){
+    private fun swapConstraintIfInternet(context: Context) {
+        if (checkForInternet(context)) {
             addNewCarViewModel.refreshDataFromNetwork()
             binding.constraintLayoutAddNewCarWithConnection.visibility = View.VISIBLE
             binding.constraintLayoutAddNewCarWithoutConnection.visibility = View.GONE
-        }else {
+        } else {
             binding.constraintLayoutAddNewCarWithConnection.visibility = View.GONE
             binding.constraintLayoutAddNewCarWithoutConnection.visibility = View.VISIBLE
             binding.retryAgainErrorConnection.setOnClickListener {

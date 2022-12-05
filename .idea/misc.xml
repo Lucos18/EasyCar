@@ -19,9 +19,11 @@
         <entry key="..\:/Users/Lucos18/AndroidStudioProjects/EasyCarNew/app/src/main/res/drawable-nodpi/engine.xml" value="0.1635" />
         <entry key="..\:/Users/Lucos18/AndroidStudioProjects/EasyCarNew/app/src/main/res/drawable-nodpi/icons8_benzina_50.xml" value="0.1635" />
         <entry key="..\:/Users/Lucos18/AndroidStudioProjects/EasyCarNew/app/src/main/res/drawable-nodpi/icons8_car_roof_box_90.xml" value="0.2095" />
+        <entry key="..\:/Users/Lucos18/AndroidStudioProjects/EasyCarNew/app/src/main/res/drawable-nodpi/searching_car.xml" value="0.2385" />
         <entry key="..\:/Users/Lucos18/AndroidStudioProjects/EasyCarNew/app/src/main/res/drawable/circle_shape.xml" value="0.2015" />
         <entry key="..\:/Users/Lucos18/AndroidStudioProjects/EasyCarNew/app/src/main/res/drawable/ic_baseline_calendar_today_24.xml" value="0.1745" />
         <entry key="..\:/Users/Lucos18/AndroidStudioProjects/EasyCarNew/app/src/main/res/drawable/ic_baseline_check_24.xml" value="0.1745" />
+        <entry key="..\:/Users/Lucos18/AndroidStudioProjects/EasyCarNew/app/src/main/res/drawable/ic_baseline_currency_exchange_24.xml" value="0.2385" />
         <entry key="..\:/Users/Lucos18/AndroidStudioProjects/EasyCarNew/app/src/main/res/drawable/ic_baseline_notes_24.xml" value="0.1745" />
         <entry key="..\:/Users/Lucos18/AndroidStudioProjects/EasyCarNew/app/src/main/res/drawable/ic_baseline_star_24.xml" value="0.1745" />
         <entry key="..\:/Users/Lucos18/AndroidStudioProjects/EasyCarNew/app/src/main/res/drawable/ic_baseline_star_border_24dp.xml" value="0.1745" />
@@ -33,7 +35,7 @@
         <entry key="..\:/Users/Lucos18/AndroidStudioProjects/EasyCarNew/app/src/main/res/layout/fragment_detail_car.xml" value="0.25" />
         <entry key="..\:/Users/Lucos18/AndroidStudioProjects/EasyCarNew/app/src/main/res/layout/fragment_favorites.xml" value="0.2015625" />
         <entry key="..\:/Users/Lucos18/AndroidStudioProjects/EasyCarNew/app/src/main/res/layout/fragment_home.xml" value="0.3123359580052493" />
-        <entry key="..\:/Users/Lucos18/AndroidStudioProjects/EasyCarNew/app/src/main/res/layout/fragment_search.xml" value="0.2015625" />
+        <entry key="..\:/Users/Lucos18/AndroidStudioProjects/EasyCarNew/app/src/main/res/layout/fragment_search.xml" value="0.35827338129496406" />
         <entry key="..\:/Users/Lucos18/AndroidStudioProjects/EasyCarNew/app/src/main/res/layout/fragment_sell.xml" value="0.1" />
         <entry key="..\:/Users/Lucos18/AndroidStudioProjects/EasyCarNew/app/src/main/res/menu/bottom_nav_menu.xml" value="0.15185185185185185" />
         <entry key="..\:/Users/Lucos18/AndroidStudioProjects/EasyCarNew/app/src/main/res/xml/file_paths.xml" value="0.11458333333333333" />
