@@ -48,7 +48,7 @@ class SearchFragment : Fragment() {
             )
         }
         binding.carSearchBrandText.doOnTextChanged { _, _, _, _ ->
-            result = searchViewModel.onBrandChange(binding.carSearchBrandText.text.toString())
+            result = searchViewModel.onBrandChange(binding.carSearchBrandText.text.toString())!!
             binding.searchCarsButton.text = getString(R.string.button_result_text, result.toString())
         }
         binding.carSearchModelText.setOnClickListener {
@@ -61,18 +61,17 @@ class SearchFragment : Fragment() {
             )
         }
         binding.carSearchModelText.doOnTextChanged { _, _, _, _ ->
-            result = searchViewModel.onModelChange(binding.carSearchModelText.text.toString())
-            Log.d("ciao", result.toString())
+            result = searchViewModel.onModelChange(binding.carSearchModelText.text.toString())!!
             binding.searchCarsButton.text = getString(R.string.button_result_text, result.toString())
         }
         binding.buttonGroupVehicleState.addOnButtonCheckedListener { group, checkedId, isChecked ->
             if (isChecked) {
                 when (checkedId) {
                     binding.newCarButton.id -> {
-                        result = searchViewModel.onStateCarCheckChange(binding.newCarButton.text.toString())
+                        result = searchViewModel.onStateCarCheckChange(binding.newCarButton.text.toString())!!
                     }
                     binding.usedCarButton.id -> {
-                        result = searchViewModel.onStateCarCheckChange(binding.usedCarButton.text.toString())
+                        result = searchViewModel.onStateCarCheckChange(binding.usedCarButton.text.toString())!!
                     }
                 }
                 binding.searchCarsButton.text = getString(R.string.button_result_text, result.toString())

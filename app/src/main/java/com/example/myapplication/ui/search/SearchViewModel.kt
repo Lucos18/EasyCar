@@ -3,6 +3,7 @@ package com.example.myapplication.ui.search
 import android.util.Log
 import androidx.lifecycle.*
 import com.example.myapplication.data.CarDao
+import com.example.myapplication.enums.CarFiltersSearch
 import com.example.myapplication.model.Car
 import com.example.myapplication.model.CarInfo
 import com.example.myapplication.network.VehicleApi
@@ -12,22 +13,27 @@ import java.io.IOException
 class SearchViewModel(val CarDao: CarDao) : ViewModel(){
     private val _carList = MutableLiveData<List<CarInfo>>()
     //TODO Create a new type of filter that works (maybe one that gets all the filters in a list if selected)
+    val mapFilters = mutableMapOf<CarFiltersSearch, Boolean>()
+
     val allCars: LiveData<List<Car>> = CarDao.getCars().asLiveData()
-    lateinit var filteredList: List<Car>
-    fun onStateCarCheckChange(string: String): Int{
-        when(string){
-            "New" -> filteredList = allCars.value?.filter { car -> car.mileage == 0.0  }!!
-            "Used" -> filteredList = allCars.value?.filter { car -> car.mileage > 0.0  }!!
+
+    fun onStateCarCheckChange(string: String): Int? {
+        if(string == "New"){
+            mapFilters[CarFiltersSearch.NEW] = true
+            mapFilters[CarFiltersSearch.USED] = false
+        } else if (string == "Used") {
+            mapFilters[CarFiltersSearch.NEW] = false
+            mapFilters[CarFiltersSearch.USED] = true
         }
-        return filteredList.size
+        return filterListOfCars(null,null)
     }
-    fun onBrandChange(brand: String): Int{
-        filteredList = allCars.value?.filter { car -> car.brand == brand }!!
-        return filteredList.size
+    fun onBrandChange(brand: String): Int? {
+        mapFilters[CarFiltersSearch.BRAND] = true
+        return filterListOfCars(brand = brand, null)
     }
-    fun onModelChange(model: String): Int{
-        filteredList = allCars.value?.filter { car -> car.model == model }!!
-        return filteredList.size
+    fun onModelChange(model: String): Int? {
+        mapFilters[CarFiltersSearch.MODEL] = true
+        return filterListOfCars(null, model = model)
     }
     fun getDistinctBrandNames(): List<String> {
         return _carList.value!!.map { e -> e.maker }.distinct().sorted()
@@ -43,6 +49,26 @@ class SearchViewModel(val CarDao: CarDao) : ViewModel(){
         } catch (networkError: IOException) {
 
         }
+    }
+    fun filterListOfCars(brand:String?, model: String?): Int? {
+        //TODO Filter by true or false
+        //TODO Return number of cars found with filter
+        //TODO Do something about the next fragment where you show the cars
+        var filteredList: List<Car>? = allCars.value?.toList()
+        mapFilters.forEach { filter ->
+
+            when (filter.key){
+                CarFiltersSearch.NEW -> if (filter.value) filteredList = filteredList?.filter { car -> car.mileage == 0.0 }
+                CarFiltersSearch.USED -> if (filter.value) filteredList = filteredList?.filter { car -> car.mileage > 0.0 }
+                CarFiltersSearch.MODEL -> if (filter.value) filteredList = filteredList?.filter { car -> car.model == model }
+                CarFiltersSearch.BRAND -> if (filter.value) filteredList = filteredList?.filter { car -> car.brand == brand }
+                CarFiltersSearch.MINPRICE -> if (filter.value) filteredList = filteredList?.filter { car -> car.mileage > 0.0 }
+                else -> {}
+            }
+        }
+        Log.d("filter", brand.toString())
+        Log.d("filter", filteredList.toString())
+        return filteredList?.size
     }
 }
 
