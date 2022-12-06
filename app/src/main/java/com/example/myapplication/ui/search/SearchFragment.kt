@@ -38,6 +38,19 @@ class SearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.startingPriceSearchText.doOnTextChanged { _, _, _, _ ->
+            if(binding.startingPriceSearchText.text.toString().isNotEmpty()){
+                result = searchViewModel.onStartingPriceChange(binding.startingPriceSearchText.text.toString().toDouble())!!
+                binding.searchCarsButton.text = getString(R.string.button_result_text, result.toString())
+            }
+        }
+        binding.endingPriceSearchText.doOnTextChanged { _, _, _, _ ->
+            if(binding.endingPriceSearchText.text.toString().isNotEmpty()){
+                result = searchViewModel.onEndingPriceChange(binding.endingPriceSearchText.text.toString().toDouble())!!
+                binding.searchCarsButton.text = getString(R.string.button_result_text, result.toString())
+            }
+        }
         binding.carSearchBrandText.setOnClickListener {
             carListItemsAlertDialog(
                 requireContext(),
@@ -48,8 +61,11 @@ class SearchFragment : Fragment() {
             )
         }
         binding.carSearchBrandText.doOnTextChanged { _, _, _, _ ->
-            result = searchViewModel.onBrandChange(binding.carSearchBrandText.text.toString())!!
-            binding.searchCarsButton.text = getString(R.string.button_result_text, result.toString())
+            if (binding.carSearchBrandText.text.toString().isNotEmpty()){
+                binding.carSearchModelText.isEnabled = true
+                result = searchViewModel.onBrandChange(binding.carSearchBrandText.text.toString())!!
+                binding.searchCarsButton.text = getString(R.string.button_result_text, result.toString())
+            }
         }
         binding.carSearchModelText.setOnClickListener {
             carListItemsAlertDialog(
@@ -61,8 +77,10 @@ class SearchFragment : Fragment() {
             )
         }
         binding.carSearchModelText.doOnTextChanged { _, _, _, _ ->
-            result = searchViewModel.onModelChange(binding.carSearchModelText.text.toString())!!
-            binding.searchCarsButton.text = getString(R.string.button_result_text, result.toString())
+            if (binding.carSearchModelText.text.toString().isNotEmpty()){
+                result = searchViewModel.onModelChange(binding.carSearchModelText.text.toString())!!
+                binding.searchCarsButton.text = getString(R.string.button_result_text, result.toString())
+            }
         }
         binding.buttonGroupVehicleState.addOnButtonCheckedListener { group, checkedId, isChecked ->
             if (isChecked) {

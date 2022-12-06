@@ -82,5 +82,6 @@
     <!-- SEARCH CAR FRAGMENT STRINGS -->
 
     <string name="button_result_text">%s results</string>
+    <string name="vehicle_fuel_text_search">Vehicle Fuel</string>
 
 </resources>

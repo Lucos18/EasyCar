@@ -85,6 +85,7 @@
                             android:layout_marginEnd="32dp">
 
                             <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/starting_price_search_text"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="@string/starting_at_price"
@@ -100,6 +101,7 @@
                             android:layout_height="70dp">
 
                             <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/ending_price_search_text"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="@string/ending_price"
@@ -203,6 +205,7 @@
                     android:text="@string/vehicle_state_label">
                 </TextView>
                 <LinearLayout
+                    android:id="@+id/vehicle_state_linear_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toBottomOf="@id/vehicle_status_label"
@@ -238,6 +241,53 @@
 
                     </com.google.android.material.button.MaterialButton>
                     </com.google.android.material.button.MaterialButtonToggleGroup>
+                </LinearLayout>
+                <TextView
+                    android:id="@+id/vehicle_fuel_type_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:textColor="@color/primaryLightColor"
+                    android:text="@string/vehicle_fuel_text_search"
+                    app:layout_constraintTop_toBottomOf="@id/vehicle_state_linear_layout"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                </TextView>
+                <LinearLayout
+                    android:id="@+id/vehicle_fuel_type_linear_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/vehicle_fuel_type_label"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:orientation="horizontal">
+                    <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/button_group_vehicle_fuel_type"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent">
+
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/diesel_button"
+                            style="?attr/materialButtonOutlinedStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/new_text"
+                            app:cornerRadius="20dp">
+
+                        </com.google.android.material.chip.Chip>
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/electric_button"
+                            style="?attr/materialButtonOutlinedStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:text="@string/used_text"
+                            app:cornerRadius="20dp">
+
+                        </com.google.android.material.chip.Chip>
+                    </com.google.android.material.chip.ChipGroup>
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
