@@ -48,9 +48,6 @@ class FavoritesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val navBar: BottomNavigationView =
-            requireActivity().findViewById(R.id.nav_view)
-        navBar.visibility = View.VISIBLE
         val adapter = FavoritesListAdapter(clickListener = { car ->
             val action = FavoritesFragmentDirections
                 .actionNavigationFavoritesToDetailCarFragment(car.id)

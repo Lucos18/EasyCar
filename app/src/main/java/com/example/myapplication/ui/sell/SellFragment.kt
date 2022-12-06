@@ -36,9 +36,7 @@ class SellFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val navBar: BottomNavigationView =
-            requireActivity().findViewById(R.id.nav_view)
-        navBar.visibility = View.VISIBLE
+
         binding.apply {
             addCarFab.setOnClickListener {
                 val action = SellFragmentDirections

@@ -39,9 +39,7 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val navBar: BottomNavigationView =
-            requireActivity().findViewById(R.id.nav_view)
-        navBar.visibility = View.VISIBLE
+
         val adapter = HomeListAdapter(clickListener = { car ->
             val action = HomeFragmentDirections
                 .actionNavigationHomeToDetailCarFragment(car.id)

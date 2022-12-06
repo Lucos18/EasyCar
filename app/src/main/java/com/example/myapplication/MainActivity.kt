@@ -11,6 +11,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.myapplication.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.navigationrail.NavigationRailView
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,9 +23,8 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         val navView: BottomNavigationView = binding.navView
-
+        val railView: NavigationRailView? = binding.navigationRailView
         navController = findNavController()
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -38,6 +38,7 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+        railView?.setupWithNavController(navController)
         if (intent != null) {
             val id = intent.getLongExtra("ID", -1)
             val bundle = Bundle()

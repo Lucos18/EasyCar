@@ -195,14 +195,13 @@ class AddNewCarFragment : Fragment() {
             builder.show()
 
         }
+        //TODO How will your car item will appear on the market
         //TODO 4 Add more information to details card of the car (Color)
         //TODO 5 Fix Price on focus listener that shows error if not changed
         //TODO Change calendar function to show only year options
     }
 
     override fun onDestroyView() {
-        val navBar: BottomNavigationView = requireActivity().findViewById(R.id.nav_view)
-        navBar.visibility = View.VISIBLE
         super.onDestroyView()
         _binding = null
     }

@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.myapplication.BaseApplication
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentSearchBinding
+import com.example.myapplication.enums.CarFiltersSearch
 import com.example.myapplication.model.Car
 import com.example.myapplication.utils.carListItemsAlertDialog
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -40,9 +41,6 @@ class SearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val navBar: BottomNavigationView =
-            requireActivity().findViewById(R.id.nav_view)
-        navBar.visibility = View.VISIBLE
         val observer = Observer<List<Car>> {
             if (searchViewModel.filteredList != null) {
                 binding.searchCarsButton.text = getString(
@@ -152,6 +150,7 @@ class SearchFragment : Fragment() {
     }
 
     override fun onDestroyView() {
+        searchViewModel.filteredList = null
         super.onDestroyView()
         _binding = null
     }
