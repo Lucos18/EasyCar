@@ -2,9 +2,9 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:fillViewport="true"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fillViewport="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -194,96 +194,123 @@
 
                     </com.google.android.material.textfield.TextInputEditText>
                 </com.google.android.material.textfield.TextInputLayout>
+
                 <TextView
                     android:id="@+id/vehicle_status_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="16sp"
+                    android:text="@string/vehicle_state_label"
                     android:textColor="@color/primaryLightColor"
-                    app:layout_constraintTop_toBottomOf="@id/car_search_model"
+                    android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:text="@string/vehicle_state_label">
-                </TextView>
+                    app:layout_constraintTop_toBottomOf="@id/car_search_model"></TextView>
+
                 <LinearLayout
                     android:id="@+id/vehicle_state_linear_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/vehicle_status_label"
+                    android:orientation="horizontal"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:orientation="horizontal">
+                    app:layout_constraintTop_toBottomOf="@id/vehicle_status_label">
+
                     <com.google.android.material.button.MaterialButtonToggleGroup
                         android:id="@+id/button_group_vehicle_state"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        app:singleSelection="true"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent">
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:singleSelection="true">
 
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/new_car_button"
-                        style="?attr/materialButtonOutlinedStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/new_text"
-                        android:layout_marginEnd="8dp"
-                        app:cornerRadius="20dp">
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/new_car_button"
+                            style="?attr/materialButtonOutlinedStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:text="@string/new_text"
+                            app:cornerRadius="20dp">
 
-                    </com.google.android.material.button.MaterialButton>
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/used_car_button"
-                        style="?attr/materialButtonOutlinedStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
-                        android:text="@string/used_text"
-                        app:cornerRadius="20dp">
+                        </com.google.android.material.button.MaterialButton>
 
-                    </com.google.android.material.button.MaterialButton>
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/used_car_button"
+                            style="?attr/materialButtonOutlinedStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:text="@string/used_text"
+                            app:cornerRadius="20dp">
+
+                        </com.google.android.material.button.MaterialButton>
                     </com.google.android.material.button.MaterialButtonToggleGroup>
                 </LinearLayout>
+
                 <TextView
                     android:id="@+id/vehicle_fuel_type_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:textColor="@color/primaryLightColor"
                     android:text="@string/vehicle_fuel_text_search"
-                    app:layout_constraintTop_toBottomOf="@id/vehicle_state_linear_layout"
-                    app:layout_constraintStart_toStartOf="parent">
+                    android:textColor="@color/primaryLightColor"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/vehicle_state_linear_layout">
 
                 </TextView>
+
                 <LinearLayout
                     android:id="@+id/vehicle_fuel_type_linear_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/vehicle_fuel_type_label"
+                    android:orientation="horizontal"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:orientation="horizontal">
+                    app:layout_constraintTop_toBottomOf="@id/vehicle_fuel_type_label">
+
                     <com.google.android.material.chip.ChipGroup
                         android:id="@+id/button_group_vehicle_fuel_type"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
+                        android:layout_height="wrap_content"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent">
 
 
                         <com.google.android.material.chip.Chip
                             android:id="@+id/diesel_filter"
-                            style="@style/Widget.Material3.Chip.Filter"
+                            style="@style/Widget.MaterialComponents.Chip.Filter"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:checked="true"
-                            android:text="@string/used_text">
+                            android:text="Diesel"
+                            android:theme="@style/Theme.MaterialComponents.Light">
 
                         </com.google.android.material.chip.Chip>
+
                         <com.google.android.material.chip.Chip
-                            android:id="@+id/chip_1"
-                            style="@style/Widget.Material3.Chip.Filter"
+                            android:id="@+id/electric_filter"
+                            style="@style/Widget.MaterialComponents.Chip.Filter"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:checked="true"
-                            android:text="@string/new_text">
+                            android:text="Electric"
+                            android:theme="@style/Theme.MaterialComponents.Light">
+
+                        </com.google.android.material.chip.Chip>
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/petrol_filter"
+                            style="@style/Widget.MaterialComponents.Chip.Filter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Petrol"
+                            android:theme="@style/Theme.MaterialComponents.Light">
+
+                        </com.google.android.material.chip.Chip>
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/gas_filter"
+                            style="@style/Widget.MaterialComponents.Chip.Filter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Gas"
+                            android:theme="@style/Theme.MaterialComponents.Light">
 
                         </com.google.android.material.chip.Chip>
                     </com.google.android.material.chip.ChipGroup>
@@ -299,9 +326,9 @@
             android:drawableStart="@drawable/ic_baseline_search_24dp"
             android:text="@string/search"
             android:textColor="@color/black"
-            tools:layout_editor_absoluteX="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteX="16dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>

@@ -83,5 +83,7 @@
 
     <string name="button_result_text">%s results</string>
     <string name="vehicle_fuel_text_search">Vehicle Fuel</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

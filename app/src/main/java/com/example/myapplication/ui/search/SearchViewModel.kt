@@ -14,19 +14,24 @@ class SearchViewModel(val CarDao: CarDao) : ViewModel(){
     private val _carList = MutableLiveData<List<CarInfo>>()
     //TODO Create a new type of filter that works (maybe one that gets all the filters in a list if selected)
     val mapFilters = mutableMapOf<CarFiltersSearch, Boolean>()
+
     var modelSelected: String = ""
     var brandSelected: String = ""
     var maxPriceSelected: Double = 0.0
     var minPriceSelected: Double = 0.0
     val allCars: LiveData<List<Car>> = CarDao.getCars().asLiveData()
-
-    fun onStateCarCheckChange(string: String): Int? {
+    var filteredList: List<Car>? = allCars.value?.toList()
+    fun onStateCarCheckChange(string: String, valueToSet: Boolean): Int? {
         if(string == "New"){
-            mapFilters[CarFiltersSearch.NEW] = true
+            mapFilters[CarFiltersSearch.NEW] = valueToSet
             mapFilters[CarFiltersSearch.USED] = false
+            Log.d("mapfilters", mapFilters[CarFiltersSearch.NEW].toString())
+            Log.d("mapfilters", mapFilters[CarFiltersSearch.USED].toString())
+
         } else if (string == "Used") {
-            mapFilters[CarFiltersSearch.NEW] = false
-            mapFilters[CarFiltersSearch.USED] = true
+            mapFilters[CarFiltersSearch.USED] = valueToSet
+            Log.d("mapfilters", mapFilters[CarFiltersSearch.NEW].toString())
+            Log.d("mapfilters", mapFilters[CarFiltersSearch.USED].toString())
         }
         return filterListOfCars()
     }
@@ -77,7 +82,7 @@ class SearchViewModel(val CarDao: CarDao) : ViewModel(){
         //TODO Filter by true or false
         //TODO Return number of cars found with filter
         //TODO Do something about the next fragment where you show the cars
-        var filteredList: List<Car>? = allCars.value?.toList()
+        filteredList = allCars.value?.toList()
         mapFilters.forEach { filter ->
 
             when (filter.key){

@@ -114,9 +114,6 @@ class DetailCarFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-        val navBar: BottomNavigationView =
-            requireActivity().findViewById(R.id.nav_view)
-        navBar.visibility = View.VISIBLE
         super.onDestroyView()
         _binding = null
     }

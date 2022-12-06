@@ -2,6 +2,7 @@ package com.example.myapplication.ui.home
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.LiveData
@@ -23,7 +24,6 @@ class HomeListAdapter(
     class HomeViewHolder(
         private var binding: CarItemCardBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
-        //TODO Check from database if already favorite
         fun bind(car: Car, functionFavorites: (Car) -> Unit, listLogo: LiveData<List<CarLogo>>) {
             binding.car = car
             binding.carPrice.text = car.formatPriceToCurrency(car.price)
@@ -32,8 +32,11 @@ class HomeListAdapter(
             binding.carItemState.text = car.carMileageWithUnitString(car.mileage)
             binding.favoritesButtonImage.setImageResource(getImageResource(car.favorite))
             binding.favoritesButtonImage.setOnClickListener {
+                Log.d("testClick", "testClick")
                 functionFavorites(car)
+                Log.d("testClick", "testClick")
                 binding.favoritesButtonImage.setImageResource(getImageResource(car.favorite))
+                Log.d("testClick", "testClick")
             }
             if (car.image != null) {
                 val bmp = BitmapFactory.decodeByteArray(car.image, 0, car.image.size)

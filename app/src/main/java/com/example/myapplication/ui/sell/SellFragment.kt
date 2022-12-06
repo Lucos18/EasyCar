@@ -9,8 +9,10 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.myapplication.BaseApplication
+import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentSellBinding
 import com.example.myapplication.model.CarLogo
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class SellFragment : Fragment() {
 
@@ -34,6 +36,9 @@ class SellFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val navBar: BottomNavigationView =
+            requireActivity().findViewById(R.id.nav_view)
+        navBar.visibility = View.VISIBLE
         binding.apply {
             addCarFab.setOnClickListener {
                 val action = SellFragmentDirections
