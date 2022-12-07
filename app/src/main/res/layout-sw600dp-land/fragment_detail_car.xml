@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -14,7 +14,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0.5">
+            android:layout_weight="0.6">
+            <!--Change to image scrollable -->
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -27,13 +28,13 @@
                         <ImageView
                             android:id="@+id/car_image_detail"
                             android:layout_width="match_parent"
-                            android:layout_height="300dp"
+                            android:layout_height="match_parent"
                             android:src="@drawable/beg_removebg_preview"
                             android:contentDescription="@string/car_image_content_description"
                             android:scaleType="fitXY"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            android:layout_weight="0.5">
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent">
                         </ImageView>
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </ScrollView>
@@ -42,7 +43,7 @@
             android:fillViewport="true"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0.5">
+            android:layout_weight="0.4">
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -111,6 +112,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="8dp"
                         android:gravity="center_vertical"
+                        android:textSize="@dimen/text_size_tablet_landscape"
                         app:layout_constraintStart_toStartOf="@id/car_brand_detail"
                         app:layout_constraintTop_toBottomOf="@id/divider_1">
 
@@ -118,6 +120,8 @@
                             android:id="@+id/car_price_edit_text"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:textSize="@dimen/text_size_tablet_landscape"
+
                             android:maxLength="10"
                             android:hint="@string/car_price_add"
                             android:inputType="numberDecimal">
@@ -161,7 +165,7 @@
                                 android:layout_height="@dimen/add_car_row_height_tablet"
                                 android:drawablePadding="4dp"
                                 android:gravity="center_vertical"
-                                android:textSize="28sp"
+                                android:textSize="@dimen/text_size_tablet_landscape"
                                 app:drawableLeftCompat="@drawable/ic_engine_42"
                                 app:layout_constraintStart_toStartOf="@id/car_image"
                                 app:layout_constraintTop_toBottomOf="@id/car_image"
@@ -176,6 +180,7 @@
                                 android:layout_marginEnd="28dp"
                                 android:background="@android:color/transparent"
                                 android:gravity="center_vertical"
+                                android:textSize="@dimen/text_size_tablet_landscape"
                                 app:boxBackgroundColor="@android:color/transparent"
                                 app:layout_constraintStart_toStartOf="@id/car_image"
                                 app:layout_constraintTop_toBottomOf="@id/car_image">
@@ -184,8 +189,8 @@
                                     android:id="@+id/car_power_edit_text"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:drawableStart="@drawable/ic_engine_24"
-                                    android:textSize="24sp"
+                                    android:drawableStart="@drawable/ic_engine_42"
+                                    android:textSize="@dimen/text_size_tablet_landscape"
                                     android:drawablePadding="8dp"
                                     android:hint="@string/car_power_add"
                                     android:inputType="number"
@@ -205,7 +210,7 @@
                                 android:layout_height="@dimen/add_car_row_height_tablet"
                                 android:drawablePadding="4dp"
                                 android:gravity="center_vertical"
-                                android:textSize="28sp"
+                                android:textSize="@dimen/text_size_tablet_landscape"
                                 app:drawableLeftCompat="@drawable/ic_fuel_42"
                                 app:layout_constraintStart_toStartOf="@id/car_image"
                                 app:layout_constraintTop_toBottomOf="@id/car_image"
@@ -219,6 +224,8 @@
                                 android:layout_height="@dimen/add_car_row_height_tablet"
                                 android:background="@android:color/transparent"
                                 android:gravity="center_vertical"
+                                android:textSize="@dimen/text_size_tablet_landscape"
+
                                 app:boxBackgroundColor="@android:color/transparent"
                                 app:layout_constraintStart_toStartOf="@id/car_image"
                                 app:layout_constraintTop_toBottomOf="@id/car_image">
@@ -227,8 +234,10 @@
                                     android:id="@+id/car_fuel_type_edit_text"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:drawableStart="@drawable/icons8_benzina_50"
+                                    android:drawableStart="@drawable/ic_fuel_42"
                                     android:drawablePadding="8dp"
+                                    android:textSize="@dimen/text_size_tablet_landscape"
+
                                     android:focusable="false"
                                     android:hint="@string/car_fuel_type_add"
                                     android:inputType="text">
@@ -250,8 +259,8 @@
                                 android:layout_height="@dimen/add_car_row_height_tablet"
                                 android:drawablePadding="4dp"
                                 android:gravity="center_vertical"
-                                android:textSize="28sp"
-                                app:drawableLeftCompat="@drawable/ic_baseline_calendar_today_64"
+                                android:textSize="@dimen/text_size_tablet_landscape"
+                                app:drawableLeftCompat="@drawable/ic_baseline_calendar_today_42"
                                 app:layout_constraintStart_toStartOf="@id/car_image"
                                 app:layout_constraintTop_toBottomOf="@id/car_image"
                                 tools:text="Year Production: ">
@@ -264,6 +273,7 @@
                                 android:layout_height="@dimen/add_car_row_height_tablet"
                                 android:layout_marginEnd="24dp"
                                 android:background="@android:color/transparent"
+                                android:textSize="@dimen/text_size_tablet_landscape"
                                 android:gravity="center_vertical"
                                 app:boxBackgroundColor="@android:color/transparent"
                                 app:layout_constraintStart_toStartOf="@id/car_image"
@@ -273,8 +283,10 @@
                                     android:id="@+id/car_year_production_edit_text"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:drawableStart="@drawable/ic_baseline_calendar_today_24"
+                                    android:drawableStart="@drawable/ic_baseline_calendar_today_42"
                                     android:drawablePadding="8dp"
+                                    android:textSize="@dimen/text_size_tablet_landscape"
+
                                     android:hint="@string/car_year_add"
                                     android:inputType="number">
 
@@ -292,7 +304,7 @@
                                 android:layout_height="@dimen/add_car_row_height_tablet"
                                 android:drawablePadding="4dp"
                                 android:gravity="center_vertical"
-                                android:textSize="28sp"
+                                android:textSize="@dimen/text_size_tablet_landscape"
                                 app:drawableLeftCompat="@drawable/ic_seats_42"
                                 app:layout_constraintStart_toStartOf="@id/car_image"
                                 app:layout_constraintTop_toBottomOf="@id/car_image"
@@ -304,6 +316,7 @@
                                 android:layout_height="@dimen/add_car_row_height_tablet"
                                 android:background="@android:color/transparent"
                                 android:gravity="center_vertical"
+                                android:textSize="@dimen/text_size_tablet_landscape"
                                 app:boxBackgroundColor="@android:color/transparent"
                                 app:layout_constraintStart_toStartOf="@id/car_image"
                                 app:layout_constraintTop_toBottomOf="@id/car_image">
@@ -312,7 +325,8 @@
                                     android:id="@+id/car_seats_edit_text"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:drawableStart="@drawable/ic_seats_24"
+                                    android:textSize="@dimen/text_size_tablet_landscape"
+                                    android:drawableStart="@drawable/ic_seats_42"
                                     android:drawablePadding="8dp"
                                     android:hint="@string/car_seats_add"
                                     android:inputType="number"
@@ -334,8 +348,8 @@
 
                 <ImageView
                     android:id="@+id/car_notes_detail_icon"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginTop="8dp"
                     android:src="@drawable/icons8_car_roof_box_90"
@@ -351,7 +365,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:text="@string/vehicle_detail_label"
-                    android:textSize="18sp"
+                    android:textSize="32sp"
                     app:layout_constraintBottom_toBottomOf="@id/car_notes_detail_icon"
                     app:layout_constraintStart_toEndOf="@+id/car_notes_detail_icon"
                     app:layout_constraintTop_toTopOf="@id/car_notes_detail_icon"
@@ -367,7 +381,11 @@
                     app:layout_constraintStart_toStartOf="@+id/car_notes_detail_icon"
                     app:layout_constraintTop_toBottomOf="@+id/car_notes_detail_icon">
 
-                    <TableRow android:id="@+id/vehicle_status_row">
+                    <TableRow
+                        android:id="@+id/vehicle_status_row"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/add_car_row_height_tablet"
+                        android:layout_marginBottom="8dp">
 
                         <TextView
                             android:id="@+id/car_state_detail_label"
@@ -375,7 +393,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
                             android:text="@string/vehicle_state_label"
-                            android:textSize="16sp"
+                            android:textSize="@dimen/text_size_tablet_landscape"
                             tools:text="Vehicle State" />
 
                         <TextView
@@ -383,20 +401,22 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
-                            android:textSize="16sp"
+                            android:textSize="@dimen/text_size_tablet_landscape"
                             tools:text="Used" />
                     </TableRow>
 
                     <TableRow
                         android:layout_marginTop="16dp"
-                        android:gravity="center">
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/add_car_row_height_tablet"
+                        android:layout_marginBottom="8dp">
 
                         <TextView
                             android:id="@+id/car_mileage_detail_label"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/vehicle_mileage_label"
-                            android:textSize="16sp"
+                            android:textSize="@dimen/text_size_tablet_landscape"
                             tools:text="Vehicle Mileage" />
 
                         <ViewSwitcher
@@ -409,7 +429,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:gravity="center"
-                                android:textSize="16sp"
+                                android:textSize="@dimen/text_size_tablet_landscape"
                                 tools:text="68.000km" />
 
                             <EditText
@@ -417,6 +437,7 @@
                                 android:layout_width="120dp"
                                 android:layout_height="match_parent"
                                 android:gravity="center"
+                                android:textSize="@dimen/text_size_tablet_landscape"
                                 android:hint="@string/car_mileage_add"
                                 android:inputType="number"
                                 android:maxLength="7" />
@@ -428,13 +449,13 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/vehicle_color_label"
-                            android:textSize="16sp"
+                            android:textSize="@dimen/text_size_tablet_landscape"
                             tools:text="Vehicle Color" />
                         <TextView
                             android:id="@+id/car_color_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="16sp"
+                            android:textSize="@dimen/text_size_tablet_landscape"
                             tools:text="Red" />
                     </TableRow>
                 </TableLayout>
@@ -446,11 +467,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
         android:backgroundTint="@color/primaryColor"
         android:contentDescription="@string/add_new_car_content_description"
         android:src="@drawable/ic_baseline_delete_forever_24"
         android:visibility="gone"
+        app:fabCustomSize="64dp"
+        android:layout_margin="@dimen/fab_margin_tablet"
+        app:maxImageSize="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -458,11 +481,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
         android:contentDescription="@string/add_new_car_content_description"
         android:src="@drawable/ic_baseline_edit_24"
         android:tint="@color/secondaryColor"
         android:visibility="gone"
+        app:fabCustomSize="64dp"
+        android:layout_margin="@dimen/fab_margin_tablet"
+        app:maxImageSize="32dp"
         app:layout_constraintBottom_toTopOf="@id/delete_car_fab"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -471,11 +496,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
         android:backgroundTint="@color/green"
         android:contentDescription="@string/add_new_car_content_description"
         android:src="@drawable/ic_baseline_check_24"
         android:visibility="gone"
+        app:fabCustomSize="64dp"
+        android:layout_margin="@dimen/fab_margin_tablet"
+        app:maxImageSize="32dp"
         app:layout_constraintBottom_toTopOf="@id/delete_car_fab"
         app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

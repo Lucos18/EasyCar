@@ -194,7 +194,7 @@
                         android:drawablePadding="4dp"
                         android:gravity="center_vertical"
                         android:textSize="16sp"
-                        app:drawableLeftCompat="@drawable/icons8_benzina_50"
+                        app:drawableLeftCompat="@drawable/ic_fuel_24"
                         app:layout_constraintStart_toStartOf="@id/car_image"
                         app:layout_constraintTop_toBottomOf="@id/car_image"
                         tools:text="Fuel type: ">
@@ -215,7 +215,7 @@
                             android:id="@+id/car_fuel_type_edit_text"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:drawableStart="@drawable/icons8_benzina_50"
+                            android:drawableStart="@drawable/ic_fuel_24"
                             android:drawablePadding="8dp"
                             android:focusable="false"
                             android:hint="@string/car_fuel_type_add"

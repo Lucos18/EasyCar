@@ -8,8 +8,13 @@
     <dimen name="detail_car_height">55dp</dimen>
 
     <dimen name="brand_text_size_tablet">40sp</dimen>
+    <dimen name="brand_text_size_tablet_item">32sp</dimen>
     <dimen name="model_text_size_tablet">28sp</dimen>
+    <dimen name="model_text_size_tablet_item">24sp</dimen>
     <dimen name="price_text_size_tablet">32sp</dimen>
-    <dimen name="fab_margin_tablet">32dp</dimen>
+    <dimen name="fab_margin_tablet">16dp</dimen>
     <dimen name="add_car_row_height_tablet">80dp</dimen>
+
+    <dimen name="text_size_tablet_landscape">28sp</dimen>
+    <dimen name="text_size_tablet_item">24sp</dimen>
 </resources>

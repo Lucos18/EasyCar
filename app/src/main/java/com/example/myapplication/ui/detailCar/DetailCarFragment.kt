@@ -68,9 +68,6 @@ class DetailCarFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val arg = arguments?.getLong("CarIdNotification")
         setupViewSwitcher()
-        val navBar: BottomNavigationView =
-            requireActivity().findViewById(R.id.nav_view)
-        navBar.visibility = View.GONE
         var id = detailCarArgs.carId
         if (arg != null && arg > 0)
             id = arg

@@ -150,7 +150,7 @@ class SearchFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-        searchViewModel.filteredList = null
+
         super.onDestroyView()
         _binding = null
     }
