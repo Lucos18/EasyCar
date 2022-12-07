@@ -108,7 +108,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:textSize="@dimen/text_size_tablet_landscape"
-                    android:maxLength="7"
+                    android:maxLength="9"
                     android:hint="@string/car_price_add"
                     android:inputType="numberDecimal">
 

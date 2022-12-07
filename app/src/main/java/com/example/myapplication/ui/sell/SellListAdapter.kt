@@ -2,6 +2,7 @@ package com.example.myapplication.ui.sell
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,6 +25,10 @@ class SellListAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(car: Car, listLogo: LiveData<List<CarLogo>>) {
             binding.car = car
+            if (car.model.length >= 21){
+                val modelReplaced = car.model.replaceRange(22 until car.model.length, "...")
+                binding.carModel.text = modelReplaced
+            } else binding.carModel.text = car.model
             binding.carPrice.text = car.formatPriceToCurrency(car.price)
             binding.carPower.text = car.carPowerWithUnitString(car.carPower)
             binding.carYearProduction.text = car.yearStartProduction.toString()

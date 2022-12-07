@@ -203,6 +203,7 @@
                     android:id="@+id/car_price_add_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:maxLength="9"
                     android:hint="@string/car_price_add"
                     android:inputType="numberDecimal">
 

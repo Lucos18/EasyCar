@@ -26,6 +26,11 @@ class HomeListAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(car: Car, functionFavorites: (Car) -> Unit, listLogo: LiveData<List<CarLogo>>) {
             binding.car = car
+            if (car.model.length >= 21){
+                val modelReplaced = car.model.replaceRange(22 until car.model.length, "...")
+                binding.carModel.text = modelReplaced
+            } else binding.carModel.text = car.model
+
             binding.carPrice.text = car.formatPriceToCurrency(car.price)
             binding.carPower.text = car.carPowerWithUnitString(car.carPower)
             binding.carYearProduction.text = car.yearStartProduction.toString()
@@ -33,6 +38,7 @@ class HomeListAdapter(
             binding.favoritesButtonImage.setImageResource(getImageResource(car.favorite))
             binding.favoritesButtonImage.setOnClickListener {
                 Log.d("testClick", "testClick")
+
                 functionFavorites(car)
                 Log.d("testClick", "testClick")
                 binding.favoritesButtonImage.setImageResource(getImageResource(car.favorite))

@@ -73,6 +73,8 @@ class AddNewCarFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         swapConstraintIfInternet(requireContext())
+        val scrollingBackground = binding.scrollingBackground
+        scrollingBackground?.start()
         binding.apply {
             buttonAddNewCar.visibility = View.VISIBLE
             buttonAddNewCar.setOnClickListener {
@@ -146,6 +148,7 @@ class AddNewCarFragment : Fragment() {
             val color =
                 CarColors.values().first { it.nameColor == binding.carColorAddText.text.toString() }
             Log.d("color", color.toString())
+            binding.scr2?.setColorFilter(color.rgbColor)
             wrappedDrawable?.setTint(color.rgbColor)
             binding.carColorAddText.setCompoundDrawables(null, null, wrappedDrawable, null)
         }

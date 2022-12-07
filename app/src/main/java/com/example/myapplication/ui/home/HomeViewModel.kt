@@ -15,7 +15,6 @@ class HomeViewModel(private val CarDao: CarDao) : ViewModel() {
     val allCars: LiveData<List<Car>> = CarDao.getCars().asLiveData()
 
     private val _carLogo = MutableLiveData<List<CarLogo>>()
-
     val carLogos: LiveData<List<CarLogo>>
         get() = _carLogo
 

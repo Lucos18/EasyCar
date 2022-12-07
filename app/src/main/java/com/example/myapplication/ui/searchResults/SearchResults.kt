@@ -64,6 +64,12 @@ class SearchResults : Fragment() {
             binding.recyclerView.adapter = adapter
         }
         homeViewModel.carLogos.observe(viewLifecycleOwner,observer)
+
+        homeViewModel.allCars.observe(this.viewLifecycleOwner) { carSelected ->
+            carSelected.let {
+                adapter.submitList(searchViewModel.filteredList)
+            }
+        }
         adapter.submitList(searchViewModel.filteredList)
         binding.apply {
             recyclerView.adapter = adapter

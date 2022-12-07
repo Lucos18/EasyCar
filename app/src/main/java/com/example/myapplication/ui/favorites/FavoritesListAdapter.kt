@@ -43,6 +43,10 @@ class FavoritesListAdapter(
             listLogo: LiveData<List<CarLogo>>
         ) {
             binding.car = car
+            if (car.model.length >= 21){
+                val modelReplaced = car.model.replaceRange(22 until car.model.length, "...")
+                binding.carModel.text = modelReplaced
+            } else binding.carModel.text = car.model
             binding.apply {
                 carPrice.text = car.formatPriceToCurrency(car.price)
                 carPower.text = car.carPowerWithUnitString(car.carPower)
