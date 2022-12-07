@@ -1,7 +1,5 @@
 package com.example.myapplication.utils
 
-import android.media.tv.TvContract
-import android.util.Log
 import android.widget.ImageView
 import com.example.myapplication.R
 import com.example.myapplication.model.CarLogo
@@ -19,7 +17,7 @@ fun setAndGetUriByBrandParsingListOfLogoAndImageView(
             .into(logo)
     } else {
         Picasso.get()
-            .load(R.drawable.car)
+            .load(R.drawable.ic_seats_24)
             .into(logo)
         logo.alpha = 1.0F
     }
