@@ -17,4 +17,6 @@
 
     <dimen name="text_size_tablet_landscape">28sp</dimen>
     <dimen name="text_size_tablet_item">24sp</dimen>
+    <dimen name="text_size_tablet_search_title">20sp</dimen>
+    <dimen name="tablet_search_input_height">65dp</dimen>
 </resources>

@@ -13,6 +13,7 @@ import com.example.myapplication.BaseApplication
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentSearchBinding
 import com.example.myapplication.databinding.FragmentSearchResultsBinding
+import com.example.myapplication.model.Car
 import com.example.myapplication.model.CarLogo
 import com.example.myapplication.ui.home.HomeFragmentDirections
 import com.example.myapplication.ui.home.HomeListAdapter
@@ -21,6 +22,7 @@ import com.example.myapplication.ui.home.HomeViewModelFactory
 import com.example.myapplication.ui.search.SearchViewModel
 import com.example.myapplication.ui.search.SearchViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import okhttp3.internal.Util.intersect
 
 class SearchResults : Fragment() {
     //TODO Fix initial result value on search button when going back
@@ -55,7 +57,7 @@ class SearchResults : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val adapter = HomeListAdapter(clickListener = { car ->
+        val adapter = SearchResultsAdapter(clickListener = { car ->
             val action = SearchResultsDirections
                 .actionSearchResultsToDetailCarFragment(car.id)
             findNavController().navigate(action)

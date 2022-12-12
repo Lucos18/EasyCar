@@ -6,5 +6,6 @@ enum class CarFiltersSearch {
     BRAND,
     MODEL,
     NEW,
-    USED
+    USED,
+    DIESEL,
 }

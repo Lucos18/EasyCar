@@ -6,6 +6,7 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -38,14 +39,12 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import java.text.NumberFormat
 import java.util.*
-
+private var UriImage: Uri? = null
+private var kw: Int = 0
+private var price: Double = 0.0
+private val REQUEST_CODE = 100
 @Suppress("DEPRECATION")
 class AddNewCarFragment : Fragment() {
-
-    private var kw: Int = 0
-    private var price: Double = 0.0
-    private val REQUEST_CODE = 100
-
     private lateinit var adapter: ArrayAdapter<*>
 
     private val mapInputs = mutableMapOf<CarAddInputs, Boolean>()
@@ -75,6 +74,8 @@ class AddNewCarFragment : Fragment() {
         swapConstraintIfInternet(requireContext())
         val scrollingBackground = binding.scrollingBackground
         scrollingBackground?.start()
+        Log.d("ciao", kw.toString())
+        if (UriImage != null) binding.carImage1.setImageURI(UriImage)
         binding.apply {
             buttonAddNewCar.visibility = View.VISIBLE
             buttonAddNewCar.setOnClickListener {
@@ -142,15 +143,11 @@ class AddNewCarFragment : Fragment() {
             FuelTypeAlertDialog(requireContext(), binding.carFuelTypeAddText)
         }
         binding.carColorAddText.addTextChangedListener {
-            val drawable = AppCompatResources.getDrawable(requireContext(), R.drawable.circle_shape)
-            val wrappedDrawable = drawable?.let { DrawableCompat.wrap(it) }
-            wrappedDrawable?.setBounds(0, 0, 70, 70)
-            val color =
-                CarColors.values().first { it.nameColor == binding.carColorAddText.text.toString() }
-            Log.d("color", color.toString())
-            binding.scr2?.setColorFilter(color.rgbColor)
-            wrappedDrawable?.setTint(color.rgbColor)
-            binding.carColorAddText.setCompoundDrawables(null, null, wrappedDrawable, null)
+            if (binding.carColorAddText.text.toString().isNotBlank()){
+                val color =
+                    CarColors.values().first { it.nameColor == binding.carColorAddText.text.toString() }
+                binding.scr2?.setColorFilter(color.rgbColor)
+            }
         }
         binding.carColorAddText.setOnClickListener {
 
@@ -197,7 +194,6 @@ class AddNewCarFragment : Fragment() {
 
         }
         //TODO How will your car item will appear on the market
-        //TODO 4 Add more information to details card of the car (Color)
         //TODO 5 Fix Price on focus listener that shows error if not changed
         //TODO Change calendar function to show only year options
     }
@@ -294,7 +290,8 @@ class AddNewCarFragment : Fragment() {
             val selectedImage = data?.data
             if (selectedImage != null) {
                 // handle chosen image
-                binding.carImage1.setImageURI(data.data)
+                UriImage = data.data
+                binding.carImage1.setImageURI(UriImage)
                 binding.carImage1.tag = "is_not_null"
             }
         }

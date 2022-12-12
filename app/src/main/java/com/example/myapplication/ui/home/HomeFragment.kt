@@ -61,12 +61,10 @@ class HomeFragment : Fragment() {
 
         binding.searchCars.setOnClickListener {
             findNavController().navigate(R.id.navigation_search)
-
         }
     }
 
     override fun onDestroyView() {
-        findNavController().clearBackStack(R.id.navigation_home)
         super.onDestroyView()
         _binding = null
     }

@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.*
 import com.example.myapplication.data.CarDao
 import com.example.myapplication.enums.CarFiltersSearch
+import com.example.myapplication.enums.fuelType
 import com.example.myapplication.model.Car
 import com.example.myapplication.model.CarInfo
 import com.example.myapplication.network.VehicleApi
@@ -12,9 +13,7 @@ import java.io.IOException
 
 class SearchViewModel(val CarDao: CarDao) : ViewModel(){
     private val _carList = MutableLiveData<List<CarInfo>>()
-    //TODO Create a new type of filter that works (maybe one that gets all the filters in a list if selected)
     val mapFilters = mutableMapOf<CarFiltersSearch, Boolean>()
-
     var modelSelected: String = ""
     var brandSelected: String = ""
     var maxPriceSelected: Double = 0.0
@@ -68,6 +67,10 @@ class SearchViewModel(val CarDao: CarDao) : ViewModel(){
         val makerList = _carList.value!!.filter { e -> e.maker == maker }
         return makerList.map { e -> e.model }.distinct().sorted()
     }
+    fun onCheckDieselFilter(isChecked: Boolean): Int?{
+        mapFilters[CarFiltersSearch.DIESEL] = isChecked
+        return filterListOfCars()
+    }
 
     fun refreshDataFromNetwork() = viewModelScope.launch {
         try {
@@ -79,9 +82,6 @@ class SearchViewModel(val CarDao: CarDao) : ViewModel(){
     }
 
     fun filterListOfCars(): Int? {
-        //TODO Filter by true or false
-        //TODO Return number of cars found with filter
-        //TODO Do something about the next fragment where you show the cars
         filteredList = allCars.value?.toList()
         mapFilters.forEach { filter ->
 
@@ -92,6 +92,7 @@ class SearchViewModel(val CarDao: CarDao) : ViewModel(){
                 CarFiltersSearch.BRAND -> if (filter.value) filteredList = filteredList?.filter { car -> car.brand == brandSelected }
                 CarFiltersSearch.MINPRICE -> if (filter.value) filteredList = filteredList?.filter { car -> car.price >= minPriceSelected }
                 CarFiltersSearch.MAXPRICE -> if (filter.value) filteredList = filteredList?.filter { car -> car.price <= maxPriceSelected }
+                CarFiltersSearch.DIESEL -> if (filter.value) filteredList = filteredList?.filter { car -> car.fuelType == fuelType.Diesel.toString() }
             }
         }
         Log.d("filter", brandSelected)

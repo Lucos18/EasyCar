@@ -8,7 +8,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginHorizontal="8dp">
 
         <androidx.cardview.widget.CardView
@@ -30,8 +30,8 @@
 
                 <ImageView
                     android:id="@+id/icon_search_price"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
                     android:layout_marginVertical="16dp"
                     android:src="@drawable/ic_baseline_currency_exchange_24"
                     app:layout_constraintStart_toStartOf="parent"
@@ -47,6 +47,7 @@
                     android:text="@string/car_price_search_string_label"
                     android:textColor="@color/primaryLightColor"
                     android:textStyle="bold"
+                    android:textSize="@dimen/text_size_tablet_search_title"
                     app:layout_constraintBottom_toBottomOf="@id/icon_search_price"
                     app:layout_constraintStart_toEndOf="@id/icon_search_price"
                     app:layout_constraintTop_toTopOf="@id/icon_search_price"
@@ -81,13 +82,13 @@
                             android:id="@+id/starting_price_search"
                             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                             android:layout_width="match_parent"
-                            android:layout_height="70dp"
+                            android:layout_height="wrap_content"
                             android:layout_marginEnd="32dp">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/starting_price_search_text"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="@dimen/tablet_search_input_height"
                                 android:hint="@string/starting_at_price"
                                 android:inputType="number">
 
@@ -103,7 +104,7 @@
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/ending_price_search_text"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="@dimen/tablet_search_input_height"
                                 android:hint="@string/ending_price"
                                 android:inputType="number">
 
@@ -135,8 +136,8 @@
 
                 <ImageView
                     android:id="@+id/icon_vehicle_informations"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
                     android:layout_marginVertical="16dp"
                     android:src="@drawable/searching_car"
                     app:layout_constraintStart_toStartOf="parent"
@@ -152,71 +153,88 @@
                     android:text="@string/vehicle_basic_informations_label"
                     android:textColor="@color/primaryLightColor"
                     android:textStyle="bold"
+                    android:textSize="@dimen/text_size_tablet_search_title"
                     app:layout_constraintBottom_toBottomOf="@id/icon_vehicle_informations"
                     app:layout_constraintStart_toEndOf="@id/icon_vehicle_informations"
                     app:layout_constraintTop_toTopOf="@id/icon_vehicle_informations"
                     tools:text="@string/vehicle_basic_informations_label" />
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/car_search_brand"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                <LinearLayout
+                    android:id="@+id/linear_layout_vehicle_informations_input"
                     android:layout_width="match_parent"
-                    android:layout_height="70dp"
-                    android:layout_marginTop="16dp"
-                    app:layout_constraintTop_toBottomOf="@id/car_vehicle_informations_label">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/car_search_brand_text"
+                    android:layout_height="wrap_content"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal"
+                    app:layout_constraintTop_toBottomOf="@id/car_vehicle_informations_label"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:weightSum="2">
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/car_search_brand"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:focusable="false"
-                        android:hint="@string/car_brand_add"
-                        android:inputType="number">
+                        android:layout_marginEnd="5dp"
+                        android:layout_height="70dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_weight="1"
+                        app:layout_constraintTop_toBottomOf="@id/car_vehicle_informations_label">
 
-                    </com.google.android.material.textfield.TextInputEditText>
-                </com.google.android.material.textfield.TextInputLayout>
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/car_search_brand_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:focusable="false"
+                            android:hint="@string/car_brand_add"
+                            android:inputType="number">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/car_search_model"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="70dp"
-                    app:layout_constraintTop_toBottomOf="@id/car_search_brand">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/car_search_model_text"
+                        </com.google.android.material.textfield.TextInputEditText>
+                    </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/car_search_model"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:enabled="false"
-                        android:focusable="false"
-                        android:hint="@string/car_model_add"
-                        android:inputType="number">
+                        android:layout_marginStart="5dp"
+                        android:layout_height="70dp"
+                        android:layout_gravity="bottom"
+                        android:layout_weight="1"
+                        app:layout_constraintTop_toBottomOf="@id/linear_layout_vehicle_informations_input">
 
-                    </com.google.android.material.textfield.TextInputEditText>
-                </com.google.android.material.textfield.TextInputLayout>
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/car_search_model_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:enabled="false"
+                            android:focusable="false"
+                            android:hint="@string/car_model_add"
+                            android:inputType="number">
+
+                        </com.google.android.material.textfield.TextInputEditText>
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+
 
                 <TextView
                     android:id="@+id/vehicle_status_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/vehicle_state_label"
+                    android:layout_marginVertical="8dp"
                     android:textColor="@color/primaryLightColor"
-                    android:textSize="16sp"
+                    android:textSize="18sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/car_search_model"></TextView>
+                    app:layout_constraintTop_toBottomOf="@id/linear_layout_vehicle_informations_input" />
 
                 <LinearLayout
                     android:id="@+id/vehicle_state_linear_layout"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
+                    android:weightSum="1"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/vehicle_status_label">
 
                     <com.google.android.material.button.MaterialButtonToggleGroup
                         android:id="@+id/button_group_vehicle_state"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="60dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:singleSelection="true">
@@ -226,7 +244,7 @@
                             android:id="@+id/new_car_button"
                             style="?attr/materialButtonOutlinedStyle"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_height="60dp"
                             android:layout_marginEnd="8dp"
                             android:text="@string/new_text"
                             app:cornerRadius="20dp">
@@ -237,7 +255,7 @@
                             android:id="@+id/used_car_button"
                             style="?attr/materialButtonOutlinedStyle"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_height="60dp"
                             android:layout_marginEnd="8dp"
                             android:text="@string/used_text"
                             app:cornerRadius="20dp">
@@ -279,7 +297,7 @@
                             style="@style/Widget.MaterialComponents.Chip.Filter"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Diesel"
+                            android:text="@string/diesel"
                             android:theme="@style/Theme.MaterialComponents.Light">
 
                         </com.google.android.material.chip.Chip>
@@ -289,7 +307,7 @@
                             style="@style/Widget.MaterialComponents.Chip.Filter"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Electric"
+                            android:text="@string/electric"
                             android:theme="@style/Theme.MaterialComponents.Light">
 
                         </com.google.android.material.chip.Chip>
@@ -299,7 +317,7 @@
                             style="@style/Widget.MaterialComponents.Chip.Filter"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Petrol"
+                            android:text="@string/petrol"
                             android:theme="@style/Theme.MaterialComponents.Light">
 
                         </com.google.android.material.chip.Chip>
@@ -309,7 +327,7 @@
                             style="@style/Widget.MaterialComponents.Chip.Filter"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Gas"
+                            android:text="@string/gas"
                             android:theme="@style/Theme.MaterialComponents.Light">
 
                         </com.google.android.material.chip.Chip>

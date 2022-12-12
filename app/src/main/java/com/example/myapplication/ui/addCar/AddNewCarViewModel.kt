@@ -112,7 +112,11 @@ class AddNewCarViewModel(private val carDao: CarDao) : ViewModel() {
     }
 
     fun getDistinctBrandNames(): List<String> {
-        return _carList.value!!.map { e -> e.maker }.distinct().sorted()
+        if (checkCarListValue())
+        {
+            return _carList.value!!.map { e -> e.maker }.distinct().sorted()
+        }
+        return listOf("")
     }
 
     fun getDistinctMaxYearCarByBrand(maker: String): String? {
@@ -129,7 +133,9 @@ class AddNewCarViewModel(private val carDao: CarDao) : ViewModel() {
     fun convertKwToCv(kw: Int): Int {
         return (kw * 1.36).toInt()
     }
-
+    fun checkCarListValue(): Boolean {
+        return _carList.value != null
+    }
     private fun Bitmap.toByteArray(quality: Int = 100): ByteArray {
         val stream = ByteArrayOutputStream()
         compress(Bitmap.CompressFormat.JPEG, quality, stream)

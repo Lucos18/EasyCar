@@ -145,8 +145,12 @@ class SearchFragment : Fragment() {
                 .actionNavigationSearchToSearchResults()
             findNavController().navigate(action)
         }
+        binding.dieselFilter.setOnCheckedChangeListener{ _, isChecked ->
+            result = searchViewModel.onCheckDieselFilter(isChecked)!!
+            binding.searchCarsButton.text =
+                getString(R.string.button_result_text, result.toString())
+        }
         searchViewModel.allCars.observe(this.viewLifecycleOwner) { }
-
     }
 
     override fun onDestroyView() {

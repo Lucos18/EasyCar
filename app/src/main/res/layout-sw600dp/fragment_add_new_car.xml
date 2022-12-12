@@ -23,6 +23,7 @@
                 android:layout_width="200dp"
                 android:layout_height="200dp"
                 android:layout_marginTop="32dp"
+
                 android:src="@drawable/beg_removebg_preview"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -68,7 +69,23 @@
             android:id="@+id/constraint_layout_add_new_car_with_connection"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="8dp">
+            android:padding="8dp"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:scaleType="fitXY"
+                android:id="@+id/car_image_1"
+                android:layout_width="match_parent"
+                android:layout_height="350dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:contentDescription="@string/add_car_image_content_description"
+                android:focusable="true"
+                android:src="@drawable/add_image_brown"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TableLayout
                 android:id="@+id/table_layout_add"
@@ -76,11 +93,10 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="8dp"
-
                 android:stretchColumns="*"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toBottomOf="@+id/car_image_1">
 
                 <TableRow
                     android:id="@+id/firstRow"
@@ -260,8 +276,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:hint="@string/car_price_add"
-                            android:maxLength="9"
                             android:inputType="numberDecimal"
+                            android:maxLength="15"
                             android:textSize="24sp">
 
                         </com.google.android.material.textfield.TextInputEditText>
@@ -291,7 +307,7 @@
 
                 <TableRow
                     android:id="@+id/fifthRow"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp">
 
@@ -317,32 +333,55 @@
 
                         </com.google.android.material.textfield.TextInputEditText>
                     </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/car_info_to_add"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/add_car_row_height_tablet"
+                        android:layout_marginEnd="25dp"
+                        android:background="@android:color/transparent"
+                        android:visibility="invisible"
+                        app:boxBackgroundColor="@android:color/transparent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/car_mileage_add_label">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/car_info_to_add_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:focusable="false"
+                            android:hint="@string/car_color_add"
+                            android:inputType="numberDecimal"
+                            android:longClickable="false"
+                            android:textSize="24sp">
+
+                        </com.google.android.material.textfield.TextInputEditText>
+                    </com.google.android.material.textfield.TextInputLayout>
                 </TableRow>
             </TableLayout>
 
             <RelativeLayout xmlns:scrolling_image_view="http://schemas.android.com/apk/res-auto"
-                android:layout_width="match_parent"
+                android:layout_width="380dp"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
                 android:orientation="vertical"
                 android:padding="0dp"
-                android:layout_marginHorizontal="16dp"
-                scrolling_image_view:layout_constraintStart_toStartOf="@id/button_add_new_car"
                 scrolling_image_view:layout_constraintBottom_toTopOf="@id/button_add_new_car"
                 scrolling_image_view:layout_constraintEnd_toEndOf="@id/button_add_new_car"
+                scrolling_image_view:layout_constraintStart_toStartOf="@id/button_add_new_car"
                 tools:context=".MainActivity">
 
                 <FrameLayout
-                    android:layout_marginTop="8dp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp">
 
                     <com.q42.android.scrollingimageview.ScrollingImageView
                         android:id="@+id/scrolling_background"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         scrolling_image_view:source="@drawable/scrolling_background"
-                        scrolling_image_view:speed="60dp"
-                        />
+                        scrolling_image_view:speed="60dp" />
 
                     <com.q42.android.scrollingimageview.ScrollingImageView
                         android:id="@+id/scrolling_foreground"
@@ -359,6 +398,7 @@
                     android:layout_centerInParent="true"
                     android:scaleType="centerInside"
                     android:src="@drawable/van2" />
+
                 <ImageView
                     android:id="@+id/scr2"
                     android:layout_width="match_parent"
@@ -379,20 +419,6 @@
                 app:layout_constraintTop_toBottomOf="@id/table_layout_add">
 
                 <ImageView
-                    android:id="@+id/car_image_1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="0.50"
-                    android:clickable="true"
-                    android:contentDescription="@string/add_car_image_content_description"
-                    android:focusable="true"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/add_image_brown"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/car_price_add_label" />
-
-                <ImageView
                     android:id="@+id/car_image_2"
                     android:layout_width="0dp"
                     android:layout_height="200dp"
@@ -408,19 +434,18 @@
 
             <Button
                 android:id="@+id/button_add_new_car"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_width="400dp"
+                android:layout_height="100dp"
                 android:layout_marginHorizontal="16dp"
-
                 android:layout_marginTop="36dp"
-                android:backgroundTint="@color/secondaryDarkColor"
+                android:background="@drawable/gradient"
                 android:text="@string/add_new_car"
+                android:textSize="24sp"
+                app:backgroundTint="@null"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout">
-
-            </Button>
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
