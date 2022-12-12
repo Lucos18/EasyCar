@@ -8,4 +8,5 @@ enum class CarFiltersSearch {
     NEW,
     USED,
     DIESEL,
+    ELECTRIC,
 }

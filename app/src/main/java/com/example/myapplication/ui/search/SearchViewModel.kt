@@ -14,6 +14,7 @@ import java.io.IOException
 class SearchViewModel(val CarDao: CarDao) : ViewModel(){
     private val _carList = MutableLiveData<List<CarInfo>>()
     val mapFilters = mutableMapOf<CarFiltersSearch, Boolean>()
+    private val mapFiltersFuelType = mutableMapOf<fuelType, Boolean>()
     var modelSelected: String = ""
     var brandSelected: String = ""
     var maxPriceSelected: Double = 0.0
@@ -69,6 +70,12 @@ class SearchViewModel(val CarDao: CarDao) : ViewModel(){
     }
     fun onCheckDieselFilter(isChecked: Boolean): Int?{
         mapFilters[CarFiltersSearch.DIESEL] = isChecked
+        mapFiltersFuelType[fuelType.Diesel] = isChecked
+        return filterListOfCars()
+    }
+    fun onCheckElectricFilter(isChecked: Boolean): Int?{
+        mapFilters[CarFiltersSearch.ELECTRIC] = isChecked
+        mapFiltersFuelType[fuelType.Electric] = isChecked
         return filterListOfCars()
     }
 
@@ -92,12 +99,31 @@ class SearchViewModel(val CarDao: CarDao) : ViewModel(){
                 CarFiltersSearch.BRAND -> if (filter.value) filteredList = filteredList?.filter { car -> car.brand == brandSelected }
                 CarFiltersSearch.MINPRICE -> if (filter.value) filteredList = filteredList?.filter { car -> car.price >= minPriceSelected }
                 CarFiltersSearch.MAXPRICE -> if (filter.value) filteredList = filteredList?.filter { car -> car.price <= maxPriceSelected }
-                CarFiltersSearch.DIESEL -> if (filter.value) filteredList = filteredList?.filter { car -> car.fuelType == fuelType.Diesel.toString() }
+                CarFiltersSearch.DIESEL -> if (filter.value) mapFiltersFuelType[fuelType.Diesel] = true
+                CarFiltersSearch.ELECTRIC -> if (filter.value) mapFiltersFuelType[fuelType.Electric] = true
             }
         }
+        Log.d("ciao",filteredList.toString())
+        filteredList = carCheck(filteredList)
         Log.d("filter", brandSelected)
         Log.d("filter", filteredList.toString())
         return filteredList?.size
+    }
+
+    fun carCheck(filteredList: List<Car>?): List<Car>? {
+        var mapFiltersFuelTypeOnlyTrue = mutableListOf<String>()
+        var booleanFound = false
+        mapFiltersFuelType.forEach { filter ->
+            if(filter.value){
+                booleanFound = true
+                mapFiltersFuelTypeOnlyTrue.add(filter.key.toString())
+            }
+        }
+        Log.d("ciao", mapFiltersFuelTypeOnlyTrue.toString())
+        return if (booleanFound){
+            mapFiltersFuelTypeOnlyTrue = mapFiltersFuelTypeOnlyTrue.toSet().toMutableList()
+            filteredList?.filter{ it.fuelType in (mapFiltersFuelTypeOnlyTrue) }
+        }else filteredList
     }
 }
 

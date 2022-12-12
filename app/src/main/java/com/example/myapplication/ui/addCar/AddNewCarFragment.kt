@@ -80,6 +80,7 @@ class AddNewCarFragment : Fragment() {
             buttonAddNewCar.visibility = View.VISIBLE
             buttonAddNewCar.setOnClickListener {
                 addNewCar()
+
             }
         }
         binding.carBrandAddText.setOnClickListener {
@@ -199,6 +200,7 @@ class AddNewCarFragment : Fragment() {
     }
 
     override fun onDestroyView() {
+        UriImage = null
         super.onDestroyView()
         _binding = null
     }

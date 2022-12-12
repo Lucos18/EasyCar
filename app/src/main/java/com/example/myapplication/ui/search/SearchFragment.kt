@@ -1,9 +1,10 @@
 package com.example.myapplication.ui.search
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.util.Log
+import android.view.*
+import androidx.core.content.res.ColorStateListInflaterCompat.inflate
+import androidx.core.graphics.drawable.DrawableCompat.inflate
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -11,6 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.myapplication.BaseApplication
 import com.example.myapplication.R
+import com.example.myapplication.databinding.ActivityMainBinding.inflate
 import com.example.myapplication.databinding.FragmentSearchBinding
 import com.example.myapplication.enums.CarFiltersSearch
 import com.example.myapplication.model.Car
@@ -34,6 +36,7 @@ class SearchFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        setHasOptionsMenu(true);
         searchViewModel.refreshDataFromNetwork()
         _binding = FragmentSearchBinding.inflate(inflater, container, false)
         return binding.root
@@ -146,7 +149,13 @@ class SearchFragment : Fragment() {
             findNavController().navigate(action)
         }
         binding.dieselFilter.setOnCheckedChangeListener{ _, isChecked ->
+            Log.d("ciao", isChecked.toString())
             result = searchViewModel.onCheckDieselFilter(isChecked)!!
+            binding.searchCarsButton.text =
+                getString(R.string.button_result_text, result.toString())
+        }
+        binding.electricFilter.setOnCheckedChangeListener{ _, isChecked ->
+            result = searchViewModel.onCheckElectricFilter(isChecked)!!
             binding.searchCarsButton.text =
                 getString(R.string.button_result_text, result.toString())
         }
@@ -158,4 +167,5 @@ class SearchFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
 }

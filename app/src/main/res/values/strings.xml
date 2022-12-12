@@ -87,5 +87,6 @@
     <string name="electric">Electric</string>
     <string name="petrol">Petrol</string>
     <string name="gas">Gas</string>
+    <string name="delete_search_parameters">delete search parameters</string>
 
 </resources>
