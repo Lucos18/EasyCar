@@ -19,9 +19,11 @@ class SearchViewModel(val CarDao: CarDao) : ViewModel(){
     var brandSelected: String = ""
     var maxPriceSelected: Double = 0.0
     var minPriceSelected: Double = 0.0
+
     val allCars: LiveData<List<Car>> = CarDao.getCars().asLiveData()
     var filteredList: List<Car>? = allCars.value?.toList()
-    fun onStateCarCheckChange(string: String, valueToSet: Boolean): Int? {
+    val currentNumberOfResults = MutableLiveData(filteredList?.size ?: 0)
+    fun onStateCarCheckChange(string: String, valueToSet: Boolean){
         if(string == "New"){
             mapFilters[CarFiltersSearch.NEW] = valueToSet
             mapFilters[CarFiltersSearch.USED] = false
@@ -33,31 +35,31 @@ class SearchViewModel(val CarDao: CarDao) : ViewModel(){
             Log.d("mapfilters", mapFilters[CarFiltersSearch.NEW].toString())
             Log.d("mapfilters", mapFilters[CarFiltersSearch.USED].toString())
         }
-        return filterListOfCars()
+        filterListOfCars()
     }
 
-    fun onBrandChange(brand: String): Int? {
+    fun onBrandChange(brand: String){
         mapFilters[CarFiltersSearch.BRAND] = true
         brandSelected = brand
-        return filterListOfCars()
+        filterListOfCars()
     }
 
-    fun onModelChange(model: String): Int? {
+    fun onModelChange(model: String){
         mapFilters[CarFiltersSearch.MODEL] = true
         modelSelected = model
-        return filterListOfCars()
+        filterListOfCars()
     }
 
-    fun onStartingPriceChange(minPrice: Double): Int?{
+    fun onStartingPriceChange(minPrice: Double){
         mapFilters[CarFiltersSearch.MINPRICE] = true
         minPriceSelected = minPrice
-        return filterListOfCars()
+        filterListOfCars()
     }
 
-    fun onEndingPriceChange(maxPrice: Double): Int?{
+    fun onEndingPriceChange(maxPrice: Double){
         mapFilters[CarFiltersSearch.MAXPRICE] = true
         maxPriceSelected = maxPrice
-        return filterListOfCars()
+        filterListOfCars()
     }
 
     fun getDistinctBrandNames(): List<String> {
@@ -68,15 +70,29 @@ class SearchViewModel(val CarDao: CarDao) : ViewModel(){
         val makerList = _carList.value!!.filter { e -> e.maker == maker }
         return makerList.map { e -> e.model }.distinct().sorted()
     }
-    fun onCheckDieselFilter(isChecked: Boolean): Int?{
+    fun onCheckDieselFilter(isChecked: Boolean){
         mapFilters[CarFiltersSearch.DIESEL] = isChecked
         mapFiltersFuelType[fuelType.Diesel] = isChecked
-        return filterListOfCars()
+        filterListOfCars()
     }
-    fun onCheckElectricFilter(isChecked: Boolean): Int?{
+    fun onCheckElectricFilter(isChecked: Boolean){
         mapFilters[CarFiltersSearch.ELECTRIC] = isChecked
         mapFiltersFuelType[fuelType.Electric] = isChecked
-        return filterListOfCars()
+        filterListOfCars()
+    }
+    fun onCheckPetrolFilter(isChecked: Boolean){
+        mapFilters[CarFiltersSearch.PETROL] = isChecked
+        mapFiltersFuelType[fuelType.Petrol] = isChecked
+        filterListOfCars()
+    }
+    fun onCheckGasFilter(isChecked: Boolean){
+        mapFilters[CarFiltersSearch.GAS] = isChecked
+        mapFiltersFuelType[fuelType.Gas] = isChecked
+        filterListOfCars()
+    }
+    fun onCheckBoxChange(isChecked: Boolean){
+        mapFilters[CarFiltersSearch.AT_LEAST_ONE_PHOTO] = isChecked
+        filterListOfCars()
     }
 
     fun refreshDataFromNetwork() = viewModelScope.launch {
@@ -99,14 +115,15 @@ class SearchViewModel(val CarDao: CarDao) : ViewModel(){
                 CarFiltersSearch.BRAND -> if (filter.value) filteredList = filteredList?.filter { car -> car.brand == brandSelected }
                 CarFiltersSearch.MINPRICE -> if (filter.value) filteredList = filteredList?.filter { car -> car.price >= minPriceSelected }
                 CarFiltersSearch.MAXPRICE -> if (filter.value) filteredList = filteredList?.filter { car -> car.price <= maxPriceSelected }
-                CarFiltersSearch.DIESEL -> if (filter.value) mapFiltersFuelType[fuelType.Diesel] = true
-                CarFiltersSearch.ELECTRIC -> if (filter.value) mapFiltersFuelType[fuelType.Electric] = true
+                CarFiltersSearch.AT_LEAST_ONE_PHOTO -> if (filter.value) filteredList = filteredList?.filter { car -> car.image != null }
+                else -> 0
             }
         }
         Log.d("ciao",filteredList.toString())
         filteredList = carCheck(filteredList)
         Log.d("filter", brandSelected)
         Log.d("filter", filteredList.toString())
+        currentNumberOfResults.value = filteredList?.size
         return filteredList?.size
     }
 

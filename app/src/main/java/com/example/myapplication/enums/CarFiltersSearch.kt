@@ -9,4 +9,7 @@ enum class CarFiltersSearch {
     USED,
     DIESEL,
     ELECTRIC,
+    PETROL,
+    GAS,
+    AT_LEAST_ONE_PHOTO
 }

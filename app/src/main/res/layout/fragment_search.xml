@@ -203,7 +203,7 @@
                     android:textColor="@color/primaryLightColor"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/car_search_model"></TextView>
+                    app:layout_constraintTop_toBottomOf="@id/car_search_model" />
 
                 <LinearLayout
                     android:id="@+id/vehicle_state_linear_layout"

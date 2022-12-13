@@ -88,5 +88,12 @@
     <string name="petrol">Petrol</string>
     <string name="gas">Gas</string>
     <string name="delete_search_parameters">delete search parameters</string>
+    <string name="car_power_search">Power</string>
+    <string name="cv">CV</string>
+    <string name="kw">Kw</string>
+    <string name="starting_power">Starting power</string>
+    <string name="ending_power">Ending power</string>
+    <string name="only_offers_that_contains_at_least_one_photo">Only offers that contains at least one photo</string>
+    <string name="details_offer_text">Details offer</string>
 
 </resources>

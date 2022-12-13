@@ -61,20 +61,16 @@ class SearchFragment : Fragment() {
         searchViewModel.allCars.observe(viewLifecycleOwner, observer)
         binding.startingPriceSearchText.doOnTextChanged { _, _, _, _ ->
             if (binding.startingPriceSearchText.text.toString().isNotEmpty()) {
-                result = searchViewModel.onStartingPriceChange(
+                searchViewModel.onStartingPriceChange(
                     binding.startingPriceSearchText.text.toString().toDouble()
-                )!!
-                binding.searchCarsButton.text =
-                    getString(R.string.button_result_text, result.toString())
+                )
             }
         }
         binding.endingPriceSearchText.doOnTextChanged { _, _, _, _ ->
             if (binding.endingPriceSearchText.text.toString().isNotEmpty()) {
-                result = searchViewModel.onEndingPriceChange(
+                searchViewModel.onEndingPriceChange(
                     binding.endingPriceSearchText.text.toString().toDouble()
-                )!!
-                binding.searchCarsButton.text =
-                    getString(R.string.button_result_text, result.toString())
+                )
             }
         }
         binding.carSearchBrandText.setOnClickListener {
@@ -89,9 +85,7 @@ class SearchFragment : Fragment() {
         binding.carSearchBrandText.doOnTextChanged { _, _, _, _ ->
             if (binding.carSearchBrandText.text.toString().isNotEmpty()) {
                 binding.carSearchModelText.isEnabled = true
-                result = searchViewModel.onBrandChange(binding.carSearchBrandText.text.toString())!!
-                binding.searchCarsButton.text =
-                    getString(R.string.button_result_text, result.toString())
+                searchViewModel.onBrandChange(binding.carSearchBrandText.text.toString())!!
             }
         }
         binding.carSearchModelText.setOnClickListener {
@@ -105,43 +99,39 @@ class SearchFragment : Fragment() {
         }
         binding.carSearchModelText.doOnTextChanged { _, _, _, _ ->
             if (binding.carSearchModelText.text.toString().isNotEmpty()) {
-                result = searchViewModel.onModelChange(binding.carSearchModelText.text.toString())!!
-                binding.searchCarsButton.text =
-                    getString(R.string.button_result_text, result.toString())
+                searchViewModel.onModelChange(binding.carSearchModelText.text.toString())!!
             }
         }
         binding.buttonGroupVehicleState.addOnButtonCheckedListener { group, checkedId, isChecked ->
             if (isChecked) {
                 when (checkedId) {
                     binding.newCarButton.id -> {
-                        result = searchViewModel.onStateCarCheckChange(
+                        searchViewModel.onStateCarCheckChange(
                             binding.newCarButton.text.toString(),
                             true
-                        )!!
+                        )
                     }
                     binding.usedCarButton.id -> {
-                        result = searchViewModel.onStateCarCheckChange(
+                        searchViewModel.onStateCarCheckChange(
                             binding.usedCarButton.text.toString(),
                             true
-                        )!!
+                        )
                     }
                 }
             } else when (checkedId) {
                 binding.usedCarButton.id -> {
-                    result = searchViewModel.onStateCarCheckChange(
+                    searchViewModel.onStateCarCheckChange(
                         binding.usedCarButton.text.toString(),
                         false
-                    )!!
+                    )
                 }
                 binding.newCarButton.id -> {
-                    result = searchViewModel.onStateCarCheckChange(
+                    searchViewModel.onStateCarCheckChange(
                         binding.newCarButton.text.toString(),
                         false
-                    )!!
+                    )
                 }
             }
-            binding.searchCarsButton.text =
-                getString(R.string.button_result_text, result.toString())
         }
         binding.searchCarsButton.setOnClickListener {
             val action = SearchFragmentDirections
@@ -149,17 +139,25 @@ class SearchFragment : Fragment() {
             findNavController().navigate(action)
         }
         binding.dieselFilter.setOnCheckedChangeListener{ _, isChecked ->
-            Log.d("ciao", isChecked.toString())
-            result = searchViewModel.onCheckDieselFilter(isChecked)!!
-            binding.searchCarsButton.text =
-                getString(R.string.button_result_text, result.toString())
+            searchViewModel.onCheckDieselFilter(isChecked)!!
         }
         binding.electricFilter.setOnCheckedChangeListener{ _, isChecked ->
-            result = searchViewModel.onCheckElectricFilter(isChecked)!!
-            binding.searchCarsButton.text =
-                getString(R.string.button_result_text, result.toString())
+            searchViewModel.onCheckElectricFilter(isChecked)
+        }
+        binding.petrolFilter.setOnCheckedChangeListener{ _, isChecked ->
+            searchViewModel.onCheckPetrolFilter(isChecked)
+        }
+        binding.gasFilter.setOnCheckedChangeListener{ _, isChecked ->
+            searchViewModel.onCheckGasFilter(isChecked)
+        }
+        binding.checkboxAtLeastOnePhoto?.setOnClickListener {
+            searchViewModel.onCheckBoxChange(binding.checkboxAtLeastOnePhoto!!.isChecked)!!
         }
         searchViewModel.allCars.observe(this.viewLifecycleOwner) { }
+        searchViewModel.currentNumberOfResults.observe(this.viewLifecycleOwner) {
+            binding.searchCarsButton.text =
+                getString(R.string.button_result_text, it.toString())
+        }
     }
 
     override fun onDestroyView() {
