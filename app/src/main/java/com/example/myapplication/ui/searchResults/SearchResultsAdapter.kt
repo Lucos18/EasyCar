@@ -11,9 +11,15 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import com.example.myapplication.databinding.CarItemCardBinding
+import com.example.myapplication.databinding.CarItemCardSearchResultBinding
 import com.example.myapplication.model.*
 import com.example.myapplication.ui.home.HomeListAdapter
+import com.example.myapplication.utils.ShareDialog
+import com.example.myapplication.utils.createBitmapFromCarImage
 import com.example.myapplication.utils.setAndGetUriByBrandParsingListOfLogoAndImageView
+import com.example.myapplication.workers.FORMAT_IMAGE_PNG
+import com.example.myapplication.workers.IMAGE_NAME
+import java.io.File
 
 class SearchResultsAdapter(
     private val clickListener: (Car) -> Unit,
@@ -22,7 +28,7 @@ class SearchResultsAdapter(
 ) : ListAdapter<Car, SearchResultsAdapter.SearchResultsViewHolder>(DiffCallback) {
 
     class SearchResultsViewHolder(
-        private var binding: CarItemCardBinding,
+        private var binding: CarItemCardSearchResultBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(car: Car, functionFavorites: (Car) -> Unit, listLogo: LiveData<List<CarLogo>>) {
             binding.car = car
@@ -37,12 +43,22 @@ class SearchResultsAdapter(
             binding.carItemState.text = car.carMileageWithUnitString(car.mileage)
             binding.favoritesButtonImage.setImageResource(getImageResource(car.favorite))
             binding.favoritesButtonImage.setOnClickListener {
-                Log.d("testClick", "testClick")
-
                 functionFavorites(car)
-                Log.d("testClick", "testClick")
                 binding.favoritesButtonImage.setImageResource(getImageResource(car.favorite))
-                Log.d("testClick", "testClick")
+            }
+            binding.shareButtonCarItem.setOnClickListener {
+                var file: File? = null
+                if (car.image != null)
+                {
+                    file = File(createBitmapFromCarImage(car.image,car.id), "$IMAGE_NAME${car.id}$FORMAT_IMAGE_PNG")
+                }
+                ShareDialog(
+                    itemView.context,
+                    itemView.context.getString(R.string.check_auto_share_dialog),
+                    "Check this new auto!\nBrand:${car.brand}\nModel:${car.model}\nPrice:${car.price}",
+                    "Share With",
+                    file
+                )
             }
             if (car.image != null) {
                 val bmp = BitmapFactory.decodeByteArray(car.image, 0, car.image.size)
@@ -91,7 +107,7 @@ class SearchResultsAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchResultsViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         return SearchResultsViewHolder(
-            CarItemCardBinding.inflate(layoutInflater, parent, false),
+            CarItemCardSearchResultBinding.inflate(layoutInflater, parent, false),
         )
     }
 }
