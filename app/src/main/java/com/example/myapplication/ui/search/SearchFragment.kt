@@ -1,10 +1,9 @@
 package com.example.myapplication.ui.search
 
 import android.os.Bundle
-import android.util.Log
-import android.view.*
-import androidx.core.content.res.ColorStateListInflaterCompat.inflate
-import androidx.core.graphics.drawable.DrawableCompat.inflate
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -12,12 +11,10 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.myapplication.BaseApplication
 import com.example.myapplication.R
-import com.example.myapplication.databinding.ActivityMainBinding.inflate
 import com.example.myapplication.databinding.FragmentSearchBinding
 import com.example.myapplication.enums.CarFiltersSearch
 import com.example.myapplication.model.Car
 import com.example.myapplication.utils.carListItemsAlertDialog
-import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class SearchFragment : Fragment() {
     val searchViewModel: SearchViewModel by activityViewModels {
@@ -36,7 +33,7 @@ class SearchFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        setHasOptionsMenu(true);
+        setHasOptionsMenu(true)
         searchViewModel.refreshDataFromNetwork()
         _binding = FragmentSearchBinding.inflate(inflater, container, false)
         return binding.root
@@ -59,6 +56,7 @@ class SearchFragment : Fragment() {
             }
         }
         searchViewModel.allCars.observe(viewLifecycleOwner, observer)
+
         binding.startingPriceSearchText.doOnTextChanged { _, _, _, _ ->
             if (binding.startingPriceSearchText.text.toString().isNotEmpty()) {
                 searchViewModel.onStartingPriceChange(
@@ -85,7 +83,7 @@ class SearchFragment : Fragment() {
         binding.carSearchBrandText.doOnTextChanged { _, _, _, _ ->
             if (binding.carSearchBrandText.text.toString().isNotEmpty()) {
                 binding.carSearchModelText.isEnabled = true
-                searchViewModel.onBrandChange(binding.carSearchBrandText.text.toString())!!
+                searchViewModel.onBrandChange(binding.carSearchBrandText.text.toString())
             }
         }
         binding.carSearchModelText.setOnClickListener {
@@ -99,10 +97,10 @@ class SearchFragment : Fragment() {
         }
         binding.carSearchModelText.doOnTextChanged { _, _, _, _ ->
             if (binding.carSearchModelText.text.toString().isNotEmpty()) {
-                searchViewModel.onModelChange(binding.carSearchModelText.text.toString())!!
+                searchViewModel.onModelChange(binding.carSearchModelText.text.toString())
             }
         }
-        binding.buttonGroupVehicleState.addOnButtonCheckedListener { group, checkedId, isChecked ->
+        binding.buttonGroupVehicleState.addOnButtonCheckedListener { _, checkedId, isChecked ->
             if (isChecked) {
                 when (checkedId) {
                     binding.newCarButton.id -> {
@@ -133,25 +131,46 @@ class SearchFragment : Fragment() {
                 }
             }
         }
+        binding.buttonGroupVehiclePowerType?.setOnCheckedChangeListener { _, checkedId ->
+            when (checkedId) {
+                binding.KwFilter?.id -> searchViewModel.multiplierPower = 1.00
+                binding.CVFilter?.id -> searchViewModel.multiplierPower = 1.36
+            }
+            searchViewModel.filterListOfCars()
+        }
+        binding.carSearchPowerStartingText?.doOnTextChanged{ _, _, _, _ ->
+            if (binding.carSearchPowerStartingText!!.text.toString().isNotEmpty()) {
+                searchViewModel.onStartingPowerChange(
+                    binding.carSearchPowerStartingText!!.text.toString().toDouble()
+                )
+            } else searchViewModel.mapFilters[CarFiltersSearch.MIN_POWER] = false
+        }
+        binding.carSearchPowerEndingText?.doOnTextChanged{ _, _, _, _ ->
+            if (binding.carSearchPowerEndingText!!.text.toString().isNotEmpty()) {
+                searchViewModel.onEndingPowerChange(
+                    binding.carSearchPowerEndingText!!.text.toString().toDouble()
+                )
+            } else searchViewModel.mapFilters[CarFiltersSearch.MAX_POWER] = false
+        }
         binding.searchCarsButton.setOnClickListener {
             val action = SearchFragmentDirections
                 .actionNavigationSearchToSearchResults()
             findNavController().navigate(action)
         }
-        binding.dieselFilter.setOnCheckedChangeListener{ _, isChecked ->
-            searchViewModel.onCheckDieselFilter(isChecked)!!
+        binding.dieselFilter.setOnCheckedChangeListener { _, isChecked ->
+            searchViewModel.onCheckDieselFilter(isChecked)
         }
-        binding.electricFilter.setOnCheckedChangeListener{ _, isChecked ->
+        binding.electricFilter.setOnCheckedChangeListener { _, isChecked ->
             searchViewModel.onCheckElectricFilter(isChecked)
         }
-        binding.petrolFilter.setOnCheckedChangeListener{ _, isChecked ->
+        binding.petrolFilter.setOnCheckedChangeListener { _, isChecked ->
             searchViewModel.onCheckPetrolFilter(isChecked)
         }
-        binding.gasFilter.setOnCheckedChangeListener{ _, isChecked ->
+        binding.gasFilter.setOnCheckedChangeListener { _, isChecked ->
             searchViewModel.onCheckGasFilter(isChecked)
         }
         binding.checkboxAtLeastOnePhoto?.setOnClickListener {
-            searchViewModel.onCheckBoxChange(binding.checkboxAtLeastOnePhoto!!.isChecked)!!
+            searchViewModel.onCheckBoxChange(binding.checkboxAtLeastOnePhoto!!.isChecked)
         }
         searchViewModel.allCars.observe(this.viewLifecycleOwner) { }
         searchViewModel.currentNumberOfResults.observe(this.viewLifecycleOwner) {

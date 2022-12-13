@@ -93,7 +93,8 @@
     <string name="kw">Kw</string>
     <string name="starting_power">Starting power</string>
     <string name="ending_power">Ending power</string>
-    <string name="only_offers_that_contains_at_least_one_photo">Only offers that contains at least one photo</string>
+    <string name="only_offers_that_contains_at_least_one_photo">Only offers that contains a photo</string>
     <string name="details_offer_text">Details offer</string>
+    <string name="vehicle_technical_informations_text">Vehicle technical informations</string>
 
 </resources>

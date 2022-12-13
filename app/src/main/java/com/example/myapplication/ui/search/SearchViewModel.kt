@@ -10,6 +10,7 @@ import com.example.myapplication.model.CarInfo
 import com.example.myapplication.network.VehicleApi
 import kotlinx.coroutines.launch
 import java.io.IOException
+import kotlin.math.max
 
 class SearchViewModel(val CarDao: CarDao) : ViewModel(){
     private val _carList = MutableLiveData<List<CarInfo>>()
@@ -19,7 +20,9 @@ class SearchViewModel(val CarDao: CarDao) : ViewModel(){
     var brandSelected: String = ""
     var maxPriceSelected: Double = 0.0
     var minPriceSelected: Double = 0.0
-
+    var maxPowerSelected: Double = 0.0
+    var minPowerSelected: Double = 0.0
+    var multiplierPower: Double = 1.00
     val allCars: LiveData<List<Car>> = CarDao.getCars().asLiveData()
     var filteredList: List<Car>? = allCars.value?.toList()
     val currentNumberOfResults = MutableLiveData(filteredList?.size ?: 0)
@@ -56,9 +59,21 @@ class SearchViewModel(val CarDao: CarDao) : ViewModel(){
         filterListOfCars()
     }
 
+    fun onStartingPowerChange(minPower: Double){
+        mapFilters[CarFiltersSearch.MIN_POWER] = true
+        minPowerSelected = minPower
+        filterListOfCars()
+    }
+
     fun onEndingPriceChange(maxPrice: Double){
         mapFilters[CarFiltersSearch.MAXPRICE] = true
         maxPriceSelected = maxPrice
+        filterListOfCars()
+    }
+
+    fun onEndingPowerChange(maxPower: Double){
+        mapFilters[CarFiltersSearch.MAX_POWER] = true
+        maxPowerSelected = maxPower
         filterListOfCars()
     }
 
@@ -115,6 +130,8 @@ class SearchViewModel(val CarDao: CarDao) : ViewModel(){
                 CarFiltersSearch.BRAND -> if (filter.value) filteredList = filteredList?.filter { car -> car.brand == brandSelected }
                 CarFiltersSearch.MINPRICE -> if (filter.value) filteredList = filteredList?.filter { car -> car.price >= minPriceSelected }
                 CarFiltersSearch.MAXPRICE -> if (filter.value) filteredList = filteredList?.filter { car -> car.price <= maxPriceSelected }
+                CarFiltersSearch.MIN_POWER -> if (filter.value) filteredList = filteredList?.filter { car -> (car.carPower * multiplierPower) >= minPowerSelected.toInt()}
+                CarFiltersSearch.MAX_POWER -> if (filter.value) filteredList = filteredList?.filter { car -> (car.carPower * multiplierPower) <= maxPowerSelected.toInt()}
                 CarFiltersSearch.AT_LEAST_ONE_PHOTO -> if (filter.value) filteredList = filteredList?.filter { car -> car.image != null }
                 else -> 0
             }

@@ -11,5 +11,7 @@ enum class CarFiltersSearch {
     ELECTRIC,
     PETROL,
     GAS,
+    MIN_POWER,
+    MAX_POWER,
     AT_LEAST_ONE_PHOTO
 }
