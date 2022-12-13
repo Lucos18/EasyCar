@@ -101,13 +101,15 @@
     <fragment
         android:id="@+id/searchResults"
         android:name="com.example.myapplication.ui.searchResults.SearchResults"
-        android:label="SearchResults" >
+        android:label="@string/title_search_results">
         <action
             android:id="@+id/action_searchResults_to_detailCarFragment"
             app:destination="@id/detailCarFragment" />
         <action
             android:id="@+id/action_searchResults_to_navigation_search"
-            app:destination="@id/navigation_search" />
+            app:destination="@id/navigation_search"
+            app:popUpTo="@id/navigation_search"
+            app:popUpToInclusive="true" />
     </fragment>
 
 </navigation>

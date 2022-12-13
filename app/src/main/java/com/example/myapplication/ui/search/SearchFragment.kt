@@ -1,6 +1,7 @@
 package com.example.myapplication.ui.search
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,8 +26,6 @@ class SearchFragment : Fragment() {
     private var _binding: FragmentSearchBinding? = null
 
     private val binding get() = _binding!!
-
-    private var result = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -131,24 +130,24 @@ class SearchFragment : Fragment() {
                 }
             }
         }
-        binding.buttonGroupVehiclePowerType?.setOnCheckedChangeListener { _, checkedId ->
+        binding.buttonGroupVehiclePowerType.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
-                binding.KwFilter?.id -> searchViewModel.multiplierPower = 1.00
-                binding.CVFilter?.id -> searchViewModel.multiplierPower = 1.36
+                binding.KwFilter.id -> searchViewModel.multiplierPower = 1.00
+                binding.CVFilter.id -> searchViewModel.multiplierPower = 1.36
             }
             searchViewModel.filterListOfCars()
         }
-        binding.carSearchPowerStartingText?.doOnTextChanged{ _, _, _, _ ->
-            if (binding.carSearchPowerStartingText!!.text.toString().isNotEmpty()) {
+        binding.carSearchPowerStartingText.doOnTextChanged { _, _, _, _ ->
+            if (binding.carSearchPowerStartingText.text.toString().isNotEmpty()) {
                 searchViewModel.onStartingPowerChange(
-                    binding.carSearchPowerStartingText!!.text.toString().toDouble()
+                    binding.carSearchPowerStartingText.text.toString().toDouble()
                 )
             } else searchViewModel.mapFilters[CarFiltersSearch.MIN_POWER] = false
         }
-        binding.carSearchPowerEndingText?.doOnTextChanged{ _, _, _, _ ->
-            if (binding.carSearchPowerEndingText!!.text.toString().isNotEmpty()) {
+        binding.carSearchPowerEndingText.doOnTextChanged { _, _, _, _ ->
+            if (binding.carSearchPowerEndingText.text.toString().isNotEmpty()) {
                 searchViewModel.onEndingPowerChange(
-                    binding.carSearchPowerEndingText!!.text.toString().toDouble()
+                    binding.carSearchPowerEndingText.text.toString().toDouble()
                 )
             } else searchViewModel.mapFilters[CarFiltersSearch.MAX_POWER] = false
         }
@@ -169,18 +168,22 @@ class SearchFragment : Fragment() {
         binding.gasFilter.setOnCheckedChangeListener { _, isChecked ->
             searchViewModel.onCheckGasFilter(isChecked)
         }
-        binding.checkboxAtLeastOnePhoto?.setOnClickListener {
-            searchViewModel.onCheckBoxChange(binding.checkboxAtLeastOnePhoto!!.isChecked)
+        binding.checkboxAtLeastOnePhoto.setOnClickListener {
+            searchViewModel.onCheckBoxChange(binding.checkboxAtLeastOnePhoto.isChecked)
         }
         searchViewModel.allCars.observe(this.viewLifecycleOwner) { }
         searchViewModel.currentNumberOfResults.observe(this.viewLifecycleOwner) {
-            binding.searchCarsButton.text =
-                getString(R.string.button_result_text, it.toString())
+            if (searchViewModel.currentNumberOfResults.value != 0){
+                binding.searchCarsButton.text =
+                    getString(R.string.button_result_text, it.toString())
+            } else {
+                binding.searchCarsButton.text =
+                    getString(R.string.button_result_text, searchViewModel.filteredList?.size.toString())
+            }
         }
     }
 
     override fun onDestroyView() {
-
         super.onDestroyView()
         _binding = null
     }

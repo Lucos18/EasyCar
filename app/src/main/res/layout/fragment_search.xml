@@ -41,7 +41,8 @@
                         android:layout_marginVertical="16dp"
                         android:src="@drawable/ic_baseline_currency_exchange_24"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="ContentDescription">
 
                     </ImageView>
 
@@ -135,7 +136,8 @@
                         android:layout_marginVertical="16dp"
                         android:src="@drawable/searching_car"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="ContentDescription">
 
                     </ImageView>
 
@@ -274,7 +276,7 @@
                                 style="@style/Widget.MaterialComponents.Chip.Filter"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Diesel"
+                                android:text="@string/diesel"
                                 android:theme="@style/Theme.MaterialComponents.Light">
 
                             </com.google.android.material.chip.Chip>
@@ -284,7 +286,7 @@
                                 style="@style/Widget.MaterialComponents.Chip.Filter"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Electric"
+                                android:text="@string/electric"
                                 android:theme="@style/Theme.MaterialComponents.Light">
 
                             </com.google.android.material.chip.Chip>
@@ -294,7 +296,7 @@
                                 style="@style/Widget.MaterialComponents.Chip.Filter"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Petrol"
+                                android:text="@string/petrol"
                                 android:theme="@style/Theme.MaterialComponents.Light">
 
                             </com.google.android.material.chip.Chip>
@@ -304,7 +306,7 @@
                                 style="@style/Widget.MaterialComponents.Chip.Filter"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Gas"
+                                android:text="@string/gas"
                                 android:theme="@style/Theme.MaterialComponents.Light">
 
                             </com.google.android.material.chip.Chip>
@@ -429,7 +431,7 @@
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/car_search_power_starting_text"
                                 android:layout_width="match_parent"
-                                android:layout_height="@dimen/tablet_search_input_height"
+                                android:layout_height="wrap_content"
                                 android:hint="@string/starting_power"
                                 android:inputType="number"
                                 android:maxLength="5">
@@ -450,7 +452,7 @@
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/car_search_power_ending_text"
                                 android:layout_width="match_parent"
-                                android:layout_height="@dimen/tablet_search_input_height"
+                                android:layout_height="wrap_content"
                                 android:hint="@string/ending_power"
                                 android:inputType="number"
                                 android:maxLength="5" />
@@ -482,7 +484,8 @@
                         android:layout_marginVertical="16dp"
                         android:src="@drawable/ic_baseline_info_24"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="ContentDescription">
 
                     </ImageView>
 
