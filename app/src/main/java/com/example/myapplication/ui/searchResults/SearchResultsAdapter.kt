@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.DiffUtil
@@ -36,7 +37,8 @@ class SearchResultsAdapter(
                 val modelReplaced = car.model.replaceRange(22 until car.model.length, "...")
                 binding.carModel.text = modelReplaced
             } else binding.carModel.text = car.model
-
+            //TODO Remove line when favorites will work again
+            binding.favoritesButtonImage.visibility = View.GONE
             binding.carPrice.text = car.formatPriceToCurrency(car.price)
             binding.carPower.text = car.carPowerWithUnitString(car.carPower)
             binding.carYearProduction.text = car.yearStartProduction.toString()
