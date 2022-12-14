@@ -27,9 +27,4 @@ class HomeFragmentInstrumentedTest {
             .perform(click())
     }
 
-    fun click_on_card_and_check_details_card(){
-        go_to_home_fragment()
-        //TODO Check if works click on card since it wont run
-        click_on_card(0)
-    }
 }

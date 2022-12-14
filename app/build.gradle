@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
+    id 'kotlin-android'
     id 'androidx.navigation.safeargs.kotlin'
 }
 
@@ -49,6 +50,7 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
     androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.5.0'
+    implementation "androidx.test:core:1.5.0"
     androidTestImplementation 'androidx.navigation:navigation-testing:2.5.3'
     debugImplementation 'androidx.fragment:fragment-testing:1.5.5'
     // Lifecycle
@@ -86,7 +88,6 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
     implementation 'com.squareup.picasso:picasso:2.8'
     implementation 'com.github.bumptech.glide:glide:4.14.2'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.14.2'
 
     implementation "androidx.slidingpanelayout:slidingpanelayout:1.2.0"
 
