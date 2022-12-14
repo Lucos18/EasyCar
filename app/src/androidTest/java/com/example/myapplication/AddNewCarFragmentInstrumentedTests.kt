@@ -25,13 +25,13 @@ class AddNewCarFragmentInstrumentedTest {
         click_text_input_brand_and_choose_by_position(R.id.car_brand_add_text, 1)
         click_text_input_year_production_and_choose_year(R.id.car_year_add_text, 2016)
         click_text_input_model_and_choose_by_position(R.id.car_model_add_text, 0)
-        //TODO add fuel type choose by position
+        click_text_input_fuel_and_choose_by_position(R.id.car_fuel_type_add_text, 0)
         click_text_input_and_write_string(R.id.car_power_add_text,"150")
         click_text_input_and_write_string(R.id.car_seats_add_text,"5")
         click_text_input_and_write_string(R.id.car_price_add_text,"500000")
         click_text_input_and_write_string(R.id.car_mileage_add_text,"0")
         click_text_input_color_and_choose_by_position(R.id.car_color_add_text, 0)
-        Thread.sleep(5000)
+        Thread.sleep(2000)
         //TODO add image somewhat
         simple_click(R.id.button_add_new_car)
         //TODO check current location

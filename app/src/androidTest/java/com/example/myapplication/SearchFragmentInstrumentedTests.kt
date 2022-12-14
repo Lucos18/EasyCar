@@ -19,4 +19,5 @@ class SearchFragmentInstrumentedTests {
     @get:Rule()
     val activity = ActivityScenarioRule(MainActivity::class.java)
 
+
 }

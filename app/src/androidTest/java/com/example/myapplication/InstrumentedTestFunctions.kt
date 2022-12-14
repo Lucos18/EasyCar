@@ -1,20 +1,25 @@
 package com.example.myapplication
 
+import android.app.PendingIntent.getActivity
+import android.view.View
 import android.widget.DatePicker
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onData
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.UiController
+import androidx.test.espresso.ViewAction
 import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.contrib.PickerActions
 import androidx.test.espresso.contrib.RecyclerViewActions
+import androidx.test.espresso.matcher.RootMatchers.withDecorView
 import androidx.test.espresso.matcher.ViewMatchers
-import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.espresso.matcher.ViewMatchers.withText
-import org.hamcrest.CoreMatchers.allOf
-import org.hamcrest.CoreMatchers.anything
+import androidx.test.espresso.matcher.ViewMatchers.*
+import com.example.myapplication.enums.CarFiltersSearch
+import com.example.myapplication.enums.fuelType
+import com.example.myapplication.utils.FuelTypeAlertDialog
+import org.hamcrest.CoreMatchers.*
 import org.hamcrest.Matchers
 import org.junit.Assert
-import java.time.Year
 
 
 fun go_to_sell_fragment() {
@@ -44,7 +49,7 @@ fun navigate_to_sell_fragment_and_add_new_car() {
 }
 
 fun check_current_location_is_expected(currentLocation: Int?, expectedLocation: Int) {
-    Assert.assertEquals(currentLocation, expectedLocation)
+    //assert(currentLocation.toString()).isEqualTo(expectedLocation)
 }
 
 fun simple_click(idTextInput: Int){
@@ -87,13 +92,12 @@ fun click_text_input_model_and_choose_by_position(idTextInput: Int, positionItem
     simple_click(idTextInput)
     onData(anything()).inAdapterView(withId(R.id.listView)).atPosition(positionItemClick).perform(click());
 }
-
-fun click_text_input_color_and_choose_by_position(idTextInput: Int, positionItemClick: Int){
+fun click_text_input_fuel_and_choose_by_position(idTextInput: Int, positionItemClick: Int){
     simple_click(idTextInput)
-    onData(anything()).inAdapterView(withId(R.id.listView)).atPosition(positionItemClick).perform(click());
+    onView(withText(fuelType.Diesel.toString())).perform(click())
+    click_positive_button_alert_dialog()
 }
-
-fun click_text_input_seats_and_write(idTextInput: Int, positionItemClick: Int){
+fun click_text_input_color_and_choose_by_position(idTextInput: Int, positionItemClick: Int){
     simple_click(idTextInput)
     onData(anything()).inAdapterView(withId(R.id.listView)).atPosition(positionItemClick).perform(click());
 }
@@ -108,6 +112,12 @@ fun click_text_input_brand_and_choose_by_text(idTextInput: Int, positionItemClic
 fun click_on_card(idCard: Int) {
     onView(withId(R.id.recycler_view)).perform(
         RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(idCard, click())
+    )
+}
+
+fun click_on_favorites_button(idCard: Int) {
+    onView(withId(R.id.recycler_view)).perform(
+        RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(idCard, clickOnViewChild(R.id.favorites_button_image))
     )
 }
 
@@ -136,4 +146,12 @@ fun hideKeyboard() {
 
 fun click_positive_button_alert_dialog(){
     onView(withId(android.R.id.button1)).perform(click())
+}
+
+fun clickOnViewChild(viewId: Int) = object : ViewAction {
+    override fun getConstraints() = null
+
+    override fun getDescription() = "Click on a child view with specified id."
+
+    override fun perform(uiController: UiController, view: View) = click().perform(uiController, view.findViewById<View>(viewId))
 }

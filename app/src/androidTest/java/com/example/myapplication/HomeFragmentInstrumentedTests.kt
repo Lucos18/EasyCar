@@ -23,8 +23,8 @@ class HomeFragmentInstrumentedTest {
     @Test
     fun click_add_to_favorites_car(){
         go_to_home_fragment()
-        onView(withId(R.id.favorites_button_image))
-            .perform(click())
+        click_on_favorites_button(0)
+        //TODO Check if favorites has changed on that id
     }
 
 }
