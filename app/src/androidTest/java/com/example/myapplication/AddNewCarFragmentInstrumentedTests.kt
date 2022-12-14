@@ -1,12 +1,8 @@
 package com.example.myapplication
 
-import android.widget.DatePicker
-import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.contrib.PickerActions
-import androidx.test.espresso.matcher.ViewMatchers.withClassName
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import org.hamcrest.Matchers
+import androidx.test.platform.app.InstrumentationRegistry
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -36,5 +32,19 @@ class AddNewCarFragmentInstrumentedTest {
         simple_click(R.id.button_add_new_car)
         //TODO check current location
         //TODO check if car was added
+    }
+    @Test
+    fun go_to_add_new_car_fragment_without_connection_check_error_constraint(){
+        enableWifi(false)
+        enableCellularData(false)
+        Thread.sleep(3000)
+        go_to_sell_fragment()
+        click_add_new_car_fab()
+        check_if_visible(R.id.image_error_connection)
+        enableWifi(true)
+        enableCellularData(true)
+        Thread.sleep(3000)
+        simple_click(R.id.retry_again_error_connection)
+        check_if_visible(R.id.button_add_new_car)
     }
 }

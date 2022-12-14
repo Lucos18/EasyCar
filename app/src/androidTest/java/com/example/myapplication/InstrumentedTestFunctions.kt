@@ -1,6 +1,5 @@
 package com.example.myapplication
 
-import android.app.PendingIntent.getActivity
 import android.view.View
 import android.widget.DatePicker
 import androidx.recyclerview.widget.RecyclerView
@@ -9,17 +8,16 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
 import androidx.test.espresso.action.ViewActions.*
+import androidx.test.espresso.assertion.ViewAssertions
+import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.PickerActions
 import androidx.test.espresso.contrib.RecyclerViewActions
-import androidx.test.espresso.matcher.RootMatchers.withDecorView
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
-import com.example.myapplication.enums.CarFiltersSearch
+import androidx.test.platform.app.InstrumentationRegistry
 import com.example.myapplication.enums.fuelType
-import com.example.myapplication.utils.FuelTypeAlertDialog
 import org.hamcrest.CoreMatchers.*
 import org.hamcrest.Matchers
-import org.junit.Assert
 
 
 fun go_to_sell_fragment() {
@@ -136,6 +134,10 @@ fun click_delete_car_fab(){
         .perform(click())
 }
 
+fun click_positive_button_alert_dialog(){
+    onView(withId(android.R.id.button1)).perform(click())
+}
+
 fun clear_text_text_input(idTextInput: Int) {
     onView(withId(idTextInput)).perform(clearText())
 }
@@ -144,8 +146,29 @@ fun hideKeyboard() {
     onView(ViewMatchers.isRoot()).perform(closeSoftKeyboard())
 }
 
-fun click_positive_button_alert_dialog(){
-    onView(withId(android.R.id.button1)).perform(click())
+fun check_if_visible(id: Int){
+    onView(withId(id)).check(matches(isDisplayed()))
+}
+
+fun enableWifi(enable: Boolean){
+    when (enable)
+    {
+        true -> InstrumentationRegistry.getInstrumentation().uiAutomation.executeShellCommand("svc wifi enable")
+        false -> InstrumentationRegistry.getInstrumentation().uiAutomation.executeShellCommand("svc wifi disable")
+    }
+}
+fun enableCellularData(enable: Boolean){
+    when (enable)
+    {
+        true -> InstrumentationRegistry.getInstrumentation().uiAutomation.executeShellCommand("svc data enable")
+        false -> InstrumentationRegistry.getInstrumentation().uiAutomation.executeShellCommand("svc data disable")
+    }
+}
+
+fun scrollTo(id: Int){
+    onView(withId(id))
+        .perform(scrollTo())
+        .check(matches(isDisplayed()))
 }
 
 fun clickOnViewChild(viewId: Int) = object : ViewAction {
