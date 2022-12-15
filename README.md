@@ -1,6 +1,6 @@
 <h1 align="center">
   <br>
-  <a href="https://github.com/Lucos18/EasyCarNew/tree/main"><img src="[https://raw.githubusercontent.com/amitmerchant1990/electron-markdownify/master/app/img/markdownify.png](https://github.com/Lucos18/EasyCarNew/blob/detailList/images/EasyCarLogo.png)" alt="EasyCar" width="200"></a>
+  <a href="https://github.com/Lucos18/EasyCarNew/tree/main"><img src="https://github.com/Lucos18/EasyCarNew/blob/detailList/images/EasyCarLogo.png" alt="EasyCar" width="200"></a>
   <br>
   EasyCar
   <br>
