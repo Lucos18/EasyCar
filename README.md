@@ -34,7 +34,7 @@
 
 ## Download
 
-You can [download](https://github.com/amitmerchant1990/electron-markdownify/releases/tag/v1.2.0) the latest installable version of EasyCar for Android
+You can [download](https://github.com/Lucos18/EasyCarNew/releases) the latest installable version of EasyCar for Android
 
 ## Credits
 
