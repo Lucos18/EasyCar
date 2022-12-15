@@ -38,13 +38,11 @@ You can [download](https://github.com/amitmerchant1990/electron-markdownify/rele
 
 This software uses the following open source packages:
 
-- [Electron](http://electron.atom.io/)
-- [Node.js](https://nodejs.org/)
-- [Marked - a markdown parser](https://github.com/chjj/marked)
-- [showdown](http://showdownjs.github.io/showdown/)
-- [CodeMirror](http://codemirror.net/)
-- Emojis are taken from [here](https://github.com/arvida/emoji-cheat-sheet.com)
-- [highlight.js](https://highlightjs.org/)
+- [Kotlin](https://kotlinlang.org/)
+- [Material](https://m3.material.io/)
+- [Picasso](https://square.github.io/picasso/)
+- [Retrofit2](https://square.github.io/retrofit/)
+- [ScrollinImageView](https://github.com/Q42/AndroidScrollingImageView)
 
 ## Related
 
