@@ -16,7 +16,9 @@
   <a href="#license">License</a>
 </p>
 
-![screenshot](https://github.com/Lucos18/EasyCarNew/blob/detailList/images/videoEasyCar.gif)
+<p align="center">
+  <img src="https://github.com/Lucos18/EasyCarNew/blob/detailList/images/videoEasyCar.gif" alt="animated" />
+</p>
 
 ## Key Features
 
