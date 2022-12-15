@@ -60,6 +60,7 @@ class HomeFragment : Fragment() {
         }
 
         binding.searchCars.setOnClickListener {
+            findNavController().popBackStack(R.id.navigation_home, true)
             findNavController().navigate(R.id.navigation_search)
         }
     }

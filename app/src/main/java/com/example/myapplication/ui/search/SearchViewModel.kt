@@ -110,6 +110,11 @@ class SearchViewModel(val CarDao: CarDao) : ViewModel(){
         filterListOfCars()
     }
 
+    fun checkMaxIsNotMinorOfMin(Min: Double?, Max: Double?):Boolean{
+        if (Min == null || Max == null) return true
+        return Max >= Min
+    }
+
     fun refreshDataFromNetwork() = viewModelScope.launch {
         try {
             _carList.value = VehicleApi.retrofitService.getCarInfo()
@@ -118,6 +123,8 @@ class SearchViewModel(val CarDao: CarDao) : ViewModel(){
 
         }
     }
+
+
 
     fun filterListOfCars(): Int? {
         filteredList = allCars.value?.toList()
