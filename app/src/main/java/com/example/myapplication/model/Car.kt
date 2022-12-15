@@ -1,5 +1,6 @@
 package com.example.myapplication.model
 
+import android.graphics.Color
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -19,7 +20,7 @@ data class Car(
     @ColumnInfo(name="fuel_type") val fuelType: String,
     @ColumnInfo val price: Double,
     @ColumnInfo val mileage: Double,
-    //@ColumnInfo val color: Double,
+    @ColumnInfo val color: String,
     //@ColumnInfo val state: Double,
     @ColumnInfo(typeAffinity = ColumnInfo.BLOB) val image: ByteArray?,
     @ColumnInfo val favorite: Boolean = false
@@ -38,11 +39,6 @@ fun Car.carMileageWithUnitString(mileage: Double): String{
 fun Car.convertKwToCv(kw: Int): Int {
     return (kw * 1.36).toInt()
 }
-enum class fuelType{
-    Petrol,
-    Diesel,
-    Electric,
-    Gas,
-    Other
-}
+
+
 

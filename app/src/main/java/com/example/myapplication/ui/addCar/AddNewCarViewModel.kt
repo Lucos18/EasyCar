@@ -17,7 +17,7 @@ import java.io.IOException
 class AddNewCarViewModel(private val carDao: CarDao) : ViewModel() {
     private val _carList = MutableLiveData<List<CarInfo>>()
 
-    val playlist: LiveData<List<CarInfo>>
+    val carList: LiveData<List<CarInfo>>
         get() = _carList
 
     private var _eventNetworkError = MutableLiveData<Boolean>(false)
@@ -30,17 +30,42 @@ class AddNewCarViewModel(private val carDao: CarDao) : ViewModel() {
     val isNetworkErrorShown: LiveData<Boolean>
         get() = _isNetworkErrorShown
 
-    fun checkInputEditTextNewCar(
-        brand: String,
-        year: Int,
-        model: String,
-        fuelType: String,
-        power: Int,
-        seats: Int,
-        price: Double,
-        mileage: Double
-    ): Boolean {
-        return brand.isNotBlank() && year != 0 && model.isNotBlank() && fuelType.isNotBlank() && power != 0 && power.toString().length <= 4 && seats != 0 && price != 0.0 && mileage != 0.0 && mileage.toString().length < 10
+    fun checkBrandInput(brand: String): Boolean{
+        return brand.isNotBlank()
+    }
+
+    fun checkYearInput(year: Int?): Boolean{
+        return year != 0 && year != null
+    }
+
+    fun checkModelInput(model: String): Boolean{
+        return model.isNotBlank()
+    }
+
+    fun checkFuelInput(fuel: String): Boolean{
+        return fuel.isNotBlank()
+    }
+
+    fun checkPowerInput(power: Int?): Boolean{
+        return power != 0 && power.toString().length <= 4 && power != null
+    }
+
+    fun checkSeatsInput(seats: Int?): Boolean{
+        return seats != 0 && seats != null
+    }
+
+    fun checkPriceInput(price: Double): Boolean{
+        return price != 0.0
+    }
+
+    fun checkMileageInput(mileage: Double?): Boolean{
+        return if (mileage != null) {
+            mileage >= 0.0
+        } else false
+    }
+
+    fun checkColorInput(color:String): Boolean{
+        return color.isNotEmpty()
     }
 
     fun addCar(
@@ -53,7 +78,8 @@ class AddNewCarViewModel(private val carDao: CarDao) : ViewModel() {
         FuelType: String,
         Price: Double,
         Image: Bitmap?,
-        Mileage: Double
+        Mileage: Double,
+        Color:String
     ) {
         val car = Car(
             brand = Brand,
@@ -65,7 +91,8 @@ class AddNewCarViewModel(private val carDao: CarDao) : ViewModel() {
             fuelType = FuelType,
             price = Price,
             image = Image?.toByteArray(),
-            mileage = Mileage
+            mileage = Mileage,
+            color = Color
         )
 
         viewModelScope.launch {
@@ -73,8 +100,7 @@ class AddNewCarViewModel(private val carDao: CarDao) : ViewModel() {
         }
     }
 
-    fun refreshDataFromNetwork()
-        = viewModelScope.launch {
+    fun refreshDataFromNetwork() = viewModelScope.launch {
         try {
             _carList.value = VehicleApi.retrofitService.getCarInfo()
             _eventNetworkError.value = false
@@ -86,7 +112,11 @@ class AddNewCarViewModel(private val carDao: CarDao) : ViewModel() {
     }
 
     fun getDistinctBrandNames(): List<String> {
-        return _carList.value!!.map { e -> e.maker }.distinct().sorted()
+        if (checkCarListValue())
+        {
+            return _carList.value!!.map { e -> e.maker }.distinct().sorted()
+        }
+        return listOf("")
     }
 
     fun getDistinctMaxYearCarByBrand(maker: String): String? {
@@ -103,7 +133,9 @@ class AddNewCarViewModel(private val carDao: CarDao) : ViewModel() {
     fun convertKwToCv(kw: Int): Int {
         return (kw * 1.36).toInt()
     }
-
+    fun checkCarListValue(): Boolean {
+        return _carList.value != null
+    }
     private fun Bitmap.toByteArray(quality: Int = 100): ByteArray {
         val stream = ByteArrayOutputStream()
         compress(Bitmap.CompressFormat.JPEG, quality, stream)

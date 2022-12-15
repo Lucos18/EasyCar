@@ -3,7 +3,8 @@ package com.example.myapplication.utils
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
-import com.example.myapplication.model.fuelType
+import com.example.myapplication.R
+import com.example.myapplication.enums.fuelType
 import com.google.android.material.textfield.TextInputEditText
 
 fun FuelTypeAlertDialog(context: Context,text: TextInputEditText){
@@ -13,17 +14,17 @@ fun FuelTypeAlertDialog(context: Context,text: TextInputEditText){
         items[i] = values[i].toString()
     }
     val builder: AlertDialog.Builder = AlertDialog.Builder(context)
-    builder.setTitle("Choose fuel type")
-    builder.setSingleChoiceItems(items, -1) { dialogInterface: DialogInterface, which ->
+    builder.setTitle(context.getString(R.string.choose_fuel_type_title))
+    builder.setSingleChoiceItems(items, -1) { _: DialogInterface, which ->
         text.setText(items[which].toString())
     }
     builder.setItems(items) { _: DialogInterface, which ->
         text.setText(items[which].toString())
     }
-    builder.setPositiveButton("OK") { _: DialogInterface, _ ->
+    builder.setPositiveButton(context.getString(R.string.delete_car_dialog_positive_button)) { _: DialogInterface, _ ->
 
     }
-    builder.setNegativeButton("Cancel") { _: DialogInterface, _ ->
+    builder.setNegativeButton(context.getString(R.string.delete_car_dialog_negative_button)) { _: DialogInterface, _ ->
         text.setText("")
     }
     builder.show()

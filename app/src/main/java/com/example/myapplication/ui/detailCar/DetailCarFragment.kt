@@ -1,7 +1,7 @@
 package com.example.myapplication.ui.detailCar
 
 import android.app.AlertDialog
-import android.content.DialogInterface
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
@@ -10,21 +10,30 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
-import androidx.constraintlayout.widget.ConstraintLayout
+import android.view.inputmethod.InputMethodManager
+import android.widget.TextView
+import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.myapplication.BaseApplication
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentDetailCarBinding
+import com.example.myapplication.enums.CarColors
 import com.example.myapplication.model.*
 import com.example.myapplication.ui.transformIntoDatePicker
 import com.example.myapplication.utils.FuelTypeAlertDialog
+import com.example.myapplication.utils.setAndGetUriByBrandParsingListOfLogoAndImageView
 import com.example.myapplication.utils.showCustomSnackBar
 import com.example.myapplication.workers.CarWorkerViewModel
 import com.example.myapplication.workers.CarWorkerViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.squareup.picasso.Picasso
+import java.lang.System.load
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -32,6 +41,7 @@ class DetailCarFragment : Fragment() {
     var oldCarMileage: Double = 0.0
     private val detailCarArgs: DetailCarFragmentArgs by navArgs()
     private lateinit var car: Car
+    private var carLogo = MutableLiveData<List<CarLogo>>()
     private val detailCarViewModel: DetailCarViewModel by viewModels {
         DetailViewModelFactory(
             (activity?.application as BaseApplication).database.CarDao()
@@ -49,17 +59,18 @@ class DetailCarFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        detailCarViewModel.refreshDataFromNetwork()
         _binding = FragmentDetailCarBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val arg = arguments?.getLong("CarIdNotification")
         setupViewSwitcher()
-        val navBar: BottomNavigationView =
-            requireActivity().findViewById(R.id.nav_view)
-        navBar.visibility = View.GONE
-        val id = detailCarArgs.carId
+        var id = detailCarArgs.carId
+        if (arg != null && arg > 0)
+            id = arg
         if (id > 0) {
             detailCarViewModel.getCarById(id).observe(this.viewLifecycleOwner) { carSelected ->
                 car = carSelected
@@ -72,13 +83,13 @@ class DetailCarFragment : Fragment() {
             binding.deleteCarFab.setOnClickListener {
                 val builder = AlertDialog.Builder(requireContext())
                 //set title for alert dialog
-                builder.setTitle("Delete Car")
+                builder.setTitle(getString(R.string.delete_car_dialog_title))
                 //set message for alert dialog
-                builder.setMessage("Are you sure do you want to delete this car from database?")
+                builder.setMessage(getString(R.string.delete_car_dialog_message))
                 builder.setIcon(android.R.drawable.ic_dialog_alert)
 
                 //performing positive action
-                builder.setPositiveButton("Yes") { _, _ ->
+                builder.setPositiveButton(getString(R.string.delete_car_dialog_positive_button)) { _, _ ->
                     detailCarViewModel.deleteCarById(detailCarArgs.carId)
                     val action = DetailCarFragmentDirections
                         .actionDetailCarFragmentToNavigationSell()
@@ -86,7 +97,7 @@ class DetailCarFragment : Fragment() {
                 }
 
                 //performing negative action
-                builder.setNegativeButton("No") { _, _ ->
+                builder.setNegativeButton(getString(R.string.delete_car_dialog_negative_button)) { _, _ ->
 
                 }
                 // Create the AlertDialog
@@ -100,9 +111,6 @@ class DetailCarFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-        val navBar: BottomNavigationView =
-            requireActivity().findViewById(R.id.nav_view)
-        navBar.visibility = View.VISIBLE
         super.onDestroyView()
         _binding = null
     }
@@ -119,7 +127,6 @@ class DetailCarFragment : Fragment() {
             }
             editCarFab.setOnClickListener {
                 oldCarMileage = car.mileage
-                Log.d("Old", oldCarMileage.toString())
                 switchBetweenEditAndSave()
                 setEditTextBinding()
                 deleteCarFab.visibility = View.GONE
@@ -129,6 +136,7 @@ class DetailCarFragment : Fragment() {
             saveCarFab.setOnClickListener {
                 if (checkInput()) {
                     switchBetweenEditAndSave()
+                    view?.hideKeyboard()
                     deleteCarFab.visibility = View.VISIBLE
                     editCarFab.visibility = View.VISIBLE
                     saveCarFab.visibility = View.GONE
@@ -142,9 +150,20 @@ class DetailCarFragment : Fragment() {
                         price = carPriceEditText.text.toString(),
                         mileage = carMileageTextEdit.text.toString()
                     )
-                    val checkMileage = binding.carMileageTextEdit.text.toString().toDouble() - oldCarMileage
-                    Log.d("ciaoss", checkMileage.toString())
-                    if (checkMileage >= 1000) viewModel.scheduleReminder(5, TimeUnit.SECONDS,"La tua macchina e' stata rubata", "chiama il 112", car.id,car.brand,car.model,car.image)
+                    val checkMileage =
+                        binding.carMileageTextEdit.text.toString().toDouble() - oldCarMileage
+                    if (checkMileage >= 100000) viewModel.scheduleReminder(
+                        5,
+                        TimeUnit.SECONDS,
+                        getString(
+                            R.string.service_car_expired_text, car.brand
+                        ),
+                        getString(R.string.service_car_context_text, car.brand, car.model),
+                        car.id,
+                        car.brand,
+                        car.model,
+                        car.image
+                    )
                 } else {
                     showCustomSnackBar(
                         binding.coordinatorDetailCar,
@@ -158,22 +177,38 @@ class DetailCarFragment : Fragment() {
             carPriceDetail.text = car.formatPriceToCurrency(car.price)
             carPowerDetail.text = car.carPowerWithUnitString(car.carPower)
             carMileageText.text = car.carMileageWithUnitString(car.mileage)
+            carColorText.text   = car.color
+            setColorDrawable(binding.carColorText)
+
             carFuelTypeDetail.text = getString(R.string.car_fuel_type_detail_string, car.fuelType)
             carSeatsTypeDetail.text =
                 getString(R.string.car_seats_detail_string, car.seats.toString())
             carYearProductionDetail.text =
                 getString(R.string.car_year_detail_string, car.yearStartProduction.toString())
+            carStateText.text =
+                if (car.mileage > 0) getString(R.string.used_text) else getString(R.string.new_text)
+
             if (car.image != null) {
+                val bmp = BitmapFactory.decodeByteArray(car.image, 0, car.image.size)
                 binding.carImageDetail.setImageBitmap(
                     Bitmap.createScaledBitmap(
-                        BitmapFactory.decodeByteArray(
-                            car.image, 0, car.image.size
-                        ), 600, 250, false
+                        bmp,
+                        1920,
+                        1080,
+                        false
                     )
                 )
             } else {
                 binding.carImageDetail.setImageResource(R.drawable.ic_baseline_directions_car_24)
             }
+            val observer = Observer<List<CarLogo>> { list ->
+                setAndGetUriByBrandParsingListOfLogoAndImageView(
+                    list,
+                    car.brand,
+                    binding.carLogoDetail
+                )
+            }
+            detailCarViewModel.carLogos.observe(viewLifecycleOwner,observer)
         }
     }
 
@@ -221,13 +256,27 @@ class DetailCarFragment : Fragment() {
         }
     }
 
-    fun checkInput():Boolean{
+    fun checkInput(): Boolean {
         return detailCarViewModel.checkInputEditTextNewCar(
             power = binding.carPowerEditText.text.toString().toInt(),
             seats = binding.carSeatsEditText.text.toString().toInt(),
             fuelType = binding.carFuelTypeEditText.text.toString(),
             year = binding.carYearProductionEditText.text.toString().toInt(),
-            price = binding.carPriceEditText.text.toString().toDouble()
+            price = binding.carPriceEditText.text.toString().toDouble(),
+            mileage = binding.carMileageTextEdit.text.toString().toDouble()
         )
+    }
+    fun View.hideKeyboard() {
+        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(windowToken, 0)
+    }
+    fun setColorDrawable(textView: TextView){
+        val drawable = AppCompatResources.getDrawable(requireContext(), R.drawable.circle_shape)
+        val wrappedDrawable = drawable?.let { DrawableCompat.wrap(it) }
+        wrappedDrawable?.setBounds(0, 0, 70, 70)
+        val color =
+            CarColors.values().first { it.nameColor == textView.text.toString() }
+        wrappedDrawable?.setTint(color.rgbColor)
+        textView.setCompoundDrawables(wrappedDrawable, null, null, null)
     }
 }

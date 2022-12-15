@@ -4,14 +4,30 @@ import android.view.View
 import androidx.lifecycle.*
 import com.example.myapplication.data.CarDao
 import com.example.myapplication.model.Car
+import com.example.myapplication.model.CarLogo
+import com.example.myapplication.network.VehicleApi
 import com.example.myapplication.ui.home.HomeViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.io.IOException
 
 class FavoritesViewModel(private val CarDao: CarDao) : ViewModel() {
-    //TODO Change it to favorites list item of a new database with a new dao
-    val allCars: LiveData<List<Car>> = CarDao.getCars().asLiveData()
+    private val _carLogo = MutableLiveData<List<CarLogo>>()
+
+    val carLogos: LiveData<List<CarLogo>>
+        get() = _carLogo
+
+    init {
+        refreshDataFromNetwork()
+    }
+    fun refreshDataFromNetwork() = viewModelScope.launch {
+        try {
+            _carLogo.value = VehicleApi.retrofitServiceLogos.getCarLogos()
+        } catch (networkError: IOException) {
+        }
+    }
+
     val allFavoritesCar: LiveData<List<Car>> = CarDao.getAllFavoritesCar().asLiveData()
     val favoritesCarNumber: LiveData<Int> = CarDao.getFavoritesCarNumber().asLiveData()
     fun updateFavorites(car: Car){
@@ -28,7 +44,8 @@ class FavoritesViewModel(private val CarDao: CarDao) : ViewModel() {
             price = car.price,
             mileage = car.mileage,
             image = car.image,
-            favorite = !car.favorite
+            favorite = !car.favorite,
+            color = car.color
         )
         updateCarDatabase(updatedCar)
     }
@@ -52,7 +69,8 @@ class FavoritesViewModel(private val CarDao: CarDao) : ViewModel() {
             price = car.price,
             mileage = car.mileage,
             image = car.image,
-            favorite = true
+            favorite = true,
+            color = car.color
         )
         updateCarDatabase(updatedCar)
     }

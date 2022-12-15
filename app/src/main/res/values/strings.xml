@@ -1,4 +1,5 @@
 <resources>
+
     <!-- FRAGMENT TITLES -->
     <string name="app_name">EasyCar</string>
     <string name="title_home">Home</string>
@@ -7,6 +8,7 @@
     <string name="title_favorites">Favorites</string>
     <string name="title_sell">Sell</string>
     <string name="title_add_new_car">Add New Car</string>
+    <string name="title_search_results">Search Results</string>
     <string name="search">Search</string>
 
     <!-- IMAGE CONTENT DESCRIPTION -->
@@ -14,6 +16,7 @@
     <string name="car_image_content_description">Car Image</string>
     <string name="add_new_car_content_description">Add new car</string>
     <string name="add_to_favorites_icon">Add to favorites</string>
+    <string name="add_car_image_content_description">Add Car Image</string>
 
     <!-- DETAIL FRAGMENT STRINGS -->
 
@@ -40,18 +43,61 @@
     <string name="car_price_add">Price</string>
     <string name="car_power_add">Power (kW)</string>
     <string name="car_power_convert">%s kW (%s CV)</string>
+    <string name="car_color_add">Color</string>
     <string name="add_new_car">ADD NEW CAR</string>
+
     <string name="error_add_car_toast">Input not valid, please retry.</string>
     <string name="search_box_brand_query_hint">Search brand car</string>
     <string name="error_validation_edit">Error, please check your inputs and retry.</string>
+
+    <!-- FAVORITES CAR FRAGMENT STRINGS -->
     <string name="remove_success_favorites_car">Removed successfully: %s</string>
     <string name="car_favorites_number">%s Favorites Car</string>
     <string name="undo">UNDO</string>
     <string name="check_auto_share_dialog">Check this new auto!</string>
+
+    <!-- DETAIL CAR FRAGMENT STRINGS -->
     <string name="vehicle_detail_label">Vehicle Detail</string>
     <string name="vehicle_state_label">Vehicle State</string>
     <string name="vehicle_mileage_label">Vehicle Mileage</string>
     <string name="vehicle_color_label">Vehicle Color</string>
-    <string name="mileage_add_text">Mileage</string>
+    <string name="delete_car_dialog_title">Delete Car</string>
+    <string name="delete_car_dialog_message">Are you sure do you want to delete this car from database?</string>
+    <string name="delete_car_dialog_positive_button">Yes</string>
+    <string name="delete_car_dialog_negative_button">No</string>
+    <string name="used_text">Used</string>
+    <string name="new_text">New</string>
+
+    <!-- WORKER STRINGS -->
+    <string name="service_car_expired_text">Your car service for %s has expired</string>
+    <string name="service_car_context_text">Please do a checkup when possible for the car %s model %s</string>
+
+    <!-- FUEL TYPE DIALOG STRINGS -->
+    <string name="choose_fuel_type_title">Choose fuel type</string>
+    <string name="no_results_text">No Results</string>
+    <string name="error_add_new_car_text">Please check your input</string>
+    <string name="error_message_no_connection">Sorry, there was a connection problem. Try later.</string>
+    <string name="retry_again">Retry again</string>
+    <string name="vehicle_basic_informations_label">Vehicle basic informations</string>
+
+    <!-- SEARCH CAR FRAGMENT STRINGS -->
+
+    <string name="button_result_text">%s results</string>
+    <string name="vehicle_fuel_text_search">Vehicle Fuel</string>
+    <string name="diesel">Diesel</string>
+    <string name="electric">Electric</string>
+    <string name="petrol">Petrol</string>
+    <string name="gas">Gas</string>
+    <string name="delete_search_parameters">delete search parameters</string>
+    <string name="car_power_search">Power</string>
+    <string name="cv">CV</string>
+    <string name="kw">Kw</string>
+    <string name="starting_power">Starting power</string>
+    <string name="ending_power">Ending power</string>
+    <string name="only_offers_that_contains_at_least_one_photo">Only offers that contains a photo</string>
+    <string name="details_offer_text">Details offer</string>
+    <string name="vehicle_technical_informations_text">Vehicle technical informations</string>
+    <string name="go_back_to_search_text_no_car_found">Go back to Search</string>
+    <string name="no_cars_have_been_found_with_the_current_filters_please_retry_with_different_ones_error_message">No cars have been found with the current filters. Please retry with different ones.</string>
 
 </resources>

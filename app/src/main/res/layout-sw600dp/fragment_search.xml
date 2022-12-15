@@ -1,0 +1,568 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toTopOf="@id/search_cars_button"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_price_and_payment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="10dp"
+                app:cardMaxElevation="12dp"
+                app:cardPreventCornerOverlap="true"
+                app:cardUseCompatPadding="true"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_editor_absoluteX="10dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="16dp">
+
+                    <ImageView
+                        android:id="@+id/icon_search_price"
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
+                        android:layout_marginVertical="16dp"
+                        android:src="@drawable/ic_baseline_currency_exchange_24"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                    </ImageView>
+
+                    <TextView
+                        android:id="@+id/car_price_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:text="@string/car_price_search_string_label"
+                        android:textColor="@color/primaryLightColor"
+                        android:textSize="@dimen/text_size_tablet_search_title"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@id/icon_search_price"
+                        app:layout_constraintStart_toEndOf="@id/icon_search_price"
+                        app:layout_constraintTop_toTopOf="@id/icon_search_price"
+                        tools:text="@string/car_price_search_string_label">
+
+                    </TextView>
+
+                    <TableLayout
+                        android:id="@+id/table_layout_card"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:stretchColumns="*"
+                        app:layout_constraintTop_toBottomOf="@id/car_price_label">
+
+                        <TableRow
+                            android:id="@+id/firstRow"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginVertical="16dp">
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/starting_price_search"
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="32dp">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/starting_price_search_text"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/tablet_search_input_height"
+                                    android:hint="@string/starting_at_price"
+                                    android:inputType="number">
+
+                                </com.google.android.material.textfield.TextInputEditText>
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/ending_price_search"
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                android:layout_width="match_parent"
+                                android:layout_height="70dp">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/ending_price_search_text"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/tablet_search_input_height"
+                                    android:hint="@string/ending_price"
+                                    android:inputType="number">
+
+                                </com.google.android.material.textfield.TextInputEditText>
+                            </com.google.android.material.textfield.TextInputLayout>
+                        </TableRow>
+                    </TableLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_vehicle_basic_informations"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="10dp"
+                app:cardMaxElevation="12dp"
+                app:cardPreventCornerOverlap="true"
+                app:cardUseCompatPadding="true"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/card_price_and_payment">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="16dp">
+
+                    <ImageView
+                        android:id="@+id/icon_vehicle_informations"
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
+                        android:layout_marginVertical="16dp"
+                        android:src="@drawable/searching_car"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                    </ImageView>
+
+                    <TextView
+                        android:id="@+id/car_vehicle_informations_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:text="@string/vehicle_basic_informations_label"
+                        android:textColor="@color/primaryLightColor"
+                        android:textSize="@dimen/text_size_tablet_search_title"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@id/icon_vehicle_informations"
+                        app:layout_constraintStart_toEndOf="@id/icon_vehicle_informations"
+                        app:layout_constraintTop_toTopOf="@id/icon_vehicle_informations"
+                        tools:text="@string/vehicle_basic_informations_label" />
+
+                    <LinearLayout
+                        android:id="@+id/linear_layout_vehicle_informations_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:baselineAligned="false"
+                        android:orientation="horizontal"
+                        android:weightSum="2"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/car_vehicle_informations_label">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/car_search_brand"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="70dp"
+                            android:layout_marginEnd="24dp"
+                            android:layout_weight="1"
+                            app:layout_constraintTop_toBottomOf="@id/car_vehicle_informations_label">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/car_search_brand_text"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/tablet_search_input_height"
+                                android:focusable="false"
+                                android:hint="@string/car_brand_add"
+                                android:inputType="number">
+
+                            </com.google.android.material.textfield.TextInputEditText>
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/car_search_model"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="70dp"
+                            android:layout_gravity="bottom"
+                            android:layout_marginStart="12dp"
+                            android:layout_weight="1"
+                            app:layout_constraintTop_toBottomOf="@id/linear_layout_vehicle_informations_input">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/car_search_model_text"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/tablet_search_input_height"
+                                android:enabled="false"
+                                android:focusable="false"
+                                android:hint="@string/car_model_add"
+                                android:inputType="number">
+
+                            </com.google.android.material.textfield.TextInputEditText>
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
+
+
+                    <TextView
+                        android:id="@+id/vehicle_status_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="8dp"
+                        android:text="@string/vehicle_state_label"
+                        android:textColor="@color/primaryLightColor"
+                        android:textSize="18sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/linear_layout_vehicle_informations_input" />
+
+                    <LinearLayout
+                        android:id="@+id/vehicle_state_linear_layout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/vehicle_status_label">
+
+                        <com.google.android.material.button.MaterialButtonToggleGroup
+                            android:id="@+id/button_group_vehicle_state"
+                            android:layout_width="wrap_content"
+                            android:layout_height="60dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:singleSelection="true">
+
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/new_car_button"
+                                style="?attr/materialButtonOutlinedStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="60dp"
+                                android:layout_marginEnd="8dp"
+                                android:text="@string/new_text"
+                                app:cornerRadius="20dp">
+
+                            </com.google.android.material.button.MaterialButton>
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/used_car_button"
+                                style="?attr/materialButtonOutlinedStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="60dp"
+                                android:layout_marginEnd="8dp"
+                                android:text="@string/used_text"
+                                app:cornerRadius="20dp">
+
+                            </com.google.android.material.button.MaterialButton>
+                        </com.google.android.material.button.MaterialButtonToggleGroup>
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/vehicle_fuel_type_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="8dp"
+                        android:text="@string/vehicle_fuel_text_search"
+                        android:textColor="@color/primaryLightColor"
+                        android:textSize="18sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/vehicle_state_linear_layout">
+
+                    </TextView>
+
+                    <LinearLayout
+                        android:id="@+id/vehicle_fuel_type_linear_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/vehicle_fuel_type_label">
+
+                        <com.google.android.material.chip.ChipGroup
+                            android:id="@+id/button_group_vehicle_fuel_type"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent">
+
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/diesel_filter"
+                                style="@style/Widget.MaterialComponents.Chip.Filter"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/diesel"
+                                android:theme="@style/Theme.MaterialComponents.Light"
+                                app:chipIcon="@drawable/ic_baseline_delete_24">
+
+                            </com.google.android.material.chip.Chip>
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/electric_filter"
+                                style="@style/Widget.MaterialComponents.Chip.Filter"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/electric"
+                                android:theme="@style/Theme.MaterialComponents.Light">
+
+                            </com.google.android.material.chip.Chip>
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/petrol_filter"
+                                style="@style/Widget.MaterialComponents.Chip.Filter"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/petrol"
+                                android:theme="@style/Theme.MaterialComponents.Light">
+
+                            </com.google.android.material.chip.Chip>
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/gas_filter"
+                                style="@style/Widget.MaterialComponents.Chip.Filter"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/gas"
+                                android:theme="@style/Theme.MaterialComponents.Light">
+
+                            </com.google.android.material.chip.Chip>
+                        </com.google.android.material.chip.ChipGroup>
+                    </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_vehicle_technical_informations"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="10dp"
+                app:cardMaxElevation="12dp"
+                app:cardPreventCornerOverlap="true"
+                app:cardUseCompatPadding="true"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/card_vehicle_basic_informations">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="16dp">
+
+                    <ImageView
+                        android:id="@+id/icon_vehicle_techical_informations"
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
+                        android:layout_marginVertical="16dp"
+                        android:src="@drawable/ic_wrench_24"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                    </ImageView>
+
+                    <TextView
+                        android:id="@+id/car_vehicle_technical_informations_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:text="@string/vehicle_technical_informations_text"
+                        android:textColor="@color/primaryLightColor"
+                        android:textSize="@dimen/text_size_tablet_search_title"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@id/icon_vehicle_techical_informations"
+                        app:layout_constraintStart_toEndOf="@id/icon_vehicle_techical_informations"
+                        app:layout_constraintTop_toTopOf="@id/icon_vehicle_techical_informations" />
+
+                    <TextView
+                        android:id="@+id/vehicle_power_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="16dp"
+                        android:text="@string/car_power_search"
+                        android:textColor="@color/primaryLightColor"
+                        android:textSize="18sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/car_vehicle_technical_informations_label" />
+
+                    <LinearLayout
+                        android:id="@+id/vehicle_power_type_linear_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/vehicle_power_label">
+
+                        <com.google.android.material.chip.ChipGroup
+                            android:id="@+id/button_group_vehicle_power_type"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:selectionRequired="true"
+                            app:singleSelection="true">
+
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/Kw_filter"
+                                style="@style/Widget.MaterialComponents.Chip.Filter"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:checked="true"
+                                android:text="@string/kw"
+                                android:theme="@style/Theme.MaterialComponents.Light"
+                                app:chipIcon="@drawable/ic_baseline_delete_24">
+
+                            </com.google.android.material.chip.Chip>
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/CV_filter"
+                                style="@style/Widget.MaterialComponents.Chip.Filter"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/cv"
+                                android:theme="@style/Theme.MaterialComponents.Light">
+
+                            </com.google.android.material.chip.Chip>
+                        </com.google.android.material.chip.ChipGroup>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/linear_layout_vehicle_technical_informations_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:baselineAligned="false"
+                        android:orientation="horizontal"
+                        android:paddingBottom="8dp"
+                        android:weightSum="2"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/vehicle_power_type_linear_layout">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/car_search_power_starting"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="70dp"
+                            android:layout_marginEnd="24dp"
+                            android:layout_weight="1"
+                            app:layout_constraintTop_toBottomOf="@id/car_vehicle_informations_label">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/car_search_power_starting_text"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/tablet_search_input_height"
+                                android:hint="@string/starting_power"
+                                android:inputType="number"
+                                android:maxLength="5">
+
+                            </com.google.android.material.textfield.TextInputEditText>
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/car_search_power_ending"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="70dp"
+                            android:layout_gravity="bottom"
+                            android:layout_marginStart="12dp"
+                            android:layout_weight="1"
+                            app:layout_constraintTop_toBottomOf="@id/linear_layout_vehicle_informations_input">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/car_search_power_ending_text"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/tablet_search_input_height"
+                                android:hint="@string/ending_power"
+                                android:inputType="number"
+                                android:maxLength="5" />
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_detail_offer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="10dp"
+                app:cardMaxElevation="12dp"
+                app:cardPreventCornerOverlap="true"
+                app:cardUseCompatPadding="true"
+                app:layout_constraintTop_toBottomOf="@id/card_vehicle_technical_informations"
+                tools:layout_editor_absoluteX="10dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="16dp">
+
+                    <ImageView
+                        android:id="@+id/icon_detail"
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
+                        android:layout_marginVertical="16dp"
+                        android:src="@drawable/ic_baseline_info_24"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                    </ImageView>
+
+                    <TextView
+                        android:id="@+id/car_detail_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:text="@string/details_offer_text"
+                        android:textColor="@color/primaryLightColor"
+                        android:textSize="@dimen/text_size_tablet_search_title"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@id/icon_detail"
+                        app:layout_constraintStart_toEndOf="@id/icon_detail"
+                        app:layout_constraintTop_toTopOf="@id/icon_detail" />
+
+                    <TextView
+                        android:id="@+id/car_detail_photo_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="16dp"
+                        android:text="@string/only_offers_that_contains_at_least_one_photo"
+                        android:textColor="@color/primaryLightColor"
+                        android:textSize="@dimen/text_size_tablet_search_title"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/car_detail_label" />
+
+                    <CheckBox
+                        android:id="@+id/checkbox_at_least_one_photo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        app:layout_constraintBottom_toBottomOf="@id/car_detail_photo_text"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/car_detail_photo_text" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+    <Button
+        android:id="@+id/search_cars_button"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginHorizontal="16dp"
+        android:drawableStart="@drawable/ic_baseline_search_24dp"
+        android:text="@string/search"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

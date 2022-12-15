@@ -10,3 +10,4 @@ data class CarInfo(
     @SerializedName("FULLMODELNAME") val fullModelName: String,
     @SerializedName("PRODUCTION END") val production_end: String,
 )
+

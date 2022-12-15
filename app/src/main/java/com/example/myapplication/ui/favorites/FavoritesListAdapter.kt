@@ -2,37 +2,56 @@ package com.example.myapplication.ui.favorites
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.net.Uri
+import android.os.Environment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.FileProvider
+import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import com.example.myapplication.databinding.CarItemCardBinding
-import com.example.myapplication.model.Car
-import com.example.myapplication.model.carPowerWithUnitString
-import com.example.myapplication.model.formatPriceToCurrency
+import com.example.myapplication.model.*
 import com.example.myapplication.utils.ShareDialog
+import com.example.myapplication.utils.createBitmapFromCarImage
+import com.example.myapplication.utils.setAndGetUriByBrandParsingListOfLogoAndImageView
 import com.example.myapplication.utils.showCustomSnackBarWithUndo
+import com.example.myapplication.workers.CarReminderWorker
+import com.example.myapplication.workers.FORMAT_IMAGE_PNG
+import com.example.myapplication.workers.IMAGE_NAME
 import com.google.android.material.snackbar.Snackbar
+import java.io.File
 
 class FavoritesListAdapter(
     private val clickListener: (Car) -> Unit,
     private val functionFavorites: (Car) -> Unit,
     private val undoRemovedFavorites: (Car) -> Unit,
+    private val listLogo: LiveData<List<CarLogo>>,
 ) : ListAdapter<Car, FavoritesListAdapter.FavoritesViewHolder>(DiffCallback) {
 
     class FavoritesViewHolder(
         private var binding: CarItemCardBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        //TODO ADD PARAMETER HERE
-        fun bind(car: Car, functionFavorites: (Car) -> Unit, undoRemovedFavorites: (Car) -> Unit) {
+        fun bind(
+            car: Car,
+            functionFavorites: (Car) -> Unit,
+            undoRemovedFavorites: (Car) -> Unit,
+            listLogo: LiveData<List<CarLogo>>
+        ) {
             binding.car = car
+            if (car.model.length >= 21){
+                val modelReplaced = car.model.replaceRange(22 until car.model.length, "...")
+                binding.carModel.text = modelReplaced
+            } else binding.carModel.text = car.model
             binding.apply {
                 carPrice.text = car.formatPriceToCurrency(car.price)
                 carPower.text = car.carPowerWithUnitString(car.carPower)
                 carYearProduction.text = car.yearStartProduction.toString()
+                carItemState.text = car.carMileageWithUnitString(car.mileage)
                 shareButtonCarItem.visibility = View.VISIBLE
                 favoritesButtonImage.setImageResource(R.drawable.ic_baseline_star_24)
                 favoritesButtonImage.setOnClickListener {
@@ -50,24 +69,35 @@ class FavoritesListAdapter(
                         {undoRemovedFavorites(car)}
                     )
                 }
-
-
                 shareButtonCarItem.setOnClickListener {
+                    var file: File? = null
+                    if (car.image != null)
+                    {
+                        file = File(createBitmapFromCarImage(car.image,car.id), "$IMAGE_NAME${car.id}$FORMAT_IMAGE_PNG")
+                    }
                     ShareDialog(
                         itemView.context,
                         itemView.context.getString(R.string.check_auto_share_dialog),
                         "Check this new auto!\nBrand:${car.brand}\nModel:${car.model}\nPrice:${car.price}",
-                        "Share With"
+                        "Share With",
+                        file
                     )
                 }
+                setAndGetUriByBrandParsingListOfLogoAndImageView(
+                    listLogo.value,
+                    car.brand,
+                    binding.carItemLogo
+                )
             }
 
             if (car.image != null) {
+                val bmp = BitmapFactory.decodeByteArray(car.image, 0, car.image.size)
                 binding.carImage.setImageBitmap(
                     Bitmap.createScaledBitmap(
-                        BitmapFactory.decodeByteArray(
-                            car.image, 0, car.image.size
-                        ), 100, 80, false
+                        bmp,
+                        1920,
+                        1080,
+                        false
                     )
                 )
             } else {
@@ -89,13 +119,12 @@ class FavoritesListAdapter(
 
     }
 
-    override fun onBindViewHolder(holder: FavoritesViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: FavoritesListAdapter.FavoritesViewHolder, position: Int) {
         val car = getItem(position)
         holder.itemView.setOnClickListener {
             clickListener(car)
         }
-        //TODO ADD PARAMETER HERE
-        if (car.favorite) holder.bind(car, functionFavorites, undoRemovedFavorites)
+        if (car.favorite) holder.bind(car, functionFavorites, undoRemovedFavorites, listLogo)
     }
 
     override fun onCreateViewHolder(

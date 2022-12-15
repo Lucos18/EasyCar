@@ -1,14 +1,24 @@
 package com.example.myapplication.ui.addCar
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.ListView
+import android.widget.SearchView
+import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.graphics.drawable.DrawableCompat
+import androidx.core.widget.addTextChangedListener
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -16,24 +26,28 @@ import androidx.navigation.fragment.findNavController
 import com.example.myapplication.BaseApplication
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentAddNewCarBinding
+import com.example.myapplication.enums.CarAddInputs
+import com.example.myapplication.enums.CarColors
 import com.example.myapplication.ui.transformIntoDatePicker
 import com.example.myapplication.utils.FuelTypeAlertDialog
+import com.example.myapplication.utils.carListItemsAlertDialog
+import com.example.myapplication.utils.checkForInternet
 import com.example.myapplication.utils.showCustomSnackBar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import java.text.NumberFormat
 import java.util.*
-
-
+private var UriImage: Uri? = null
+private var kw: Int = 0
+private var price: Double = 0.0
+private val REQUEST_CODE = 100
 @Suppress("DEPRECATION")
 class AddNewCarFragment : Fragment() {
-
-    private var kw: Int = 0
-    private var price: Double = 0.0
-    private val REQUEST_CODE = 100
-
     private lateinit var adapter: ArrayAdapter<*>
+
+    private val mapInputs = mutableMapOf<CarAddInputs, Boolean>()
 
     private val addNewCarViewModel: AddNewCarViewModel by viewModels {
         AddNewCarViewModelFactory(
@@ -50,64 +64,36 @@ class AddNewCarFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        addNewCarViewModel.refreshDataFromNetwork()
         _binding = FragmentAddNewCarBinding.inflate(inflater, container, false)
         return binding.root
     }
 
+    @SuppressLint("InflateParams")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //addNewCarViewModel.addCar("FIAT", "Abarth", 2021, 2022, 5, 8, "diesel", 8.0, R.drawable.ic_baseline_add_24.)
-        val navBar: BottomNavigationView = requireActivity().findViewById(R.id.nav_view)
-        navBar.visibility = View.GONE
+        swapConstraintIfInternet(requireContext())
+        val scrollingBackground = binding.scrollingBackground
+        scrollingBackground?.start()
+        Log.d("ciao", kw.toString())
+        if (UriImage != null) binding.carImage1.setImageURI(UriImage)
         binding.apply {
-            //TODO change when the button will be invisible
             buttonAddNewCar.visibility = View.VISIBLE
             buttonAddNewCar.setOnClickListener {
                 addNewCar()
+
             }
         }
         binding.carBrandAddText.setOnClickListener {
-            val builder = AlertDialog.Builder(requireContext())
-                .create()
-            val view = layoutInflater.inflate(R.layout.alert_dialog, null)
-            val searchText = view.findViewById<SearchView>(R.id.search_view)
-            val listViewBrand = view.findViewById<ListView>(R.id.listView)
-            adapter = ArrayAdapter(
+            carListItemsAlertDialog(
                 requireContext(),
-                android.R.layout.simple_list_item_1,
-                addNewCarViewModel.getDistinctBrandNames()
+                layoutInflater,
+                addNewCarViewModel.getDistinctBrandNames(),
+                binding.carBrandAddText,
+                binding.carYearAddText
             )
-            listViewBrand.adapter = adapter
-            listViewBrand.onItemClickListener =
-                AdapterView.OnItemClickListener { adapterView, view, position, l ->
-                    binding.carBrandAddText.setText(
-                        listViewBrand.getItemAtPosition(position).toString()
-                    )
-                    resetText(binding.carYearAddText)
-                    binding.carYearAddText.isEnabled = true
-                    builder.dismiss()
-                }
-            listViewBrand.emptyView = view.findViewById(R.id.empty_text_view_search)
-            searchText.setOnClickListener {
-                searchText.isIconified = false
-            }
-            searchText.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-                override fun onQueryTextSubmit(p0: String?): Boolean {
-                    return false
-                }
-
-                override fun onQueryTextChange(p0: String?): Boolean {
-                    adapter.filter.filter(p0)
-                    return true
-                }
-            })
-            builder.setCanceledOnTouchOutside(true)
-            builder.setView(view)
-            builder.show()
         }
         binding.carYearAddText.transformIntoDatePicker(requireContext(), "yyyy", Date())
-        binding.carYearAddText.doOnTextChanged { text, start, before, count ->
+        binding.carYearAddText.doOnTextChanged { _, _, _, _ ->
             if (binding.carYearAddText.text?.isEmpty() == true) {
                 binding.carModelAddText.isEnabled = false
                 resetText(binding.carModelAddText)
@@ -115,44 +101,12 @@ class AddNewCarFragment : Fragment() {
         }
 
         binding.carModelAddText.setOnClickListener {
-            val builder = AlertDialog.Builder(requireContext())
-                .create()
-            val view = layoutInflater.inflate(R.layout.alert_dialog, null)
-            val searchText = view.findViewById<SearchView>(R.id.search_view)
-            val listViewBrand = view.findViewById<ListView>(R.id.listView)
-            adapter = ArrayAdapter(
-                requireContext(),
-                android.R.layout.simple_list_item_1,
-                addNewCarViewModel.getDistinctModelByBrandAndYear(
+            carListItemsAlertDialog(
+                requireContext(), layoutInflater, addNewCarViewModel.getDistinctModelByBrandAndYear(
                     binding.carBrandAddText.text.toString(),
                     binding.carYearAddText.text.toString()
-                )
+                ), binding.carModelAddText, null
             )
-            listViewBrand.adapter = adapter
-            listViewBrand.onItemClickListener =
-                AdapterView.OnItemClickListener { _, view, position, _ ->
-                    binding.carModelAddText.setText(
-                        listViewBrand.getItemAtPosition(position).toString()
-                    )
-                    builder.dismiss()
-                }
-            listViewBrand.emptyView = view.findViewById(R.id.empty_text_view_search)
-            searchText.setOnClickListener {
-                searchText.isIconified = false
-            }
-            searchText.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-                override fun onQueryTextSubmit(p0: String?): Boolean {
-                    return false
-                }
-
-                override fun onQueryTextChange(p0: String?): Boolean {
-                    adapter.filter.filter(p0)
-                    return true
-                }
-            })
-            builder.setCanceledOnTouchOutside(true)
-            builder.setView(view)
-            builder.show()
         }
 
         binding.carPowerAddText.onFocusChangeListener = View.OnFocusChangeListener { _, b ->
@@ -189,18 +143,64 @@ class AddNewCarFragment : Fragment() {
         binding.carFuelTypeAddText.setOnClickListener {
             FuelTypeAlertDialog(requireContext(), binding.carFuelTypeAddText)
         }
-        //TODO 4 Add more information to details card of the car
-        //TODO Add Error fragment if internet connection is not on
-        //TODO Fix Item card with new informations
+        binding.carColorAddText.addTextChangedListener {
+            if (binding.carColorAddText.text.toString().isNotBlank()){
+                val color =
+                    CarColors.values().first { it.nameColor == binding.carColorAddText.text.toString() }
+                binding.scr2?.setColorFilter(color.rgbColor)
+            }
+        }
+        binding.carColorAddText.setOnClickListener {
+
+            val values: Array<CarColors> = CarColors.values()
+            val items = arrayOfNulls<CharSequence>(values.size)
+            for (i in values.indices) {
+                items[i] = values[i].nameColor
+            }
+            val builder = AlertDialog.Builder(requireContext())
+                .create()
+            val view = layoutInflater.inflate(R.layout.alert_dialog, null)
+            val searchText = view.findViewById<SearchView>(R.id.search_view)
+            val listViewBrand = view.findViewById<ListView>(R.id.listView)
+            adapter = ArrayAdapter(
+                requireContext(),
+                android.R.layout.simple_list_item_1,
+                items
+            )
+            listViewBrand.adapter = adapter
+            listViewBrand.onItemClickListener =
+                AdapterView.OnItemClickListener { _, _, position, _ ->
+                    binding.carColorAddText.setText(
+                        listViewBrand.getItemAtPosition(position).toString()
+                    )
+                    builder.dismiss()
+                }
+            listViewBrand.emptyView = view.findViewById(R.id.empty_text_view_search)
+            searchText.setOnClickListener {
+                searchText.isIconified = false
+            }
+            searchText.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(p0: String?): Boolean {
+                    return false
+                }
+
+                override fun onQueryTextChange(p0: String?): Boolean {
+                    adapter.filter.filter(p0)
+                    return true
+                }
+            })
+            builder.setCanceledOnTouchOutside(true)
+            builder.setView(view)
+            builder.show()
+
+        }
+        //TODO How will your car item will appear on the market
         //TODO 5 Fix Price on focus listener that shows error if not changed
         //TODO Change calendar function to show only year options
-        //TODO 3 Change Button style on add new car
-        //TODO 2 Do favorites tab with custom adapter and database
     }
 
     override fun onDestroyView() {
-        val navBar: BottomNavigationView = requireActivity().findViewById(R.id.nav_view)
-        navBar.visibility = View.VISIBLE
+        UriImage = null
         super.onDestroyView()
         _binding = null
     }
@@ -218,14 +218,15 @@ class AddNewCarFragment : Fragment() {
                 CarPower = kw,
                 Price = price,
                 Mileage = binding.carMileageAddText.text.toString().toDouble(),
-                Image = checkIfInsertIsNull(createBitmapFromView(binding.carImage1))
+                Image = checkIfInsertIsNull(createBitmapFromView(binding.carImage1)),
+                Color = binding.carColorAddText.text.toString()
             )
             val action = AddNewCarFragmentDirections
                 .actionAddNewCarFragmentToNavigationSell()
             findNavController().navigate(action)
         } else {
             showCustomSnackBar(
-                binding.constraintLayoutAddNewCar,
+                binding.mainConstraintLayoutAddNewCar,
                 getString(R.string.error_add_car_toast),
                 Snackbar.LENGTH_LONG
             )
@@ -233,25 +234,49 @@ class AddNewCarFragment : Fragment() {
     }
 
     private fun isValidCar(): Boolean {
-        return try {
-            addNewCarViewModel.checkInputEditTextNewCar(
-                binding.carBrandAddText.text.toString(),
-                binding.carYearAddText.text.toString().toInt(),
-                binding.carModelAddText.text.toString(),
-                binding.carFuelTypeAddText.text.toString(),
-                kw,
-                binding.carSeatsAddText.text.toString().toInt(),
-                price,
-                binding.carMileageAddText.text.toString().toDouble()
-            )
-        } catch (e: Exception) {
-            showCustomSnackBar(
-                binding.constraintLayoutAddNewCar,
-                getString(R.string.error_add_car_toast),
-                Snackbar.LENGTH_LONG
-            )
-            false
+
+        mapInputs[CarAddInputs.Brand] =
+            addNewCarViewModel.checkBrandInput(binding.carBrandAddText.text.toString())
+        mapInputs[CarAddInputs.Year] =
+            addNewCarViewModel.checkYearInput(binding.carYearAddText.text.toString().toIntOrNull())
+        mapInputs[CarAddInputs.Model] =
+            addNewCarViewModel.checkModelInput(binding.carModelAddText.text.toString())
+        mapInputs[CarAddInputs.Fuel] =
+            addNewCarViewModel.checkFuelInput(binding.carFuelTypeAddText.text.toString())
+        mapInputs[CarAddInputs.Power] = addNewCarViewModel.checkPowerInput(kw)
+        mapInputs[CarAddInputs.Seats] = addNewCarViewModel.checkSeatsInput(
+            binding.carSeatsAddText.text.toString().toIntOrNull()
+        )
+        mapInputs[CarAddInputs.Price] = addNewCarViewModel.checkPriceInput(price)
+        mapInputs[CarAddInputs.Mileage] = addNewCarViewModel.checkMileageInput(
+            binding.carMileageAddText.text.toString().toDoubleOrNull()
+        )
+        mapInputs[CarAddInputs.Colors] =
+            addNewCarViewModel.checkColorInput(binding.carColorAddText.text.toString())
+        setInputs(mapInputs)
+        return !mapInputs.containsValue(false)
+    }
+
+    private fun setInputs(map: Map<CarAddInputs, Boolean>) {
+        map.forEach { (k, v) ->
+            val errorToShow = if (v) null else getString(R.string.error_add_new_car_text)
+            when (k) {
+                CarAddInputs.Brand -> setErrorShown(binding.carBrandAddLabel, errorToShow)
+                CarAddInputs.Year -> setErrorShown(binding.carYearAddLabel, errorToShow)
+                CarAddInputs.Model -> setErrorShown(binding.carModelAddLabel, errorToShow)
+                CarAddInputs.Fuel -> setErrorShown(binding.carFuelTypeAddLabel, errorToShow)
+                CarAddInputs.Power -> setErrorShown(binding.carPowerAddLabel, errorToShow)
+                CarAddInputs.Seats -> setErrorShown(binding.carSeatsAddLabel, errorToShow)
+                CarAddInputs.Price -> setErrorShown(binding.carPriceAddLabel, errorToShow)
+                CarAddInputs.Mileage -> setErrorShown(binding.carMileageAddLabel, errorToShow)
+                CarAddInputs.Colors -> setErrorShown(binding.carColorAddLabel, errorToShow)
+            }
         }
+    }
+
+    private fun setErrorShown(text: TextInputLayout, errorToShow: String?) {
+        text.error = errorToShow
+        text.isErrorEnabled = errorToShow != null
     }
 
     private fun openGalleryForImage() {
@@ -260,13 +285,15 @@ class AddNewCarFragment : Fragment() {
         startActivityForResult(intent, REQUEST_CODE)
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE) {
             val selectedImage = data?.data
             if (selectedImage != null) {
                 // handle chosen image
-                binding.carImage1.setImageURI(data.data)
+                UriImage = data.data
+                binding.carImage1.setImageURI(UriImage)
                 binding.carImage1.tag = "is_not_null"
             }
         }
@@ -288,5 +315,19 @@ class AddNewCarFragment : Fragment() {
 
     private fun resetText(binding: TextInputEditText) {
         binding.setText("")
+    }
+
+    private fun swapConstraintIfInternet(context: Context) {
+        if (checkForInternet(context)) {
+            addNewCarViewModel.refreshDataFromNetwork()
+            binding.constraintLayoutAddNewCarWithConnection.visibility = View.VISIBLE
+            binding.constraintLayoutAddNewCarWithoutConnection.visibility = View.GONE
+        } else {
+            binding.constraintLayoutAddNewCarWithConnection.visibility = View.GONE
+            binding.constraintLayoutAddNewCarWithoutConnection.visibility = View.VISIBLE
+            binding.retryAgainErrorConnection.setOnClickListener {
+                swapConstraintIfInternet(context)
+            }
+        }
     }
 }
