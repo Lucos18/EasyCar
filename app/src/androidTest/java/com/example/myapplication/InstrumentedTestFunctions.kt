@@ -16,8 +16,11 @@ import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.platform.app.InstrumentationRegistry
 import com.example.myapplication.enums.fuelType
+import junit.framework.Assert.assertEquals
 import org.hamcrest.CoreMatchers.*
 import org.hamcrest.Matchers
+import org.hamcrest.Matchers.hasToString
+import org.junit.Assert
 
 
 fun go_to_sell_fragment() {
@@ -47,7 +50,10 @@ fun navigate_to_sell_fragment_and_add_new_car() {
 }
 
 fun check_current_location_is_expected(currentLocation: Int?, expectedLocation: Int) {
-    //assert(currentLocation.toString()).isEqualTo(expectedLocation)
+    assertEquals(
+        currentLocation,
+        expectedLocation
+    )
 }
 
 fun simple_click(idTextInput: Int){
@@ -95,16 +101,24 @@ fun click_text_input_fuel_and_choose_by_position(idTextInput: Int, positionItemC
     onView(withText(fuelType.Diesel.toString())).perform(click())
     click_positive_button_alert_dialog()
 }
+fun click_text_input_fuel_and_choose_by_text(idTextInput: Int, fuelType: String){
+    simple_click(idTextInput)
+    onView(withText(fuelType)).perform(click())
+    click_positive_button_alert_dialog()
+}
 fun click_text_input_color_and_choose_by_position(idTextInput: Int, positionItemClick: Int){
     simple_click(idTextInput)
     onData(anything()).inAdapterView(withId(R.id.listView)).atPosition(positionItemClick).perform(click());
 }
-//TODO FIX not found text
-fun click_text_input_brand_and_choose_by_text(idTextInput: Int, positionItemClick: Int) {
+fun click_text_input_color_and_choose_by_text(idTextInput: Int, textToSearch: String){
+    simple_click(idTextInput)
+    onData(hasToString(startsWith(textToSearch))).inAdapterView(withId(R.id.listView)).perform(click());
+}
+fun click_text_input_list_view_and_choose_by_text(idTextInput: Int, textToSearch: String) {
     Thread.sleep(2000)
     simple_click(idTextInput)
     Thread.sleep(2000)
-    onData(anything()).inAdapterView(withId(R.id.listView)).onChildView(allOf(withText("ALFA ROMEO"))).perform(click());
+    onData(hasToString(startsWith(textToSearch))).inAdapterView(withId(R.id.listView)).perform(click());
 }
 
 fun click_on_card(idCard: Int) {

@@ -12,6 +12,7 @@ import androidx.test.uiautomator.By
 import androidx.test.uiautomator.UiDevice
 import androidx.test.uiautomator.Until
 import com.example.myapplication.data.CarDatabase
+import com.example.myapplication.model.Car
 import junit.framework.Assert.assertEquals
 import org.junit.After
 import org.junit.Before
@@ -28,6 +29,7 @@ class SellFragmentInstrumentedTest {
         ApplicationProvider.getApplicationContext(),
         CarDatabase::class.java
     ).allowMainThreadQueries().build()
+    val randomCar = CarList.random()
     val carDao = database.CarDao()
     private lateinit var uiDevice: UiDevice
 

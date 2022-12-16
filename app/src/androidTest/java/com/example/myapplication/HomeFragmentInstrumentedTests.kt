@@ -24,12 +24,15 @@ class HomeFragmentInstrumentedTest {
         CarDatabase::class.java
     ).allowMainThreadQueries().build()
     val carDao = database.CarDao()
+
     //TODO To fix need to check what car needed to be pressed the favorites button
+
     @Test
     fun click_add_to_favorites_car() {
 
         go_to_home_fragment()
         click_on_favorites_button(0)
+
         //TODO Check if favorites has changed on that id
     }
 
@@ -55,7 +58,9 @@ class HomeFragmentInstrumentedTest {
                 Log.d("ciao",it.maxByOrNull { car -> car.id }.toString())
             }
         }
-        latch.await()
+        withContext(Dispatchers.IO) {
+            latch.await()
+        }
         job.cancelAndJoin()
     }
 }
