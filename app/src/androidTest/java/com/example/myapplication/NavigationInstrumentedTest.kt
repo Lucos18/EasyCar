@@ -4,25 +4,18 @@ import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.testing.TestNavHostController
-import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.example.myapplication.ui.favorites.FavoritesFragment
 import com.example.myapplication.ui.favorites.FavoritesFragmentDirections
 import com.example.myapplication.ui.home.HomeFragment
 import com.example.myapplication.ui.home.HomeFragmentDirections
-import com.example.myapplication.ui.search.SearchFragment
 import com.example.myapplication.ui.search.SearchFragmentDirections
-import com.example.myapplication.ui.searchResults.SearchResults
-import com.example.myapplication.ui.searchResults.SearchResultsDirections
-import com.example.myapplication.ui.sell.SellFragment
 import com.example.myapplication.ui.sell.SellFragmentDirections
 import org.junit.Assert.*
 import org.junit.Rule
@@ -66,7 +59,6 @@ class NavigationInstrumentedTest {
 
     @Test
     fun test_navigation_from_home_fragment_to_search_fragment() {
-
         val homeFragmentScenario =
             launchFragmentInContainer<HomeFragment>(themeResId = theme)
         homeFragmentScenario.onFragment { fragment ->
@@ -82,19 +74,11 @@ class NavigationInstrumentedTest {
 
     @Test
     fun test_navigation_from_home_fragment_to_detail_car_fragment() {
-        launchFragmentInContainer<HomeFragment>(themeResId = theme) {
-            HomeFragment().also { fragment ->
-                fragment.viewLifecycleOwnerLiveData.observeForever { viewLifecycleOwner ->
-                    if (viewLifecycleOwner != null) {
-                        Navigation.setViewNavController(fragment.requireView(), mockNavController)
-                    }
-                }
-            }
-        }
+        val mockNavController = startHomeFragment()
         click_on_card(0)
         verify(mockNavController).navigate(
             HomeFragmentDirections.actionNavigationHomeToDetailCarFragment(
-                3,
+                1,
                 false
             )
         )
@@ -102,15 +86,7 @@ class NavigationInstrumentedTest {
 
     @Test
     fun test_navigation_from_search_fragment_to_search_results_fragment() {
-        launchFragmentInContainer<SearchFragment>(themeResId = theme) {
-            SearchFragment().also { fragment ->
-                fragment.viewLifecycleOwnerLiveData.observeForever { viewLifecycleOwner ->
-                    if (viewLifecycleOwner != null) {
-                        Navigation.setViewNavController(fragment.requireView(), mockNavController)
-                    }
-                }
-            }
-        }
+        val mockNavController = startSearchFragment()
         onView(withId(R.id.search_cars_button)).check(matches(isDisplayed()))
         simple_click(R.id.search_cars_button)
         verify(mockNavController).navigate(SearchFragmentDirections.actionNavigationSearchToSearchResults())
@@ -118,19 +94,11 @@ class NavigationInstrumentedTest {
 
     @Test
     fun test_navigation_from_favorites_fragment_to_detail_car_fragment() {
-        launchFragmentInContainer<FavoritesFragment>(themeResId = theme) {
-            FavoritesFragment().also { fragment ->
-                fragment.viewLifecycleOwnerLiveData.observeForever { viewLifecycleOwner ->
-                    if (viewLifecycleOwner != null) {
-                        Navigation.setViewNavController(fragment.requireView(), mockNavController)
-                    }
-                }
-            }
-        }
+        val mockNavController = startFavoritesFragment()
         click_on_card(0)
         verify(mockNavController).navigate(
             FavoritesFragmentDirections.actionNavigationFavoritesToDetailCarFragment(
-                3,
+                1,
                 false
             )
         )
@@ -138,15 +106,7 @@ class NavigationInstrumentedTest {
 
     @Test
     fun test_navigation_from_sell_fragment_to_add_new_car_fragment() {
-        launchFragmentInContainer<SellFragment>(themeResId = theme) {
-            SellFragment().also { fragment ->
-                fragment.viewLifecycleOwnerLiveData.observeForever { viewLifecycleOwner ->
-                    if (viewLifecycleOwner != null) {
-                        Navigation.setViewNavController(fragment.requireView(), mockNavController)
-                    }
-                }
-            }
-        }
+        val mockNavController = startSellFragment()
         onView(withId(R.id.add_car_fab)).check(matches(isDisplayed()))
         simple_click(R.id.add_car_fab)
         verify(mockNavController).navigate(SellFragmentDirections.actionNavigationSellToAddNewCarFragment())
@@ -154,19 +114,11 @@ class NavigationInstrumentedTest {
 
     @Test
     fun test_navigation_from_sell_fragment_to_detail_car_fragment() {
-        launchFragmentInContainer<SellFragment>(themeResId = theme) {
-            SellFragment().also { fragment ->
-                fragment.viewLifecycleOwnerLiveData.observeForever { viewLifecycleOwner ->
-                    if (viewLifecycleOwner != null) {
-                        Navigation.setViewNavController(fragment.requireView(), mockNavController)
-                    }
-                }
-            }
-        }
+        val mockNavController = startSellFragment()
         click_on_card(0)
         verify(mockNavController).navigate(
             SellFragmentDirections.actionNavigationSellToDetailCarFragment(
-                3,
+                1,
                 true
             )
         )

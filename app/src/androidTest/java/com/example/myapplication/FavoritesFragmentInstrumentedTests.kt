@@ -1,15 +1,10 @@
 package com.example.myapplication
 
-import android.widget.ListView
-import androidx.test.espresso.Espresso
-import androidx.test.espresso.action.ViewActions
-import androidx.test.espresso.matcher.ViewMatchers
-import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.action.ViewActions.typeText
-import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.room.Room
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.example.myapplication.data.CarDatabase
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -18,5 +13,16 @@ import org.junit.runner.RunWith
 class FavoritesFragmentInstrumentedTest {
     @get:Rule()
     val activity = ActivityScenarioRule(MainActivity::class.java)
+    val database = Room.inMemoryDatabaseBuilder(
+        ApplicationProvider.getApplicationContext(),
+        CarDatabase::class.java
+    ).allowMainThreadQueries().build()
+    val carDao = database.CarDao()
 
+
+    @Test
+    fun get_favorites_number_and_check_number_on_database() {
+        startFavoritesFragment()
+        val favoritesNumber = carDao.getFavoritesCarNumber()
+    }
 }

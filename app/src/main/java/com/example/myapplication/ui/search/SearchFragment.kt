@@ -1,6 +1,7 @@
 package com.example.myapplication.ui.search
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -64,6 +65,7 @@ class SearchFragment : Fragment() {
                 )
             }
         }
+        //TODO Bug if you put maximum price and then delete the filter remain 0
         binding.endingPriceSearchText.doOnTextChanged { _, _, _, _ ->
             if (binding.endingPriceSearchText.text.toString().isNotEmpty()) {
                 searchViewModel.onEndingPriceChange(

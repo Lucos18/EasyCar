@@ -43,5 +43,18 @@ val CarList = listOf<Car>(
         color = CarColors.MATTE_RED.nameColor,
         mileage = 0.0,
         price = 500000.0
+    ),
+    Car(
+        brand = "CITROEN",
+        model = "C3",
+        yearStartProduction = 2016,
+        yearEndProduction = null,
+        carPower = 160,
+        seats = 2,
+        fuelType = fuelType.PHEV.toString(),
+        image = null,
+        color = CarColors.MATTE_BLUE.nameColor,
+        mileage = 0.0,
+        price = 40000.0
     )
 )

@@ -30,13 +30,8 @@ class SearchViewModel(val CarDao: CarDao) : ViewModel(){
         if(string == "New"){
             mapFilters[CarFiltersSearch.NEW] = valueToSet
             mapFilters[CarFiltersSearch.USED] = false
-            Log.d("mapfilters", mapFilters[CarFiltersSearch.NEW].toString())
-            Log.d("mapfilters", mapFilters[CarFiltersSearch.USED].toString())
-
         } else if (string == "Used") {
             mapFilters[CarFiltersSearch.USED] = valueToSet
-            Log.d("mapfilters", mapFilters[CarFiltersSearch.NEW].toString())
-            Log.d("mapfilters", mapFilters[CarFiltersSearch.USED].toString())
         }
         filterListOfCars()
     }
@@ -143,10 +138,7 @@ class SearchViewModel(val CarDao: CarDao) : ViewModel(){
                 else -> 0
             }
         }
-        Log.d("ciao",filteredList.toString())
         filteredList = carCheck(filteredList)
-        Log.d("filter", brandSelected)
-        Log.d("filter", filteredList.toString())
         currentNumberOfResults.value = filteredList?.size
         return filteredList?.size
     }
@@ -160,7 +152,6 @@ class SearchViewModel(val CarDao: CarDao) : ViewModel(){
                 mapFiltersFuelTypeOnlyTrue.add(filter.key.toString())
             }
         }
-        Log.d("ciao", mapFiltersFuelTypeOnlyTrue.toString())
         return if (booleanFound){
             mapFiltersFuelTypeOnlyTrue = mapFiltersFuelTypeOnlyTrue.toSet().toMutableList()
             filteredList?.filter{ it.fuelType in (mapFiltersFuelTypeOnlyTrue) }

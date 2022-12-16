@@ -55,7 +55,6 @@ class HomeFragmentInstrumentedTest {
         val latch = CountDownLatch(1)
         val job = async(Dispatchers.IO) {
             carDao.getCars().collect {
-                Log.d("ciao",it.maxByOrNull { car -> car.id }.toString())
             }
         }
         withContext(Dispatchers.IO) {
