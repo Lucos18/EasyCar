@@ -1,7 +1,6 @@
 package com.example.myapplication.ui.search
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -65,13 +64,14 @@ class SearchFragment : Fragment() {
                 )
             }
         }
-        //TODO Bug if you put maximum price and then delete the filter remain 0
         binding.endingPriceSearchText.doOnTextChanged { _, _, _, _ ->
             if (binding.endingPriceSearchText.text.toString().isNotEmpty()) {
                 searchViewModel.onEndingPriceChange(
                     binding.endingPriceSearchText.text.toString().toDouble()
                 )
-            }
+            } else searchViewModel.onEndingPriceChange(
+                0.0
+            )
         }
         binding.carSearchBrandText.setOnClickListener {
             carListItemsAlertDialog(
@@ -152,7 +152,9 @@ class SearchFragment : Fragment() {
                 searchViewModel.onEndingPowerChange(
                     binding.carSearchPowerEndingText.text.toString().toDouble()
                 )
-            } else searchViewModel.mapFilters[CarFiltersSearch.MAX_POWER] = false
+            } else searchViewModel.onEndingPowerChange(
+                0.0
+            )
         }
         binding.searchCarsButton.setOnClickListener {
             val minPower = binding.carSearchPowerStartingText.text.toString().toDoubleOrNull()
@@ -210,7 +212,7 @@ class SearchFragment : Fragment() {
         _binding = null
     }
 
-    fun showErrorSnackBar(){
+    fun showErrorSnackBar() {
         showCustomSnackBar(
             constraintLayout = binding.mainConstraintSearchCars,
             getString(R.string.error_check_inputs),

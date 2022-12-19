@@ -29,7 +29,6 @@ import org.mockito.Mockito.verify
 class NavigationInstrumentedTest {
     @get:Rule()
     val activity = ActivityScenarioRule(MainActivity::class.java)
-    val mockNavController = mock(NavController::class.java)
     val testNavController = TestNavHostController(
         ApplicationProvider.getApplicationContext()
     )
@@ -46,14 +45,10 @@ class NavigationInstrumentedTest {
         navigationItems.forEach {
             onView(withId(it))
                 .perform(click())
-            //TODO Check if current location is expected with nav controller
-            //check_current_location_is_expected(navController.currentDestination?.id, it)
         }
         navigationItems.reversed().forEach {
             onView(withId(it))
                 .perform(click())
-            //TODO Check if current location is expected with nav controller
-            //check_current_location_is_expected(navController.currentDestination?.id, it)
         }
     }
 

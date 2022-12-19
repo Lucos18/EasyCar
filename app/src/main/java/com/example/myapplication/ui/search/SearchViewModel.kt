@@ -61,19 +61,35 @@ class SearchViewModel(val CarDao: CarDao) : ViewModel(){
     }
 
     fun onEndingPriceChange(maxPrice: Double){
-        mapFilters[CarFiltersSearch.MAXPRICE] = true
-        maxPriceSelected = maxPrice
+        if(maxPrice == 0.0){
+            mapFilters[CarFiltersSearch.MAXPRICE] = false
+        } else {
+            mapFilters[CarFiltersSearch.MAXPRICE] = true
+            maxPriceSelected = maxPrice
+        }
         filterListOfCars()
     }
 
     fun onEndingPowerChange(maxPower: Double){
-        mapFilters[CarFiltersSearch.MAX_POWER] = true
-        maxPowerSelected = maxPower
+        if(maxPower == 0.0)
+        {
+            mapFilters[CarFiltersSearch.MAX_POWER] = false
+        } else {
+            mapFilters[CarFiltersSearch.MAX_POWER] = true
+            maxPowerSelected = maxPower
+        }
         filterListOfCars()
     }
 
     fun getDistinctBrandNames(): List<String> {
-        return _carList.value!!.map { e -> e.maker }.distinct().sorted()
+        if (checkCarListValue())
+        {
+            return _carList.value!!.map { e -> e.maker }.distinct().sorted()
+        }
+        return listOf("")
+    }
+    fun checkCarListValue(): Boolean {
+        return _carList.value != null
     }
 
     fun getDistinctModelByBrand(maker: String): List<String> {
@@ -118,9 +134,6 @@ class SearchViewModel(val CarDao: CarDao) : ViewModel(){
 
         }
     }
-
-
-
     fun filterListOfCars(): Int? {
         filteredList = allCars.value?.toList()
         mapFilters.forEach { filter ->
