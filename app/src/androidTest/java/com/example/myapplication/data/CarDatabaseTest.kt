@@ -1,14 +1,11 @@
-package com.example.myapplication
+package com.example.myapplication.data
 
 import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import app.cash.turbine.test
-import com.example.myapplication.data.CarDao
-import com.example.myapplication.data.CarDatabase
-import com.example.myapplication.enums.fuelType
-import com.example.myapplication.model.Car
+import com.example.myapplication.CarListDao
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Before

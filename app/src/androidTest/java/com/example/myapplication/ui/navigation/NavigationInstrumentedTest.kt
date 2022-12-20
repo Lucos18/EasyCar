@@ -1,7 +1,6 @@
-package com.example.myapplication
+package com.example.myapplication.ui.navigation
 
 import androidx.fragment.app.testing.launchFragmentInContainer
-import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.testing.TestNavHostController
 import androidx.test.core.app.ApplicationProvider
@@ -12,6 +11,7 @@ import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.example.myapplication.*
 import com.example.myapplication.ui.favorites.FavoritesFragmentDirections
 import com.example.myapplication.ui.home.HomeFragment
 import com.example.myapplication.ui.home.HomeFragmentDirections
@@ -21,7 +21,6 @@ import org.junit.Assert.*
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mockito.mock
 import org.mockito.Mockito.verify
 
 

@@ -4,6 +4,7 @@ import android.R
 import android.app.PendingIntent.getActivity
 import android.content.Context
 import android.util.Log
+import androidx.lifecycle.asLiveData
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
@@ -43,18 +44,19 @@ class HomeFragmentInstrumentedTest {
         db.close()
     }
     //TODO FIX
+
     @Test
     fun click_add_to_favorites_car() = runBlocking {
         go_to_home_fragment()
         var initialNumberOfFavorites = 0
         var endingNumberOfFavorites = 0
+        dao.insert(CarListDao[0])
         dao.getAllFavoritesCar().test {
             val list = awaitItem()
             initialNumberOfFavorites = list.size
             cancel()
         }
         click_on_favorites_button(0)
-        Thread.sleep(1000)
         dao.getAllFavoritesCar().test {
             val list = awaitItem()
             endingNumberOfFavorites = list.size

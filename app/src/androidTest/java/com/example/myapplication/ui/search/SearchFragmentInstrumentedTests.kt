@@ -55,6 +55,7 @@ class SearchFragmentInstrumentedTests {
     fun search_car_with_all_parameters(): Unit = runBlocking {
         go_to_search_fragment()
         val carToInsert = CarListDao[2]
+        //TODO INSERT NOT WORKING
         dao.insert(carToInsert)
         click_text_input_and_write_string(R.id.starting_price_search_text, (carToInsert.price - 100).toString())
         click_text_input_and_write_string(R.id.ending_price_search_text, (carToInsert.price + 100).toString())
@@ -68,7 +69,7 @@ class SearchFragmentInstrumentedTests {
         click_text_input_and_write_string(R.id.car_search_power_starting_text, (carToInsert.carPower - 15).toString())
         click_text_input_and_write_string(R.id.car_search_power_ending_text, (carToInsert.carPower + 15).toString())
         hideKeyboard()
-        Thread.sleep(40000)
+        Thread.sleep(20000)
         click_text_input_list_view_and_choose_by_text(R.id.car_search_brand_text, carToInsert.brand)
         click_text_input_list_view_and_choose_by_text(R.id.car_search_model_text, carToInsert.model)
         hideKeyboard()

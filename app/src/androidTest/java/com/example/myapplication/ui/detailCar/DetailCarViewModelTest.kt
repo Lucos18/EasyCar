@@ -44,15 +44,15 @@ class DetailCarViewModelTest {
     @Test
     fun getCarLogos() {
         val initialCarLogo = viewModel.carLogos.value
-        refreshDataFromNetwork()
+        viewModel.refreshDataFromNetwork()
         Thread.sleep(2000)
         assert(viewModel.carLogos.value != initialCarLogo)
     }
 
     @Test
     fun getCarById() = runBlocking {
-        viewModelAdd.addCarComplete(CarListDao[0])
-        viewModel.getCarById(1).asFlow().test {
+        dao.insert(CarListDao[0])
+        dao.getCarById(1).test {
             val list = awaitItem()
             assert(list.id == CarListDao[0].id)
             cancel()
@@ -62,13 +62,15 @@ class DetailCarViewModelTest {
     @Test
     fun deleteCarById() = runBlocking {
         viewModelAdd.addCarComplete(CarListDao[0])
+        dao.insert(CarListDao[0])
         dao.getCars().test {
             val list = awaitItem()
             Log.d("ciaoLista", list.toString())
-            assert(list.isEmpty())
+            assertFalse(list.isEmpty())
             cancel()
         }
         viewModel.deleteCarById(CarListDao[0].id)
+        dao.delete(CarListDao[0])
         dao.getCars().test {
             val list = awaitItem()
             Log.d("ciaoLista", list.toString())

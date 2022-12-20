@@ -71,7 +71,7 @@ class SellFragmentInstrumentedTest {
     @Test
     fun click_card_and_delete_car() {
         go_to_sell_fragment()
-        click_on_card_and_check_details_card(0)
+        click_on_card_and_check_details_card(6)
         click_delete_car_fab()
     }
 
@@ -88,5 +88,7 @@ class SellFragmentInstrumentedTest {
         uiDevice.pressHome()
         uiDevice.openNotification()
         uiDevice.wait(Until.hasObject(By.textContains("ALFA ROMEO")), 20)
+        Thread.sleep(3000)
+        uiDevice.pressBack()
     }
 }

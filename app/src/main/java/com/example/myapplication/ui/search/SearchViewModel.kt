@@ -15,7 +15,7 @@ import kotlin.math.max
 class SearchViewModel(val CarDao: CarDao) : ViewModel(){
     private val _carList = MutableLiveData<List<CarInfo>>()
     val mapFilters = mutableMapOf<CarFiltersSearch, Boolean>()
-    private val mapFiltersFuelType = mutableMapOf<fuelType, Boolean>()
+    val mapFiltersFuelType = mutableMapOf<fuelType, Boolean>()
     var modelSelected: String = ""
     var brandSelected: String = ""
     var maxPriceSelected: Double = 0.0

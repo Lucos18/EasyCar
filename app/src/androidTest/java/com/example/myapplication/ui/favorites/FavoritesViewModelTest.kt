@@ -9,6 +9,7 @@ import com.example.myapplication.data.CarDatabase
 import com.example.myapplication.ui.addCar.AddNewCarViewModel
 import com.example.myapplication.ui.detailCar.DetailCarViewModel
 import kotlinx.coroutines.runBlocking
+import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
 
@@ -27,17 +28,17 @@ class FavoritesViewModelTest {
         dao = db.CarDao()
         viewModel = FavoritesViewModel(dao)
     }
+    @After
+    fun closeDb() {
+        db.close()
+    }
 
     @Test
     fun getCarLogos() {
         val initialCarLogo = viewModel.carLogos.value
-        refreshDataFromNetwork()
+        viewModel.refreshDataFromNetwork()
         Thread.sleep(2000)
         assert(viewModel.carLogos.value != initialCarLogo)
-    }
-
-    @Test
-    fun refreshDataFromNetwork() {
     }
 
     @Test

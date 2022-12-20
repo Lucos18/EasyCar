@@ -118,7 +118,7 @@ fun click_text_input_list_view_and_choose_by_text(idTextInput: Int, textToSearch
     Thread.sleep(2000)
     simple_click(idTextInput)
     Thread.sleep(2000)
-    onData(hasToString(startsWith(textToSearch))).inAdapterView(withId(R.id.listView)).perform(click());
+    onData(hasToString(textToSearch)).inAdapterView(withId(R.id.listView)).perform(click());
 }
 
 fun click_on_card(idCard: Int) {

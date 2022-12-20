@@ -142,7 +142,7 @@ class AddNewCarViewModelTest {
     @Test
     fun convertKwToCv_returnsRightValue() {
         val input = (10..1000).random()
-        assertEquals(viewModel.convertKwToCv(input), (input * 1.36))
+        assertEquals(viewModel.convertKwToCv(input), (input * 1.36).toInt())
     }
 
     @Test
