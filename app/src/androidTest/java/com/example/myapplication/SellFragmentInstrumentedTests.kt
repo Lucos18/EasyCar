@@ -80,6 +80,7 @@ class SellFragmentInstrumentedTest {
         go_to_sell_fragment()
         click_on_card_and_check_details_card(0)
         click_edit_car_fab()
+        click_edit_car_fab()
         //TODO get current mileage to update after
         clear_text_text_input(R.id.car_mileage_text_edit)
         click_text_input_and_write_string(R.id.car_mileage_text_edit, "1000000")
