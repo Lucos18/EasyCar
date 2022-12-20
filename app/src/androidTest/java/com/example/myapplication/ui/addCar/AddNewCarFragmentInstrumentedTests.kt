@@ -50,7 +50,6 @@ class AddNewCarFragmentInstrumentedTest {
         val mockNavController = startAddNewCarFragment()
         //go_to_sell_fragment()
         //click_add_new_car_fab()
-        Thread.sleep(60000)
         click_text_input_list_view_and_choose_by_text(R.id.car_brand_add_text, randomCar.brand)
         click_text_input_year_production_and_choose_year(R.id.car_year_add_text, randomCar.yearStartProduction)
         click_text_input_list_view_and_choose_by_text(R.id.car_model_add_text, randomCar.model)
