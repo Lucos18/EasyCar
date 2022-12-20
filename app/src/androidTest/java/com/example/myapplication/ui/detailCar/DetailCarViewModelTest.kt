@@ -2,6 +2,7 @@ package com.example.myapplication.ui.detailCar
 
 import android.content.Context
 import android.util.Log
+import androidx.lifecycle.asFlow
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import app.cash.turbine.test
@@ -9,12 +10,15 @@ import com.example.myapplication.CarListDao
 import com.example.myapplication.data.CarDao
 import com.example.myapplication.data.CarDatabase
 import com.example.myapplication.enums.fuelType
+import com.example.myapplication.model.Car
 import com.example.myapplication.ui.addCar.AddNewCarViewModel
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertFalse
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
+import org.junit.rules.TestRule
 
 class DetailCarViewModelTest {
     private lateinit var viewModel: DetailCarViewModel
@@ -39,14 +43,22 @@ class DetailCarViewModelTest {
 
     @Test
     fun getCarLogos() {
+        val initialCarLogo = viewModel.carLogos.value
+        refreshDataFromNetwork()
+        Thread.sleep(2000)
+        assert(viewModel.carLogos.value != initialCarLogo)
     }
 
     @Test
-    fun getCarById() {
-
-
+    fun getCarById() = runBlocking {
+        viewModelAdd.addCarComplete(CarListDao[0])
+        viewModel.getCarById(1).asFlow().test {
+            val list = awaitItem()
+            assert(list.id == CarListDao[0].id)
+            cancel()
+        }
     }
-
+    //TODO How the
     @Test
     fun deleteCarById() = runBlocking {
         viewModelAdd.addCarComplete(CarListDao[0])
@@ -67,6 +79,7 @@ class DetailCarViewModelTest {
 
     @Test
     fun refreshDataFromNetwork() {
+
     }
 
     @Test

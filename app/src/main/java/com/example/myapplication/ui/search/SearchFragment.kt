@@ -86,6 +86,11 @@ class SearchFragment : Fragment() {
             if (binding.carSearchBrandText.text.toString().isNotEmpty()) {
                 binding.carSearchModelText.isEnabled = true
                 searchViewModel.onBrandChange(binding.carSearchBrandText.text.toString())
+            } else
+            {
+                binding.carSearchModelText.isEnabled = false
+                searchViewModel.mapFilters[CarFiltersSearch.BRAND] = false
+                searchViewModel.filterListOfCars()
             }
         }
         binding.carSearchModelText.setOnClickListener {

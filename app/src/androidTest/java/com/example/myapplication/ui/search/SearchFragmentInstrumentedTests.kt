@@ -1,4 +1,4 @@
-package com.example.myapplication
+package com.example.myapplication.ui.search
 
 import android.content.Context
 import androidx.room.Room
@@ -9,13 +9,10 @@ import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.example.myapplication.*
 import com.example.myapplication.data.CarDao
 import com.example.myapplication.data.CarDatabase
-import com.example.myapplication.ui.addCar.AddNewCarFragmentDirections
-import com.example.myapplication.ui.search.SearchFragmentDirections
-import com.example.myapplication.ui.searchResults.SearchResults
 import com.example.myapplication.ui.searchResults.SearchResultsDirections
-import com.example.myapplication.ui.sell.SellFragmentDirections
 import kotlinx.coroutines.runBlocking
 import org.junit.*
 import org.junit.runner.RunWith

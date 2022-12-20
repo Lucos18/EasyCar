@@ -36,7 +36,7 @@ class FavoritesFragmentInstrumentedTest {
         db.close()
     }
 
-
+    //TODO CHECK TEST
     @Test
     fun get_favorites_number_and_check_number_on_database() = runBlocking {
         startFavoritesFragment()

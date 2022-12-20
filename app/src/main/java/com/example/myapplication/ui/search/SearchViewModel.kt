@@ -152,7 +152,7 @@ class SearchViewModel(val CarDao: CarDao) : ViewModel(){
             }
         }
         filteredList = carCheck(filteredList)
-        currentNumberOfResults.value = filteredList?.size
+        currentNumberOfResults.postValue(filteredList?.size)
         return filteredList?.size
     }
 
