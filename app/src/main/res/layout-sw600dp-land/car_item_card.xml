@@ -84,11 +84,12 @@
                 android:id="@+id/car_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
+                android:layout_marginVertical="4dp"
                 android:textSize="@dimen/price_text_size_tablet"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@id/car_brand"
                 app:layout_constraintTop_toBottomOf="@id/car_model"
+                app:layout_constraintBottom_toTopOf="@id/table_layout_card"
                 tools:text="$50">
 
             </TextView>
@@ -97,6 +98,7 @@
                 android:id="@+id/table_layout_card"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="4dp"
                 android:stretchColumns="*"
                 app:layout_constraintTop_toBottomOf="@id/car_image">
 
