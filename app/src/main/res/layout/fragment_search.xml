@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/main_constraint_search_cars"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -84,8 +86,10 @@
                                     android:id="@+id/starting_price_search_text"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
+                                    android:maxLength="15"
                                     android:hint="@string/starting_at_price"
                                     android:inputType="number">
+
 
                                 </com.google.android.material.textfield.TextInputEditText>
                             </com.google.android.material.textfield.TextInputLayout>
@@ -94,12 +98,14 @@
                                 android:id="@+id/ending_price_search"
                                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                                 android:layout_width="match_parent"
-                                android:layout_height="70dp">
+                                android:layout_height="70dp"
+                                app:endIconMode="clear_text">
 
                                 <com.google.android.material.textfield.TextInputEditText
                                     android:id="@+id/ending_price_search_text"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
+                                    android:maxLength="15"
                                     android:hint="@string/ending_price"
                                     android:inputType="number">
 
@@ -160,13 +166,15 @@
                         android:layout_width="match_parent"
                         android:layout_height="70dp"
                         android:layout_marginTop="16dp"
-                        app:layout_constraintTop_toBottomOf="@id/car_vehicle_informations_label">
+                        app:layout_constraintTop_toBottomOf="@id/car_vehicle_informations_label"
+                        app:endIconMode="clear_text">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/car_search_brand_text"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:focusable="false"
+                            android:longClickable="false"
                             android:hint="@string/car_brand_add"
                             android:inputType="number">
 
@@ -186,6 +194,7 @@
                             android:layout_height="wrap_content"
                             android:enabled="false"
                             android:focusable="false"
+                            android:longClickable="false"
                             android:hint="@string/car_model_add"
                             android:inputType="number">
 

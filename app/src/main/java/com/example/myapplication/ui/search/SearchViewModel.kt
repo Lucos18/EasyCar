@@ -15,7 +15,7 @@ import kotlin.math.max
 class SearchViewModel(val CarDao: CarDao) : ViewModel(){
     private val _carList = MutableLiveData<List<CarInfo>>()
     val mapFilters = mutableMapOf<CarFiltersSearch, Boolean>()
-    private val mapFiltersFuelType = mutableMapOf<fuelType, Boolean>()
+    val mapFiltersFuelType = mutableMapOf<fuelType, Boolean>()
     var modelSelected: String = ""
     var brandSelected: String = ""
     var maxPriceSelected: Double = 0.0
@@ -30,13 +30,8 @@ class SearchViewModel(val CarDao: CarDao) : ViewModel(){
         if(string == "New"){
             mapFilters[CarFiltersSearch.NEW] = valueToSet
             mapFilters[CarFiltersSearch.USED] = false
-            Log.d("mapfilters", mapFilters[CarFiltersSearch.NEW].toString())
-            Log.d("mapfilters", mapFilters[CarFiltersSearch.USED].toString())
-
         } else if (string == "Used") {
             mapFilters[CarFiltersSearch.USED] = valueToSet
-            Log.d("mapfilters", mapFilters[CarFiltersSearch.NEW].toString())
-            Log.d("mapfilters", mapFilters[CarFiltersSearch.USED].toString())
         }
         filterListOfCars()
     }
@@ -66,19 +61,35 @@ class SearchViewModel(val CarDao: CarDao) : ViewModel(){
     }
 
     fun onEndingPriceChange(maxPrice: Double){
-        mapFilters[CarFiltersSearch.MAXPRICE] = true
-        maxPriceSelected = maxPrice
+        if(maxPrice == 0.0){
+            mapFilters[CarFiltersSearch.MAXPRICE] = false
+        } else {
+            mapFilters[CarFiltersSearch.MAXPRICE] = true
+            maxPriceSelected = maxPrice
+        }
         filterListOfCars()
     }
 
     fun onEndingPowerChange(maxPower: Double){
-        mapFilters[CarFiltersSearch.MAX_POWER] = true
-        maxPowerSelected = maxPower
+        if(maxPower == 0.0)
+        {
+            mapFilters[CarFiltersSearch.MAX_POWER] = false
+        } else {
+            mapFilters[CarFiltersSearch.MAX_POWER] = true
+            maxPowerSelected = maxPower
+        }
         filterListOfCars()
     }
 
     fun getDistinctBrandNames(): List<String> {
-        return _carList.value!!.map { e -> e.maker }.distinct().sorted()
+        if (checkCarListValue())
+        {
+            return _carList.value!!.map { e -> e.maker }.distinct().sorted()
+        }
+        return listOf("")
+    }
+    fun checkCarListValue(): Boolean {
+        return _carList.value != null
     }
 
     fun getDistinctModelByBrand(maker: String): List<String> {
@@ -110,6 +121,11 @@ class SearchViewModel(val CarDao: CarDao) : ViewModel(){
         filterListOfCars()
     }
 
+    fun checkMaxIsNotMinorOfMin(Min: Double?, Max: Double?):Boolean{
+        if (Min == null || Max == null) return true
+        return Max >= Min
+    }
+
     fun refreshDataFromNetwork() = viewModelScope.launch {
         try {
             _carList.value = VehicleApi.retrofitService.getCarInfo()
@@ -118,7 +134,6 @@ class SearchViewModel(val CarDao: CarDao) : ViewModel(){
 
         }
     }
-
     fun filterListOfCars(): Int? {
         filteredList = allCars.value?.toList()
         mapFilters.forEach { filter ->
@@ -136,11 +151,8 @@ class SearchViewModel(val CarDao: CarDao) : ViewModel(){
                 else -> 0
             }
         }
-        Log.d("ciao",filteredList.toString())
         filteredList = carCheck(filteredList)
-        Log.d("filter", brandSelected)
-        Log.d("filter", filteredList.toString())
-        currentNumberOfResults.value = filteredList?.size
+        currentNumberOfResults.postValue(filteredList?.size)
         return filteredList?.size
     }
 
@@ -153,7 +165,6 @@ class SearchViewModel(val CarDao: CarDao) : ViewModel(){
                 mapFiltersFuelTypeOnlyTrue.add(filter.key.toString())
             }
         }
-        Log.d("ciao", mapFiltersFuelTypeOnlyTrue.toString())
         return if (booleanFound){
             mapFiltersFuelTypeOnlyTrue = mapFiltersFuelTypeOnlyTrue.toSet().toMutableList()
             filteredList?.filter{ it.fuelType in (mapFiltersFuelTypeOnlyTrue) }

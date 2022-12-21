@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.slidingpanelayout.widget.SlidingPaneLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    style="Theme.MaterialComponents.DayNight.DarkActionBar"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/sliding_pane_layout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ui.home.HomeFragment">
+    tools:context=".ui.home.HomeFragment"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
         <Button
             android:id="@+id/search_cars"
@@ -36,4 +33,3 @@
             app:layout_constraintTop_toBottomOf="@+id/search_cars" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.slidingpanelayout.widget.SlidingPaneLayout>

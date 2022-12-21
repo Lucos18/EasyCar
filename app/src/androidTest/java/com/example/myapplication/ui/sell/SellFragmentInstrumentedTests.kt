@@ -5,6 +5,8 @@ import android.util.Log
 import androidx.lifecycle.asLiveData
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
+import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
@@ -12,6 +14,8 @@ import androidx.test.uiautomator.By
 import androidx.test.uiautomator.UiDevice
 import androidx.test.uiautomator.Until
 import com.example.myapplication.data.CarDatabase
+import com.example.myapplication.enums.fuelType
+import com.example.myapplication.model.Car
 import junit.framework.Assert.assertEquals
 import org.junit.After
 import org.junit.Before
@@ -28,6 +32,7 @@ class SellFragmentInstrumentedTest {
         ApplicationProvider.getApplicationContext(),
         CarDatabase::class.java
     ).allowMainThreadQueries().build()
+    val randomCar = CarList.random()
     val carDao = database.CarDao()
     private lateinit var uiDevice: UiDevice
 
@@ -49,12 +54,12 @@ class SellFragmentInstrumentedTest {
         click_on_card_and_check_details_card(0)
         click_edit_car_fab()
         clear_text_text_input(R.id.car_power_edit_text)
-        click_text_input_and_write_string(R.id.car_power_edit_text, "150")
+        click_text_input_and_write_string(R.id.car_power_edit_text, (100..250).random().toString())
         clear_text_text_input(R.id.car_price_edit_text)
-        click_text_input_and_write_string(R.id.car_price_edit_text, "10000")
+        click_text_input_and_write_string(R.id.car_price_edit_text, (10000..50000).random().toString())
         clear_text_text_input(R.id.car_seats_edit_text)
         click_text_input_and_write_string(R.id.car_seats_edit_text, "5")
-        click_text_input_fuel_and_choose_by_position(R.id.car_fuel_type_edit_label, 4)
+        click_text_input_fuel_and_choose_by_text(R.id.car_fuel_type_edit_label, fuelType = fuelType.Electric.toString())
         click_text_input_year_production_and_choose_year(R.id.car_year_production_edit_text, 2015)
         scrollTo(R.id.car_mileage_text_edit)
         clear_text_text_input(R.id.car_mileage_text_edit)
@@ -66,7 +71,7 @@ class SellFragmentInstrumentedTest {
     @Test
     fun click_card_and_delete_car() {
         go_to_sell_fragment()
-        click_on_card_and_check_details_card(0)
+        click_on_card_and_check_details_card(6)
         click_delete_car_fab()
     }
 
@@ -83,5 +88,7 @@ class SellFragmentInstrumentedTest {
         uiDevice.pressHome()
         uiDevice.openNotification()
         uiDevice.wait(Until.hasObject(By.textContains("ALFA ROMEO")), 20)
+        Thread.sleep(3000)
+        uiDevice.pressBack()
     }
 }

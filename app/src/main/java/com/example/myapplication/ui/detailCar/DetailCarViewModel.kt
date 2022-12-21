@@ -92,7 +92,7 @@ class DetailCarViewModel(private val carDao: CarDao) : ViewModel() {
         price: Double,
         mileage: Double
     ): Boolean {
-        return year != 0 && fuelType.isNotBlank() && power != 0 && power.toString().length <= 4 && seats != 0 && price != 0.0 && mileage >= 0
+        return year != 0 && fuelType.isNotBlank() && power != 0 && power.toString().length <= 4 && seats != 0 && seats.toString().length <= 2 && price != 0.0 && mileage >= 0
     }
 
 }

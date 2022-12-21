@@ -1,7 +1,6 @@
 package com.example.myapplication.ui.search
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +15,8 @@ import com.example.myapplication.databinding.FragmentSearchBinding
 import com.example.myapplication.enums.CarFiltersSearch
 import com.example.myapplication.model.Car
 import com.example.myapplication.utils.carListItemsAlertDialog
+import com.example.myapplication.utils.showCustomSnackBar
+import com.google.android.material.snackbar.Snackbar
 
 class SearchFragment : Fragment() {
     val searchViewModel: SearchViewModel by activityViewModels {
@@ -68,7 +69,9 @@ class SearchFragment : Fragment() {
                 searchViewModel.onEndingPriceChange(
                     binding.endingPriceSearchText.text.toString().toDouble()
                 )
-            }
+            } else searchViewModel.onEndingPriceChange(
+                0.0
+            )
         }
         binding.carSearchBrandText.setOnClickListener {
             carListItemsAlertDialog(
@@ -83,6 +86,11 @@ class SearchFragment : Fragment() {
             if (binding.carSearchBrandText.text.toString().isNotEmpty()) {
                 binding.carSearchModelText.isEnabled = true
                 searchViewModel.onBrandChange(binding.carSearchBrandText.text.toString())
+            } else
+            {
+                binding.carSearchModelText.isEnabled = false
+                searchViewModel.mapFilters[CarFiltersSearch.BRAND] = false
+                searchViewModel.filterListOfCars()
             }
         }
         binding.carSearchModelText.setOnClickListener {
@@ -149,12 +157,30 @@ class SearchFragment : Fragment() {
                 searchViewModel.onEndingPowerChange(
                     binding.carSearchPowerEndingText.text.toString().toDouble()
                 )
-            } else searchViewModel.mapFilters[CarFiltersSearch.MAX_POWER] = false
+            } else searchViewModel.onEndingPowerChange(
+                0.0
+            )
         }
         binding.searchCarsButton.setOnClickListener {
-            val action = SearchFragmentDirections
-                .actionNavigationSearchToSearchResults()
-            findNavController().navigate(action)
+            val minPower = binding.carSearchPowerStartingText.text.toString().toDoubleOrNull()
+            val maxPower = binding.carSearchPowerEndingText.text.toString().toDoubleOrNull()
+            val minPrice = binding.startingPriceSearchText.text.toString().toDoubleOrNull()
+            val maxPrice = binding.endingPriceSearchText.text.toString().toDoubleOrNull()
+            if (searchViewModel.checkMaxIsNotMinorOfMin(minPower, maxPower)) {
+                if (searchViewModel.checkMaxIsNotMinorOfMin(minPrice, maxPrice)) {
+                    val action = SearchFragmentDirections
+                        .actionNavigationSearchToSearchResults()
+                    findNavController().navigate(action)
+                } else {
+                    binding.endingPriceSearchText.error =
+                        getString(R.string.error_max_minor_than_minimum)
+                    showErrorSnackBar()
+                }
+            } else {
+                binding.carSearchPowerEndingText.error =
+                    getString(R.string.error_max_minor_than_minimum)
+                showErrorSnackBar()
+            }
         }
         binding.dieselFilter.setOnCheckedChangeListener { _, isChecked ->
             searchViewModel.onCheckDieselFilter(isChecked)
@@ -173,12 +199,15 @@ class SearchFragment : Fragment() {
         }
         searchViewModel.allCars.observe(this.viewLifecycleOwner) { }
         searchViewModel.currentNumberOfResults.observe(this.viewLifecycleOwner) {
-            if (searchViewModel.currentNumberOfResults.value != 0){
+            if (searchViewModel.currentNumberOfResults.value != 0) {
                 binding.searchCarsButton.text =
                     getString(R.string.button_result_text, it.toString())
             } else {
                 binding.searchCarsButton.text =
-                    getString(R.string.button_result_text, searchViewModel.filteredList?.size.toString())
+                    getString(
+                        R.string.button_result_text,
+                        searchViewModel.filteredList?.size.toString()
+                    )
             }
         }
     }
@@ -188,4 +217,11 @@ class SearchFragment : Fragment() {
         _binding = null
     }
 
+    fun showErrorSnackBar() {
+        showCustomSnackBar(
+            constraintLayout = binding.mainConstraintSearchCars,
+            getString(R.string.error_check_inputs),
+            Snackbar.LENGTH_LONG
+        )
+    }
 }

@@ -51,7 +51,7 @@ class AddNewCarViewModel(private val carDao: CarDao) : ViewModel() {
     }
 
     fun checkSeatsInput(seats: Int?): Boolean{
-        return seats != 0 && seats != null
+        return seats != 0 && seats != null && seats.toString().length <= 2
     }
 
     fun checkPriceInput(price: Double): Boolean{
@@ -94,7 +94,10 @@ class AddNewCarViewModel(private val carDao: CarDao) : ViewModel() {
             mileage = Mileage,
             color = Color
         )
+        addCarComplete(car)
+    }
 
+    fun addCarComplete(car:Car){
         viewModelScope.launch {
             carDao.insert(car)
         }

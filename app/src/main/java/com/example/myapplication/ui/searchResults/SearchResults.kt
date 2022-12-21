@@ -58,10 +58,10 @@ class SearchResults : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if(searchViewModel.filteredList?.size == 0){
-            binding.searchResultsShowingResults?.visibility = View.GONE
+            binding.searchResultsShowingResults.visibility = View.GONE
             binding.searchResultsWhenNoFound.visibility = View.VISIBLE
         } else {
-            binding.searchResultsShowingResults?.visibility = View.VISIBLE
+            binding.searchResultsShowingResults.visibility = View.VISIBLE
             binding.searchResultsWhenNoFound.visibility = View.GONE
         }
         val adapter = SearchResultsAdapter(clickListener = { car ->

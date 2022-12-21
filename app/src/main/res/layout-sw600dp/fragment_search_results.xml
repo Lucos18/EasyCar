@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <ImageView
-            android:id="@+id/image_error_connection"
+            android:id="@+id/image_error_no_car_found"
             android:layout_width="400dp"
             android:layout_height="400dp"
             android:layout_marginBottom="64dp"
@@ -29,9 +29,9 @@
             android:gravity="center"
             android:text="@string/no_cars_have_been_found_with_the_current_filters_please_retry_with_different_ones_error_message"
             android:textSize="32sp"
-            app:layout_constraintEnd_toEndOf="@id/image_error_connection"
-            app:layout_constraintStart_toStartOf="@id/image_error_connection"
-            app:layout_constraintTop_toBottomOf="@id/image_error_connection">
+            app:layout_constraintEnd_toEndOf="@id/image_error_no_car_found"
+            app:layout_constraintStart_toStartOf="@id/image_error_no_car_found"
+            app:layout_constraintTop_toBottomOf="@id/image_error_no_car_found">
 
         </TextView>
 
@@ -47,8 +47,8 @@
             android:textColor="@color/blue_retry_again"
             android:textSize="32sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@id/image_error_connection"
-            app:layout_constraintStart_toStartOf="@id/image_error_connection"
+            app:layout_constraintEnd_toEndOf="@id/image_error_no_car_found"
+            app:layout_constraintStart_toStartOf="@id/image_error_no_car_found"
             app:layout_constraintTop_toBottomOf="@id/error_message_connection">
 
         </TextView>
