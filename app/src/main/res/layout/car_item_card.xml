@@ -63,7 +63,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="@{car.model}"
                 app:layout_constraintStart_toStartOf="@id/car_brand"
                 app:layout_constraintTop_toBottomOf="@id/car_brand"
                 tools:text="Model">

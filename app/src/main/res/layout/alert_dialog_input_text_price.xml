@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingHorizontal="22dp"
+    android:paddingTop="22dp"
+    android:paddingBottom="4dp">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constrain_alert_dialog"
+        android:layout_width="match_parent"
+
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/price_title_alert_dialog"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textStyle="bold"
+            android:textSize="22sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/price_add_label_alert_dialog"
+            tools:text="@string/car_price_add">
+
+        </TextView>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/price_add_label_alert_dialog"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="8dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:background="@android:color/transparent"
+            android:gravity="center_vertical"
+            app:boxBackgroundColor="@android:color/transparent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/price_title_alert_dialog">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/car_price_alert_dialog_text"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:maxLength="9"
+                android:inputType="number">
+
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="end"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@id/price_add_label_alert_dialog">
+            <Button
+                android:id="@+id/button_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/secondaryColor"
+                android:background="@android:color/transparent"
+                android:text="@string/cancel">
+
+            </Button>
+            <Button
+                android:id="@+id/button_ok"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ok">
+
+            </Button>
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

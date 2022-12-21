@@ -26,8 +26,11 @@ class HomeListAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(car: Car, functionFavorites: (Car) -> Unit, listLogo: LiveData<List<CarLogo>>) {
             binding.car = car
+            Log.d("ciaoBug", car.model.length.toString() )
             if (car.model.length >= 17){
+                Log.d("ciaoBug", car.model.length.toString())
                 val modelReplaced = car.model.replaceRange(18 until car.model.length, "...")
+                Log.d("ciaoBug", modelReplaced )
                 binding.carModel.text = modelReplaced
             } else binding.carModel.text = car.model
 
@@ -37,12 +40,8 @@ class HomeListAdapter(
             binding.carItemState.text = car.carMileageWithUnitString(car.mileage)
             binding.favoritesButtonImage.setImageResource(getImageResource(car.favorite))
             binding.favoritesButtonImage.setOnClickListener {
-                Log.d("testClick", "testClick")
-
                 functionFavorites(car)
-                Log.d("testClick", "testClick")
                 binding.favoritesButtonImage.setImageResource(getImageResource(car.favorite))
-                Log.d("testClick", "testClick")
             }
             if (car.image != null) {
                 val bmp = BitmapFactory.decodeByteArray(car.image, 0, car.image.size)

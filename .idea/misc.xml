@@ -46,7 +46,9 @@
         <entry key="..\:/Users/Lucos18/AndroidStudioProjects/EasyCarNew/app/src/main/res/layout-sw600dp/fragment_search.xml" value="0.1" />
         <entry key="..\:/Users/Lucos18/AndroidStudioProjects/EasyCarNew/app/src/main/res/layout-sw600dp/fragment_search_results.xml" value="0.25" />
         <entry key="..\:/Users/Lucos18/AndroidStudioProjects/EasyCarNew/app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="..\:/Users/Lucos18/AndroidStudioProjects/EasyCarNew/app/src/main/res/layout/alert_dialog.xml" value="0.2484375" />
         <entry key="..\:/Users/Lucos18/AndroidStudioProjects/EasyCarNew/app/src/main/res/layout/alert_dialog_brand.xml" value="0.22" />
+        <entry key="..\:/Users/Lucos18/AndroidStudioProjects/EasyCarNew/app/src/main/res/layout/alert_dialog_input_text.xml" value="0.24739583333333334" />
         <entry key="..\:/Users/Lucos18/AndroidStudioProjects/EasyCarNew/app/src/main/res/layout/car_item_card.xml" value="0.33" />
         <entry key="..\:/Users/Lucos18/AndroidStudioProjects/EasyCarNew/app/src/main/res/layout/car_item_card_search_result.xml" value="0.42448979591836733" />
         <entry key="..\:/Users/Lucos18/AndroidStudioProjects/EasyCarNew/app/src/main/res/layout/fragment_add_new_car.xml" value="0.22037037037037038" />
@@ -56,6 +58,7 @@
         <entry key="..\:/Users/Lucos18/AndroidStudioProjects/EasyCarNew/app/src/main/res/layout/fragment_search.xml" value="0.1" />
         <entry key="..\:/Users/Lucos18/AndroidStudioProjects/EasyCarNew/app/src/main/res/layout/fragment_search_results.xml" value="0.29010416666666666" />
         <entry key="..\:/Users/Lucos18/AndroidStudioProjects/EasyCarNew/app/src/main/res/layout/fragment_sell.xml" value="0.1" />
+        <entry key="..\:/Users/Lucos18/AndroidStudioProjects/EasyCarNew/app/src/main/res/layout/simple_list_item_color.xml" value="0.2484375" />
         <entry key="..\:/Users/Lucos18/AndroidStudioProjects/EasyCarNew/app/src/main/res/menu/bottom_nav_menu.xml" value="0.15185185185185185" />
         <entry key="..\:/Users/Lucos18/AndroidStudioProjects/EasyCarNew/app/src/main/res/menu/topbar_menu_search.xml" value="0.33" />
         <entry key="..\:/Users/Lucos18/AndroidStudioProjects/EasyCarNew/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />

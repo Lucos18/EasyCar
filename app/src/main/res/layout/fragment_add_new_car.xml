@@ -157,6 +157,9 @@
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
                 app:boxBackgroundColor="@android:color/transparent"
+                android:clickable="false"
+                android:longClickable="false"
+                android:focusable="false"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/car_fuel_type_add_label">
 
@@ -164,6 +167,9 @@
                     android:id="@+id/car_power_add_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:clickable="false"
+                    android:longClickable="false"
+                    android:focusable="false"
                     android:hint="@string/car_power_add"
                     android:inputType="number">
 
@@ -194,6 +200,9 @@
                 android:id="@+id/car_price_add_label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:clickable="false"
+                android:longClickable="false"
+                android:focusable="false"
                 android:background="@android:color/transparent"
                 app:boxBackgroundColor="@android:color/transparent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -203,7 +212,10 @@
                     android:id="@+id/car_price_add_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:maxLength="9"
+                    android:clickable="false"
+                    android:longClickable="false"
+                    android:focusable="false"
+                    android:maxLength="15"
                     android:hint="@string/car_price_add"
                     android:inputType="numberDecimal">
 
