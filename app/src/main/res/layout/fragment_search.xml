@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/main_constraint_search_cars"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_constraint_search_cars"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -62,58 +61,65 @@
                         tools:text="@string/car_price_search_string_label">
 
                     </TextView>
-                    <TableLayout
-                        android:id="@+id/table_layout_card"
+
+                    <LinearLayout
+                        android:id="@+id/linear_layout_price_search"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:stretchColumns="*"
+                        android:layout_height="wrap_content"
+                        android:baselineAligned="false"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="16dp"
+                        android:paddingBottom="8dp"
+                        android:weightSum="2"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/car_price_label">
 
-                        <TableRow
-                            android:id="@+id/firstRow"
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/starting_price_search"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginVertical="16dp">
+                            android:layout_height="70dp"
+                            android:layout_marginEnd="16dp"
+                            app:endIconMode="clear_text"
+                            android:layout_weight="1">
 
-                            <com.google.android.material.textfield.TextInputLayout
-                                android:id="@+id/starting_price_search"
-                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/starting_price_search_text"
                                 android:layout_width="match_parent"
-                                android:layout_height="70dp"
-                                android:layout_marginEnd="32dp">
-
-                                <com.google.android.material.textfield.TextInputEditText
-                                    android:id="@+id/starting_price_search_text"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:maxLength="15"
-                                    android:hint="@string/starting_at_price"
-                                    android:inputType="number">
+                                android:layout_height="wrap_content"
+                                android:hint="@string/starting_at_price"
+                                android:imeOptions="actionNext"
+                                android:inputType="number"
+                                android:maxLength="15"
+                                android:nextFocusForward="@id/ending_price_search_text">
 
 
-                                </com.google.android.material.textfield.TextInputEditText>
-                            </com.google.android.material.textfield.TextInputLayout>
+                            </com.google.android.material.textfield.TextInputEditText>
+                        </com.google.android.material.textfield.TextInputLayout>
 
-                            <com.google.android.material.textfield.TextInputLayout
-                                android:id="@+id/ending_price_search"
-                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/ending_price_search"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="70dp"
+                            android:layout_marginStart="16dp"
+                            android:imeOptions="actionDone"
+                            app:endIconMode="clear_text"
+                            android:layout_weight="1">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/ending_price_search_text"
                                 android:layout_width="match_parent"
-                                android:layout_height="70dp"
-                                app:endIconMode="clear_text">
+                                android:layout_height="wrap_content"
+                                android:hint="@string/ending_price"
+                                android:imeOptions="actionNext"
+                                android:inputType="number"
+                                android:maxLength="15"
+                                android:nextFocusForward="@id/car_search_power_starting_text">
 
-                                <com.google.android.material.textfield.TextInputEditText
-                                    android:id="@+id/ending_price_search_text"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:maxLength="15"
-                                    android:hint="@string/ending_price"
-                                    android:inputType="number">
-
-                                </com.google.android.material.textfield.TextInputEditText>
-                            </com.google.android.material.textfield.TextInputLayout>
-                        </TableRow>
-                    </TableLayout>
-
+                            </com.google.android.material.textfield.TextInputEditText>
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.cardview.widget.CardView>
@@ -166,17 +172,17 @@
                         android:layout_width="match_parent"
                         android:layout_height="70dp"
                         android:layout_marginTop="16dp"
-                        app:layout_constraintTop_toBottomOf="@id/car_vehicle_informations_label"
-                        app:endIconMode="clear_text">
+                        app:endIconMode="clear_text"
+                        app:layout_constraintTop_toBottomOf="@id/car_vehicle_informations_label">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/car_search_brand_text"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:focusable="false"
-                            android:longClickable="false"
                             android:hint="@string/car_brand_add"
-                            android:inputType="number">
+                            android:inputType="number"
+                            android:longClickable="false">
 
                         </com.google.android.material.textfield.TextInputEditText>
                     </com.google.android.material.textfield.TextInputLayout>
@@ -186,6 +192,7 @@
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="70dp"
+                        app:endIconMode="clear_text"
                         app:layout_constraintTop_toBottomOf="@id/car_search_brand">
 
                         <com.google.android.material.textfield.TextInputEditText
@@ -194,9 +201,9 @@
                             android:layout_height="wrap_content"
                             android:enabled="false"
                             android:focusable="false"
-                            android:longClickable="false"
                             android:hint="@string/car_model_add"
-                            android:inputType="number">
+                            android:inputType="number"
+                            android:longClickable="false">
 
                         </com.google.android.material.textfield.TextInputEditText>
                     </com.google.android.material.textfield.TextInputLayout>
@@ -323,6 +330,7 @@
                     </LinearLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
+
             <androidx.cardview.widget.CardView
                 android:id="@+id/card_vehicle_technical_informations"
                 android:layout_width="match_parent"
@@ -433,8 +441,9 @@
                             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                             android:layout_width="match_parent"
                             android:layout_height="70dp"
-                            android:layout_marginEnd="24dp"
+                            android:layout_marginEnd="16dp"
                             android:layout_weight="1"
+                            app:endIconMode="clear_text"
                             app:layout_constraintTop_toBottomOf="@id/car_vehicle_informations_label">
 
                             <com.google.android.material.textfield.TextInputEditText
@@ -442,8 +451,10 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="@string/starting_power"
+                                android:imeOptions="actionNext"
                                 android:inputType="number"
-                                android:maxLength="5">
+                                android:maxLength="5"
+                                android:nextFocusForward="@id/car_search_power_ending_text">
 
                             </com.google.android.material.textfield.TextInputEditText>
                         </com.google.android.material.textfield.TextInputLayout>
@@ -454,8 +465,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="70dp"
                             android:layout_gravity="bottom"
-                            android:layout_marginStart="12dp"
+                            android:layout_marginStart="16dp"
                             android:layout_weight="1"
+                            app:endIconMode="clear_text"
                             app:layout_constraintTop_toBottomOf="@id/linear_layout_vehicle_informations_input">
 
                             <com.google.android.material.textfield.TextInputEditText
@@ -463,12 +475,14 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="@string/ending_power"
+                                android:imeOptions="actionDone"
                                 android:inputType="number"
                                 android:maxLength="5" />
                         </com.google.android.material.textfield.TextInputLayout>
                     </LinearLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
+
             <androidx.cardview.widget.CardView
                 android:id="@+id/card_detail_offer"
                 android:layout_width="match_parent"
@@ -536,6 +550,7 @@
             </androidx.cardview.widget.CardView>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
+
     <Button
         android:id="@+id/search_cars_button"
         android:layout_width="match_parent"

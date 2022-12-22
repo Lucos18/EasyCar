@@ -84,17 +84,31 @@ class DetailCarViewModel(private val carDao: CarDao) : ViewModel() {
         }
     }
 
-    fun checkInputEditTextNewCar(
-        year: Int,
-        fuelType: String,
-        power: Int,
-        seats: Int,
-        price: Double,
-        mileage: Double
-    ): Boolean {
-        return year != 0 && fuelType.isNotBlank() && power != 0 && power.toString().length <= 4 && seats != 0 && seats.toString().length <= 2 && price != 0.0 && mileage >= 0
+    fun checkYearInput(year: Int?): Boolean{
+        return year != 0 && year != null
     }
 
+    fun checkFuelInput(fuel: String): Boolean{
+        return fuel.isNotBlank()
+    }
+
+    fun checkPowerInput(power: Int?): Boolean{
+        return power != 0 && power.toString().length <= 4 && power != null
+    }
+
+    fun checkSeatsInput(seats: Int?): Boolean{
+        return seats != 0 && seats != null && seats.toString().length <= 2
+    }
+
+    fun checkPriceInput(price: Double?): Boolean{
+        return price != null && price >= 1
+    }
+
+    fun checkMileageInput(mileage: Double?): Boolean{
+        return if (mileage != null) {
+            mileage >= 0.0
+        } else false
+    }
 }
 
 class DetailViewModelFactory(private val carDao: CarDao) : ViewModelProvider.Factory {

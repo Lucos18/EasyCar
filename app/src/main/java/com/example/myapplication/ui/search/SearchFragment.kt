@@ -1,6 +1,8 @@
 package com.example.myapplication.ui.search
 
 import android.os.Bundle
+import android.view.KeyEvent
+import android.view.KeyEvent.*
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +19,8 @@ import com.example.myapplication.model.Car
 import com.example.myapplication.utils.carListItemsAlertDialog
 import com.example.myapplication.utils.showCustomSnackBar
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 
 class SearchFragment : Fragment() {
     val searchViewModel: SearchViewModel by activityViewModels {
@@ -64,6 +68,9 @@ class SearchFragment : Fragment() {
                 )
             }
         }
+        binding.startingPriceSearch.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
+            onKey(v,keyCode,event, binding.startingPriceSearch, binding.endingPriceSearch)
+        })
         binding.endingPriceSearchText.doOnTextChanged { _, _, _, _ ->
             if (binding.endingPriceSearchText.text.toString().isNotEmpty()) {
                 searchViewModel.onEndingPriceChange(
@@ -223,5 +230,17 @@ class SearchFragment : Fragment() {
             getString(R.string.error_check_inputs),
             Snackbar.LENGTH_LONG
         )
+    }
+    fun onKey(v: View?, keyCode: Int, event: KeyEvent, text1: TextInputLayout, text2: TextInputLayout): Boolean {
+        // If the event is a key-down event on the "enter" button
+        if (event.action == ACTION_DOWN &&
+            keyCode == KEYCODE_ENTER
+        ) {
+            // Perform action on Enter key press
+            text1.clearFocus()
+            text2.requestFocus()
+            return true
+        }
+        return false
     }
 }

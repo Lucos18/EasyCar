@@ -1,6 +1,7 @@
 package com.example.myapplication.model
 
 import android.graphics.Color
+import android.util.Log
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -28,6 +29,7 @@ data class Car(
 
 fun Car.formatPriceToCurrency(price:Double): String{
     val format: NumberFormat = NumberFormat.getCurrencyInstance(Locale.getDefault())
+    Log.d("ciaoCurrency", format.format(price))
     return format.format(price)
 }
 fun Car.carPowerWithUnitString(kw: Int): String {

@@ -8,16 +8,13 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.text.InputFilter
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.ListView
-import android.widget.SearchView
-import androidx.appcompat.content.res.AppCompatResources
-import androidx.core.graphics.drawable.DrawableCompat
+import android.view.WindowManager
+import android.widget.*
 import androidx.core.widget.addTextChangedListener
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
@@ -33,16 +30,18 @@ import com.example.myapplication.utils.FuelTypeAlertDialog
 import com.example.myapplication.utils.carListItemsAlertDialog
 import com.example.myapplication.utils.checkForInternet
 import com.example.myapplication.utils.showCustomSnackBar
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import java.text.NumberFormat
 import java.util.*
+
+
 private var UriImage: Uri? = null
 private var kw: Int = 0
 private var price: Double = 0.0
 private val REQUEST_CODE = 100
+
 @Suppress("DEPRECATION")
 class AddNewCarFragment : Fragment() {
     private lateinit var adapter: ArrayAdapter<*>
@@ -108,32 +107,82 @@ class AddNewCarFragment : Fragment() {
                 ), binding.carModelAddText, null
             )
         }
+        binding.carPowerAddText.setOnClickListener {
+            val builder = AlertDialog.Builder(requireContext())
+                .create()
 
-        binding.carPowerAddText.onFocusChangeListener = View.OnFocusChangeListener { _, b ->
-            if (!b) {
-                val kwText = binding.carPowerAddText.text.toString().toIntOrNull()
-                if (kwText != null) {
-                    binding.carPowerAddText.setText(
-                        getString(
-                            R.string.car_power_convert,
-                            kwText.toString(),
-                            addNewCarViewModel.convertKwToCv(kwText).toString()
-                        )
+            val view = layoutInflater.inflate(R.layout.alert_dialog_input_text_price, null)
+            val searchText = view.findViewById<TextView>(R.id.price_title_alert_dialog)
+            val carPowerText =
+                view.findViewById<TextInputEditText>(R.id.car_price_alert_dialog_text)
+            carPowerText.filters += InputFilter.LengthFilter(4)
+            val btnOk = view.findViewById(R.id.button_ok) as Button
+            val btnCancel = view.findViewById(R.id.button_cancel) as Button
+            searchText.setText(R.string.car_power_add)
+            btnOk.setOnClickListener {
+                binding.carPowerAddText.text = carPowerText.text
+                builder.dismiss()
+            }
+            btnCancel.setOnClickListener {
+                binding.carPowerAddText.setText("")
+                kw = 0
+                builder.dismiss()
+            }
+            builder.setCanceledOnTouchOutside(true)
+            builder.setView(view)
+            builder.show()
+            builder.window?.setLayout(900, WindowManager.LayoutParams.WRAP_CONTENT)
+        }
+        binding.carPowerAddText.doOnTextChanged { _, _, _, _ ->
+            val kwText = binding.carPowerAddText.text.toString().toIntOrNull()
+            if (kwText != null) {
+                binding.carPowerAddText.setText(
+                    getString(
+                        R.string.car_power_convert,
+                        kwText.toString(),
+                        addNewCarViewModel.convertKwToCv(kwText).toString()
                     )
-                    kw = kwText
-                }
+                )
+                kw = kwText
             }
         }
-        binding.carPriceAddText.onFocusChangeListener = View.OnFocusChangeListener { _, b ->
-            if (!b) {
-                val priceText = binding.carPriceAddText.text.toString().toDoubleOrNull()
-                if (priceText != null) {
-                    val format: NumberFormat =
-                        NumberFormat.getCurrencyInstance(Locale.getDefault())
-                    val result: String = format.format(priceText)
-                    binding.carPriceAddText.setText(result)
-                    price = priceText
-                }
+        binding.carPriceAddText.setOnClickListener {
+            val builder = AlertDialog.Builder(requireContext())
+                .create()
+
+            val view = layoutInflater.inflate(R.layout.alert_dialog_input_text_price, null)
+            val searchText = view.findViewById<TextView>(R.id.price_title_alert_dialog)
+            val carPriceText =
+                view.findViewById<TextInputEditText>(R.id.car_price_alert_dialog_text)
+            carPriceText.filters += InputFilter.LengthFilter(9)
+            val btnOk = view.findViewById(R.id.button_ok) as Button
+            val btnCancel = view.findViewById(R.id.button_cancel) as Button
+            searchText.setText(R.string.car_price_add)
+            btnOk.setOnClickListener {
+                binding.carPriceAddText.text = carPriceText.text
+                builder.dismiss()
+            }
+            btnCancel.setOnClickListener {
+                binding.carPriceAddText.setText("")
+                price = 0.0
+                builder.dismiss()
+            }
+            builder.setCanceledOnTouchOutside(true)
+            builder.setView(view)
+            builder.show()
+            builder.window?.setLayout(900, WindowManager.LayoutParams.WRAP_CONTENT)
+        }
+        binding.carPriceAddText.doOnTextChanged { _, _, _, _ ->
+            val priceText = binding.carPriceAddText.text.toString().toDoubleOrNull()
+            if (priceText != null) {
+                val format: NumberFormat =
+                    NumberFormat.getCurrencyInstance(Locale.getDefault())
+                format.minimumFractionDigits = 0
+                Log.d("ciaoCurrency", format.toString())
+                val result: String = format.format(priceText)
+                Log.d("ciaoCurrency", result)
+                binding.carPriceAddText.setText(result)
+                price = priceText
             }
         }
         binding.carImage1.setOnClickListener {
@@ -144,9 +193,10 @@ class AddNewCarFragment : Fragment() {
             FuelTypeAlertDialog(requireContext(), binding.carFuelTypeAddText)
         }
         binding.carColorAddText.addTextChangedListener {
-            if (binding.carColorAddText.text.toString().isNotBlank()){
+            if (binding.carColorAddText.text.toString().isNotBlank()) {
                 val color =
-                    CarColors.values().first { it.nameColor == binding.carColorAddText.text.toString() }
+                    CarColors.values()
+                        .first { it.nameColor == binding.carColorAddText.text.toString() }
                 binding.scr2?.setColorFilter(color.rgbColor)
             }
         }
@@ -201,6 +251,8 @@ class AddNewCarFragment : Fragment() {
 
     override fun onDestroyView() {
         UriImage = null
+        price = 0.0
+        kw = 0
         super.onDestroyView()
         _binding = null
     }

@@ -129,7 +129,6 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="8dp"
-
             android:stretchColumns="*"
             app:layout_constraintStart_toStartOf="@id/price_switcher"
             app:layout_constraintTop_toBottomOf="@id/divider_2">
@@ -218,6 +217,8 @@
                             android:drawableStart="@drawable/ic_fuel_24"
                             android:drawablePadding="8dp"
                             android:focusable="false"
+                            android:longClickable="false"
+                            android:clickable="false"
                             android:hint="@string/car_fuel_type_add"
                             android:inputType="text">
 
@@ -316,7 +317,7 @@
             android:id="@+id/divider_3"
             android:layout_width="match_parent"
             android:layout_height="3dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:background="?attr/dividerHorizontal"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/table_layout_card" />
@@ -351,7 +352,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginEnd="32dp"
+            android:layout_marginEnd="48dp"
             android:stretchColumns="*"
             app:layout_constraintStart_toStartOf="@+id/car_notes_detail_icon"
             app:layout_constraintTop_toBottomOf="@+id/car_notes_detail_icon">

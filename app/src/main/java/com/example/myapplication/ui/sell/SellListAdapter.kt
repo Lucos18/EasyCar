@@ -25,8 +25,8 @@ class SellListAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(car: Car, listLogo: LiveData<List<CarLogo>>) {
             binding.car = car
-            if (car.model.length >= 21){
-                val modelReplaced = car.model.replaceRange(22 until car.model.length, "...")
+            if (car.model.length >= 17){
+                val modelReplaced = car.model.replaceRange(18 until car.model.length, "...")
                 binding.carModel.text = modelReplaced
             } else binding.carModel.text = car.model
             binding.carPrice.text = car.formatPriceToCurrency(car.price)

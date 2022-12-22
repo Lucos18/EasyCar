@@ -21,8 +21,8 @@
     <!-- DETAIL FRAGMENT STRINGS -->
 
     <string name="car_power_detail_string"> Power: %s kW</string>
-    <string name="car_fuel_type_detail_string"> Fuel Type: %s</string>
-    <string name="car_year_detail_string"> Year production: %s</string>
+    <string name="car_fuel_type_detail_string"> Fuel: %s</string>
+    <string name="car_year_detail_string"> Year: %s</string>
     <string name="car_seats_detail_string"> Seats: %s</string>
     <string name="car_notes_detail_string_label">Notes</string>
 
@@ -101,5 +101,7 @@
     <string name="no_cars_have_been_found_with_the_current_filters_please_retry_with_different_ones_error_message">No cars have been found with the current filters. Please retry with different ones.</string>
     <string name="error_max_minor_than_minimum">Maximum value can\'t be lower than minimum value</string>
     <string name="error_check_inputs">Please check inputs on maximum values</string>
+    <string name="cancel">CANCEL</string>
+    <string name="ok">OK</string>
 
 </resources>
