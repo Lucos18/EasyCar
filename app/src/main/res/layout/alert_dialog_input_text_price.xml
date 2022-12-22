@@ -27,7 +27,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/price_add_label_alert_dialog"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="65dp"
             android:layout_marginTop="8dp"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:background="@android:color/transparent"

@@ -23,6 +23,7 @@ import androidx.navigation.fragment.navArgs
 import com.example.myapplication.BaseApplication
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentDetailCarBinding
+import com.example.myapplication.enums.CarAddInputs
 import com.example.myapplication.enums.CarColors
 import com.example.myapplication.model.*
 import com.example.myapplication.ui.transformIntoDatePicker
@@ -39,6 +40,7 @@ import java.util.concurrent.TimeUnit
 
 class DetailCarFragment : Fragment() {
     var oldCarMileage: Double = 0.0
+    private val mapInputsEditValues = mutableMapOf<CarAddInputs, Boolean>()
     private val detailCarArgs: DetailCarFragmentArgs by navArgs()
     private lateinit var car: Car
     private var carLogo = MutableLiveData<List<CarLogo>>()
@@ -257,14 +259,19 @@ class DetailCarFragment : Fragment() {
     }
 
     fun checkInput(): Boolean {
-        return detailCarViewModel.checkInputEditTextNewCar(
-            power = binding.carPowerEditText.text.toString().toInt(),
-            seats = binding.carSeatsEditText.text.toString().toInt(),
-            fuelType = binding.carFuelTypeEditText.text.toString(),
-            year = binding.carYearProductionEditText.text.toString().toInt(),
-            price = binding.carPriceEditText.text.toString().toDouble(),
-            mileage = binding.carMileageTextEdit.text.toString().toDouble()
-        )
+        mapInputsEditValues[CarAddInputs.Price] =
+            detailCarViewModel.checkPriceInput(binding.carPriceEditText.text.toString().toDoubleOrNull())
+        mapInputsEditValues[CarAddInputs.Power] =
+            detailCarViewModel.checkPowerInput(binding.carPowerEditText.text.toString().toIntOrNull())
+        mapInputsEditValues[CarAddInputs.Fuel] =
+            detailCarViewModel.checkFuelInput(binding.carFuelTypeEditText.text.toString())
+        mapInputsEditValues[CarAddInputs.Year] =
+            detailCarViewModel.checkYearInput(binding.carYearProductionEditText.text.toString().toIntOrNull())
+        mapInputsEditValues[CarAddInputs.Seats] =
+            detailCarViewModel.checkSeatsInput(binding.carSeatsEditText.text.toString().toIntOrNull())
+        mapInputsEditValues[CarAddInputs.Mileage] =
+            detailCarViewModel.checkMileageInput(binding.carMileageTextEdit.text.toString().toDoubleOrNull())
+        return !mapInputsEditValues.containsValue(false)
     }
     fun View.hideKeyboard() {
         val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
