@@ -64,7 +64,19 @@
             android:layout_width="match_parent"
             android:padding="8dp"
             android:layout_height="match_parent">
-
+            <ImageView
+                android:id="@+id/car_image_1"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_gravity="center"
+                android:layout_weight="0.50"
+                android:clickable="true"
+                android:contentDescription="@string/add_car_image_content_description"
+                android:focusable="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/add_image_brown"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/car_brand_add_label"
                 android:layout_width="match_parent"
@@ -72,7 +84,7 @@
                 android:background="@android:color/transparent"
                 app:boxBackgroundColor="@android:color/transparent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toBottomOf="@id/car_image_1">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/car_brand_add_text"
@@ -263,56 +275,68 @@
                 </com.google.android.material.textfield.TextInputEditText>
             </com.google.android.material.textfield.TextInputLayout>
 
-            <LinearLayout
-                android:id="@+id/linearLayout"
-                android:layout_width="100dp"
-                android:layout_height="80dp"
-                android:layout_margin="8dp"
-                android:orientation="horizontal"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/car_color_add_label">
+            <RelativeLayout
+                android:id="@+id/relativeLayout"
+                android:layout_width="315dp"
+                android:layout_height="30dp"
+                android:layout_marginHorizontal="16dp"
+                android:orientation="vertical"
+                android:padding="0dp"
+                android:layout_marginTop="36dp"
+                app:layout_constraintTop_toBottomOf="@id/car_color_add_label"
+                app:layout_constraintBottom_toTopOf="@id/button_add_new_car"
+                app:layout_constraintEnd_toEndOf="@id/button_add_new_car"
+                app:layout_constraintStart_toStartOf="@id/button_add_new_car"
+                tools:context=".MainActivity">
 
-                <ImageView
-                    android:id="@+id/car_image_1"
-                    android:layout_width="wrap_content"
+                <FrameLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="0.50"
-                    android:clickable="true"
-                    android:contentDescription="@string/add_car_image_content_description"
-                    android:focusable="true"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/add_image_brown"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/car_price_add_label" />
+                    android:layout_marginTop="18dp">
+
+                    <com.q42.android.scrollingimageview.ScrollingImageView
+                        android:id="@+id/scrolling_background"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:source="@drawable/scrolling_background"
+                        app:speed="60dp" />
+
+                    <com.q42.android.scrollingimageview.ScrollingImageView
+                        android:id="@+id/scrolling_foreground"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:source="@drawable/scrolling_foreground"
+                        app:speed="150dp" />
+                </FrameLayout>
 
                 <ImageView
-                    android:id="@+id/car_image_2"
-                    android:layout_width="0dp"
-                    android:layout_height="200dp"
-                    android:layout_weight="0.50"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:src="@drawable/add_image_brown"
-                    android:visibility="gone"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/car_price_add_label"
-                    tools:ignore="ContentDescription" />
-            </LinearLayout>
+                    android:id="@+id/scr"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/van2" />
 
+                <ImageView
+                    android:id="@+id/scr2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/van3" />
+
+            </RelativeLayout>
             <Button
                 android:id="@+id/button_add_new_car"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="55dp"
                 android:layout_marginHorizontal="16dp"
-
-                android:layout_marginTop="36dp"
-                android:backgroundTint="@color/secondaryDarkColor"
+                android:background="@drawable/gradient"
+                app:backgroundTint="@null"
                 android:text="@string/add_new_car"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+                app:layout_constraintStart_toStartOf="parent">
 
             </Button>
         </androidx.constraintlayout.widget.ConstraintLayout>

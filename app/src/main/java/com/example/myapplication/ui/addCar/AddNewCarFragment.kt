@@ -251,6 +251,8 @@ class AddNewCarFragment : Fragment() {
 
     override fun onDestroyView() {
         UriImage = null
+        price = 0.0
+        kw = 0
         super.onDestroyView()
         _binding = null
     }
