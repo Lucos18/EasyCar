@@ -103,5 +103,7 @@
     <string name="error_check_inputs">Please check inputs on maximum values</string>
     <string name="cancel">CANCEL</string>
     <string name="ok">OK</string>
+    <string name="error_connection_text">Error connection</string>
+    <string name="car_logo_content_description">Car Logo</string>
 
 </resources>

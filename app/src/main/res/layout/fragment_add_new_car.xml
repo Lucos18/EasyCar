@@ -24,7 +24,8 @@
                 android:layout_marginTop="32dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent">
+                app:layout_constraintEnd_toEndOf="parent"
+                android:contentDescription="@string/error_connection_text">
 
             </ImageView>
             <TextView
@@ -315,7 +316,8 @@
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:scaleType="centerInside"
-                    android:src="@drawable/van2" />
+                    android:src="@drawable/van2"
+                    tools:ignore="ContentDescription" />
 
                 <ImageView
                     android:id="@+id/scr2"
@@ -323,7 +325,8 @@
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:scaleType="centerInside"
-                    android:src="@drawable/van3" />
+                    android:src="@drawable/van3"
+                    tools:ignore="ContentDescription" />
 
             </RelativeLayout>
             <Button
