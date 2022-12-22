@@ -217,6 +217,8 @@
                             android:drawableStart="@drawable/ic_fuel_24"
                             android:drawablePadding="8dp"
                             android:focusable="false"
+                            android:longClickable="false"
+                            android:clickable="false"
                             android:hint="@string/car_fuel_type_add"
                             android:inputType="text">
 

@@ -236,7 +236,7 @@ class DetailCarFragment : Fragment() {
 
     }
 
-    fun setEditTextBinding() {
+    private fun setEditTextBinding() {
         binding.apply {
             carYearProductionEditText.setText(car.yearStartProduction.toString())
             carPowerEditText.setText(car.carPower.toString())
@@ -247,7 +247,7 @@ class DetailCarFragment : Fragment() {
         }
     }
 
-    fun switchBetweenEditAndSave() {
+    private fun switchBetweenEditAndSave() {
         binding.apply {
             powerSwitcher.showNext()
             seatsSwitcher.showNext()
@@ -258,7 +258,7 @@ class DetailCarFragment : Fragment() {
         }
     }
 
-    fun checkInput(): Boolean {
+    private fun checkInput(): Boolean {
         mapInputsEditValues[CarAddInputs.Price] =
             detailCarViewModel.checkPriceInput(binding.carPriceEditText.text.toString().toDoubleOrNull())
         mapInputsEditValues[CarAddInputs.Power] =
@@ -277,7 +277,7 @@ class DetailCarFragment : Fragment() {
         val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(windowToken, 0)
     }
-    fun setColorDrawable(textView: TextView){
+    private fun setColorDrawable(textView: TextView){
         val drawable = AppCompatResources.getDrawable(requireContext(), R.drawable.circle_shape)
         val wrappedDrawable = drawable?.let { DrawableCompat.wrap(it) }
         wrappedDrawable?.setBounds(0, 0, 70, 70)

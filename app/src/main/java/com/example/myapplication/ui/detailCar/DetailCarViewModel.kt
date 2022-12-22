@@ -101,7 +101,7 @@ class DetailCarViewModel(private val carDao: CarDao) : ViewModel() {
     }
 
     fun checkPriceInput(price: Double?): Boolean{
-        return price != 0.0 && price != null
+        return price != null && price >= 1
     }
 
     fun checkMileageInput(mileage: Double?): Boolean{
