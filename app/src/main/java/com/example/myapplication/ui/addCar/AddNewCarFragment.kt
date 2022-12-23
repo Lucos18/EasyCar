@@ -26,10 +26,7 @@ import com.example.myapplication.databinding.FragmentAddNewCarBinding
 import com.example.myapplication.enums.CarAddInputs
 import com.example.myapplication.enums.CarColors
 import com.example.myapplication.ui.transformIntoDatePicker
-import com.example.myapplication.utils.FuelTypeAlertDialog
-import com.example.myapplication.utils.carListItemsAlertDialog
-import com.example.myapplication.utils.checkForInternet
-import com.example.myapplication.utils.showCustomSnackBar
+import com.example.myapplication.utils.*
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
@@ -72,8 +69,7 @@ class AddNewCarFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         swapConstraintIfInternet(requireContext())
         val scrollingBackground = binding.scrollingBackground
-        scrollingBackground?.start()
-        Log.d("ciao", kw.toString())
+        scrollingBackground.start()
         if (UriImage != null) binding.carImage1.setImageURI(UriImage)
         binding.apply {
             buttonAddNewCar.visibility = View.VISIBLE
@@ -108,30 +104,7 @@ class AddNewCarFragment : Fragment() {
             )
         }
         binding.carPowerAddText.setOnClickListener {
-            val builder = AlertDialog.Builder(requireContext())
-                .create()
-
-            val view = layoutInflater.inflate(R.layout.alert_dialog_input_text_price, null)
-            val searchText = view.findViewById<TextView>(R.id.price_title_alert_dialog)
-            val carPowerText =
-                view.findViewById<TextInputEditText>(R.id.car_price_alert_dialog_text)
-            carPowerText.filters += InputFilter.LengthFilter(4)
-            val btnOk = view.findViewById(R.id.button_ok) as Button
-            val btnCancel = view.findViewById(R.id.button_cancel) as Button
-            searchText.setText(R.string.car_power_add)
-            btnOk.setOnClickListener {
-                binding.carPowerAddText.text = carPowerText.text
-                builder.dismiss()
-            }
-            btnCancel.setOnClickListener {
-                binding.carPowerAddText.setText("")
-                kw = 0
-                builder.dismiss()
-            }
-            builder.setCanceledOnTouchOutside(true)
-            builder.setView(view)
-            builder.show()
-            builder.window?.setLayout(900, WindowManager.LayoutParams.WRAP_CONTENT)
+            AlertDialogNumberWithTitle(layoutInflater, requireContext(), R.string.car_power_add, binding.carPowerAddText, 4)
         }
         binding.carPowerAddText.doOnTextChanged { _, _, _, _ ->
             val kwText = binding.carPowerAddText.text.toString().toIntOrNull()
@@ -144,33 +117,10 @@ class AddNewCarFragment : Fragment() {
                     )
                 )
                 kw = kwText
-            }
+            } else kw = 0
         }
         binding.carPriceAddText.setOnClickListener {
-            val builder = AlertDialog.Builder(requireContext())
-                .create()
-
-            val view = layoutInflater.inflate(R.layout.alert_dialog_input_text_price, null)
-            val searchText = view.findViewById<TextView>(R.id.price_title_alert_dialog)
-            val carPriceText =
-                view.findViewById<TextInputEditText>(R.id.car_price_alert_dialog_text)
-            carPriceText.filters += InputFilter.LengthFilter(9)
-            val btnOk = view.findViewById(R.id.button_ok) as Button
-            val btnCancel = view.findViewById(R.id.button_cancel) as Button
-            searchText.setText(R.string.car_price_add)
-            btnOk.setOnClickListener {
-                binding.carPriceAddText.text = carPriceText.text
-                builder.dismiss()
-            }
-            btnCancel.setOnClickListener {
-                binding.carPriceAddText.setText("")
-                price = 0.0
-                builder.dismiss()
-            }
-            builder.setCanceledOnTouchOutside(true)
-            builder.setView(view)
-            builder.show()
-            builder.window?.setLayout(900, WindowManager.LayoutParams.WRAP_CONTENT)
+            AlertDialogNumberWithTitle(layoutInflater, requireContext(), R.string.car_price_add, binding.carPriceAddText, 9)
         }
         binding.carPriceAddText.doOnTextChanged { _, _, _, _ ->
             val priceText = binding.carPriceAddText.text.toString().toDoubleOrNull()
@@ -178,12 +128,10 @@ class AddNewCarFragment : Fragment() {
                 val format: NumberFormat =
                     NumberFormat.getCurrencyInstance(Locale.getDefault())
                 format.minimumFractionDigits = 0
-                Log.d("ciaoCurrency", format.toString())
                 val result: String = format.format(priceText)
-                Log.d("ciaoCurrency", result)
                 binding.carPriceAddText.setText(result)
                 price = priceText
-            }
+            } else price = 0.0
         }
         binding.carImage1.setOnClickListener {
             openGalleryForImage()
@@ -197,7 +145,7 @@ class AddNewCarFragment : Fragment() {
                 val color =
                     CarColors.values()
                         .first { it.nameColor == binding.carColorAddText.text.toString() }
-                binding.scr2?.setColorFilter(color.rgbColor)
+                binding.scr2.setColorFilter(color.rgbColor)
             }
         }
         binding.carColorAddText.setOnClickListener {
@@ -242,11 +190,7 @@ class AddNewCarFragment : Fragment() {
             builder.setCanceledOnTouchOutside(true)
             builder.setView(view)
             builder.show()
-
         }
-        //TODO How will your car item will appear on the market
-        //TODO 5 Fix Price on focus listener that shows error if not changed
-        //TODO Change calendar function to show only year options
     }
 
     override fun onDestroyView() {
@@ -270,7 +214,7 @@ class AddNewCarFragment : Fragment() {
                 CarPower = kw,
                 Price = price,
                 Mileage = binding.carMileageAddText.text.toString().toDouble(),
-                Image = checkIfInsertIsNull(createBitmapFromView(binding.carImage1)),
+                Image = checkIfInsertIsNull(createBitmapFromView(binding.carImage1), binding.carImage1),
                 Color = binding.carColorAddText.text.toString()
             )
             val action = AddNewCarFragmentDirections
@@ -286,7 +230,6 @@ class AddNewCarFragment : Fragment() {
     }
 
     private fun isValidCar(): Boolean {
-
         mapInputs[CarAddInputs.Brand] =
             addNewCarViewModel.checkBrandInput(binding.carBrandAddText.text.toString())
         mapInputs[CarAddInputs.Year] =
@@ -351,19 +294,6 @@ class AddNewCarFragment : Fragment() {
         }
     }
 
-    private fun createBitmapFromView(view: View): Bitmap {
-        view.isDrawingCacheEnabled = true
-        view.buildDrawingCache()
-        return view.drawingCache
-    }
-
-    private fun checkIfInsertIsNull(image: Bitmap): Bitmap? {
-        return if (binding.carImage1.tag == "is_not_null") {
-            image
-        } else {
-            null
-        }
-    }
 
     private fun resetText(binding: TextInputEditText) {
         binding.setText("")

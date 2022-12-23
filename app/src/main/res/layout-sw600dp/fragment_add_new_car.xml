@@ -94,6 +94,7 @@
                 android:layout_margin="16dp"
                 android:layout_marginHorizontal="16dp"
                 android:stretchColumns="*"
+                android:shrinkColumns="*"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/car_image_1">
