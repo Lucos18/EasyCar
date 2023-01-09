@@ -75,7 +75,7 @@
                 android:contentDescription="@string/add_car_image_content_description"
                 android:focusable="true"
                 android:scaleType="fitXY"
-                android:src="@drawable/add_image_brown"
+                android:src="@drawable/placeholder_car_image"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
             <com.google.android.material.textfield.TextInputLayout

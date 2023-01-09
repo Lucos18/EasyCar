@@ -13,7 +13,7 @@
             android:id="@+id/constraint_layout_add_new_car_without_connection"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <ImageView
                 android:id="@+id/image_error_connection"
@@ -90,7 +90,7 @@
                             android:clickable="true"
                             android:contentDescription="@string/add_car_image_content_description"
                             android:focusable="true"
-                            android:src="@drawable/add_image_brown"
+                            android:src="@drawable/placeholder_car_image"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />

@@ -4,55 +4,65 @@
     android:id="@+id/search_results_main_constraint_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/search_results_when_no_found"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
         <ImageView
             android:id="@+id/image_error_no_car_found"
             android:layout_width="200dp"
             android:layout_height="200dp"
-            android:layout_marginBottom="64dp"
-            android:src="@drawable/nocarfound"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            android:src="@drawable/nocarfounderror">
 
+        </ImageView>
         <TextView
-            android:id="@+id/error_message_connection"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="32dp"
-            android:layout_marginTop="16dp"
-            android:gravity="center"
-            android:text="@string/no_cars_have_been_found_with_the_current_filters_please_retry_with_different_ones_error_message"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="@id/image_error_no_car_found"
-            app:layout_constraintStart_toStartOf="@id/image_error_no_car_found"
-            app:layout_constraintTop_toBottomOf="@id/image_error_no_car_found">
-
-        </TextView>
-
-        <TextView
-            android:id="@+id/retry_again_no_car_found"
+            android:id="@+id/error_message_no_car_found"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:gravity="center"
-            android:text="@string/go_back_to_search_text_no_car_found"
-            android:textColor="@color/blue_retry_again"
-            android:textSize="20sp"
+            app:layout_constraintTop_toBottomOf="@id/image_error_no_car_found"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@id/image_error_no_car_found"
-            app:layout_constraintStart_toStartOf="@id/image_error_no_car_found"
-            app:layout_constraintTop_toBottomOf="@id/error_message_connection">
-
+            android:textSize="24sp"
+            android:letterSpacing="0.04"
+            android:layout_marginVertical="8dp"
+            android:text="@string/no_car_found_text">
         </TextView>
+        <TextView
+            android:id="@+id/no_favourites_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/error_message_no_car_found"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:paddingHorizontal="32dp"
+            android:textSize="18sp"
+            android:minLines="2"
+            android:gravity="center"
+            android:layout_marginTop="8dp"
+            android:text='@string/no_cars_have_been_found_with_the_current_filters_please_retry_with_different_ones_text_error'>
+        </TextView>
+        <Button
+            android:id="@+id/no_car_found_button"
+            android:text="@string/go_back_to_search_button"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:layout_width="220dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="16dp"
+            app:backgroundTint="@null"
+            android:background="@drawable/button_shape_no_favourites"
+            app:layout_constraintTop_toBottomOf="@id/no_favourites_text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
     </androidx.constraintlayout.widget.ConstraintLayout>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/search_results_showing_results"

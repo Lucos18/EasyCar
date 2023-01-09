@@ -82,7 +82,7 @@
                 android:clickable="true"
                 android:contentDescription="@string/add_car_image_content_description"
                 android:focusable="true"
-                android:src="@drawable/add_image_brown"
+                android:src="@drawable/placeholder_car_image"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -440,7 +440,7 @@
                     android:layout_weight="0.50"
                     android:clickable="true"
                     android:focusable="true"
-                    android:src="@drawable/add_image_brown"
+                    android:src="@drawable/add_image_brown2"
                     android:visibility="gone"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/car_price_add_label"

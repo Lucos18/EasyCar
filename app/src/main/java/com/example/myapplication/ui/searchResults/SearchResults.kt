@@ -83,7 +83,7 @@ class SearchResults : Fragment() {
         binding.apply {
             recyclerView.adapter = adapter
         }
-        binding.retryAgainNoCarFound.setOnClickListener {
+        binding.noCarFoundButton?.setOnClickListener {
             findNavController().popBackStack()
         }
     }
