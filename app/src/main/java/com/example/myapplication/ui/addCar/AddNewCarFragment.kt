@@ -30,6 +30,8 @@ import com.example.myapplication.utils.*
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import org.imaginativeworld.oopsnointernet.callbacks.ConnectionCallback
+import org.imaginativeworld.oopsnointernet.dialogs.signal.NoInternetDialogSignal
 import java.text.NumberFormat
 import java.util.*
 
@@ -67,7 +69,34 @@ class AddNewCarFragment : Fragment() {
     @SuppressLint("InflateParams")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        swapConstraintIfInternet(requireContext())
+        NoInternetDialogSignal.Builder(
+            requireActivity(),
+            lifecycle
+        ).apply {
+            dialogProperties.apply {
+                connectionCallback = object : ConnectionCallback {
+                    override fun hasActiveConnection(hasActiveConnection: Boolean) {
+                        if (addNewCarViewModel.carList.value == null){
+                            addNewCarViewModel.refreshDataFromNetwork()
+                        }
+                    }
+                }
+                cancelable = false
+                noInternetConnectionTitle = "No Internet"
+                noInternetConnectionMessage =
+                    "Check your Internet connection and try again."
+                showInternetOnButtons = true
+                pleaseTurnOnText = "Please turn on"
+                wifiOnButtonText = "Wifi"
+                mobileDataOnButtonText = "Mobile data"
+
+                onAirplaneModeTitle = "No Internet"
+                onAirplaneModeMessage = "You have turned on the airplane mode."
+                pleaseTurnOffText = "Please turn off"
+                airplaneModeOffButtonText = "Airplane mode"
+                showAirplaneModeOffButtons = true
+            }
+        }.build()
         val scrollingBackground = binding.scrollingBackground
         scrollingBackground.start()
         if (UriImage != null) binding.carImage1.setImageURI(UriImage)
