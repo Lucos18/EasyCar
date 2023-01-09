@@ -21,12 +21,27 @@
             android:layout_width="match_parent"
             android:layout_height="250dp"
             android:contentDescription="@string/car_image_content_description"
+            android:clickable="false"
             android:scaleType="fitXY"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
         </ImageView>
-
+        <Button
+            android:id="@+id/button_change_image"
+            android:text="@string/change_image_text"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            app:backgroundTint="@null"
+            android:visibility="gone"
+            android:layout_width="170dp"
+            android:layout_height="45dp"
+            android:background="@drawable/buttonshape"
+            app:layout_constraintBottom_toBottomOf="@id/car_image_detail"
+            app:layout_constraintEnd_toEndOf="@id/car_image_detail"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:alpha="0.80"/>
         <TextView
             android:id="@+id/car_brand_detail"
             android:layout_width="wrap_content"
@@ -107,7 +122,7 @@
                     android:layout_height="match_parent"
                     android:maxLength="9"
                     android:hint="@string/car_price_add"
-                    android:inputType="numberDecimal">
+                    android:inputType="number">
 
                 </com.google.android.material.textfield.TextInputEditText>
             </com.google.android.material.textfield.TextInputLayout>

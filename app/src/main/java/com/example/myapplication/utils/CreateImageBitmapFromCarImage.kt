@@ -5,6 +5,8 @@ import android.graphics.BitmapFactory
 import android.media.Image
 import android.os.Environment
 import android.util.Log
+import android.view.View
+import android.widget.ImageView
 import com.example.myapplication.workers.CarReminderWorker.Companion.carId
 import com.example.myapplication.workers.CarReminderWorker.Companion.carImage
 import com.example.myapplication.workers.FORMAT_IMAGE_PNG
@@ -26,4 +28,18 @@ fun createBitmapFromCarImage(carImage: ByteArray, carId: Long): String{
         e.printStackTrace()
     }
     return path
+}
+
+fun checkIfInsertIsNull(image: Bitmap, imageView: ImageView): Bitmap? {
+    return if (imageView.tag == "is_not_null") {
+        image
+    } else {
+        null
+    }
+}
+
+fun createBitmapFromView(view: View): Bitmap {
+    view.isDrawingCacheEnabled = true
+    view.buildDrawingCache()
+    return view.drawingCache
 }

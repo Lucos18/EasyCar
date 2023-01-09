@@ -23,11 +23,11 @@
                 android:layout_width="200dp"
                 android:layout_height="200dp"
                 android:layout_marginTop="32dp"
-
                 android:src="@drawable/beg_removebg_preview"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ContentDescription">
 
             </ImageView>
 
@@ -94,6 +94,7 @@
                 android:layout_margin="16dp"
                 android:layout_marginHorizontal="16dp"
                 android:stretchColumns="*"
+                android:shrinkColumns="*"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/car_image_1">
@@ -409,7 +410,8 @@
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:scaleType="centerInside"
-                    android:src="@drawable/van2" />
+                    android:src="@drawable/van2"
+                    tools:ignore="ContentDescription" />
 
                 <ImageView
                     android:id="@+id/scr2"
@@ -417,7 +419,8 @@
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:scaleType="centerInside"
-                    android:src="@drawable/van3" />
+                    android:src="@drawable/van3"
+                    tools:ignore="ContentDescription" />
 
             </RelativeLayout>
 

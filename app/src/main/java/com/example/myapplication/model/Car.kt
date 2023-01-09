@@ -29,7 +29,7 @@ data class Car(
 
 fun Car.formatPriceToCurrency(price:Double): String{
     val format: NumberFormat = NumberFormat.getCurrencyInstance(Locale.getDefault())
-    Log.d("ciaoCurrency", format.format(price))
+    format.minimumFractionDigits = 0
     return format.format(price)
 }
 fun Car.carPowerWithUnitString(kw: Int): String {

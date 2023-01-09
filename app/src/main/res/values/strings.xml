@@ -5,7 +5,7 @@
     <string name="title_home">Home</string>
     <string name="title_car_details">Car Details</string>
     <string name="title_search">Search</string>
-    <string name="title_favorites">Favorites</string>
+    <string name="title_favourites">Favorites</string>
     <string name="title_sell">Sell</string>
     <string name="title_add_new_car">Add New Car</string>
     <string name="title_search_results">Search Results</string>
@@ -15,7 +15,7 @@
 
     <string name="car_image_content_description">Car Image</string>
     <string name="add_new_car_content_description">Add new car</string>
-    <string name="add_to_favorites_icon">Add to favorites</string>
+    <string name="add_to_favorites_icon">Add to favourites</string>
     <string name="add_car_image_content_description">Add Car Image</string>
 
     <!-- DETAIL FRAGMENT STRINGS -->
@@ -103,5 +103,11 @@
     <string name="error_check_inputs">Please check inputs on maximum values</string>
     <string name="cancel">CANCEL</string>
     <string name="ok">OK</string>
+    <string name="error_connection_text">Error connection</string>
+    <string name="car_logo_content_description">Car Logo</string>
+    <string name="change_image_text">Change Image</string>
+    <string name="no_favourites_text">No Favourites</string>
+    <string name="no_favourites_text_how_to_add_a_favourites">you can add a car to your \n favourites by clicking the star icon</string>
+    <string name="go_back_to_home_button">Go Back to Home</string>
 
 </resources>

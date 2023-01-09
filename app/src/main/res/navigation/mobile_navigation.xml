@@ -32,14 +32,16 @@
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_navigation_search_to_searchResults"
-            app:destination="@id/searchResults" />
+            app:destination="@id/searchResults"
+            app:enterAnim="@anim/push_up_in"
+            app:popExitAnim="@anim/push_down_out"/>
     </fragment>
 
     <fragment
         android:id="@+id/navigation_favorites"
         android:name="com.example.myapplication.ui.favorites.FavoritesFragment"
-        android:label="@string/title_favorites"
-        tools:layout="@layout/fragment_favorites" >
+        android:label="@string/title_favourites"
+        tools:layout="@layout/fragment_favorites">
         <action
             android:id="@+id/action_navigation_favorites_to_detailCarFragment"
             app:destination="@id/detailCarFragment"
@@ -56,7 +58,9 @@
             android:id="@+id/action_navigation_sell_to_addNewCarFragment"
             app:destination="@id/addNewCarFragment"
             app:popUpTo="@id/addNewCarFragment"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="true"
+            app:enterAnim="@anim/push_left_in"
+            app:popExitAnim="@anim/push_right_out"/>
         <action
             android:id="@+id/action_navigation_sell_to_detailCarFragment"
             app:destination="@id/detailCarFragment" />

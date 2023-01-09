@@ -1,5 +1,6 @@
 package com.example.myapplication.ui.detailCar
 
+import android.graphics.Bitmap
 import androidx.lifecycle.*
 import com.example.myapplication.data.CarDao
 import com.example.myapplication.model.Car
@@ -8,6 +9,7 @@ import com.example.myapplication.network.VehicleApi
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.io.ByteArrayOutputStream
 import java.io.IOException
 
 class DetailCarViewModel(private val carDao: CarDao) : ViewModel() {
@@ -58,7 +60,8 @@ class DetailCarViewModel(private val carDao: CarDao) : ViewModel() {
         seats: String,
         fuelType: String,
         price: String,
-        mileage: String
+        mileage: String,
+        Image: Bitmap?,
     ): Boolean {
         val updatedCar = Car(
             id = car.id,
@@ -71,7 +74,7 @@ class DetailCarViewModel(private val carDao: CarDao) : ViewModel() {
             fuelType = fuelType,
             price = price.toDouble(),
             mileage = mileage.toDouble(),
-            image = car.image,
+            image = Image?.toByteArray(),
             color = car.color
         )
         updateCarDatabase(updatedCar)
@@ -108,6 +111,11 @@ class DetailCarViewModel(private val carDao: CarDao) : ViewModel() {
         return if (mileage != null) {
             mileage >= 0.0
         } else false
+    }
+    private fun Bitmap.toByteArray(quality: Int = 100): ByteArray {
+        val stream = ByteArrayOutputStream()
+        compress(Bitmap.CompressFormat.JPEG, quality, stream)
+        return stream.toByteArray()
     }
 }
 
