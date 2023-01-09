@@ -14,7 +14,7 @@
     <item
         android:id="@+id/navigation_favorites"
         android:icon="@drawable/ic_baseline_star_border_24dp"
-        android:title="@string/title_favorites" />
+        android:title="@string/title_favourites" />
 
     <item
         android:id="@+id/navigation_sell"

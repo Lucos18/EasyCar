@@ -66,12 +66,23 @@ class FavoritesFragment : Fragment() {
         favoritesViewModel.favoritesCarNumber.observe(this.viewLifecycleOwner) {
             binding.numberOfFavorites.text =
                 getString(R.string.car_favorites_number, it.toString())
+            if (it.equals(0)){
+                binding.recyclerView.visibility = View.GONE
+                binding.constraintLayoutNoFavorites?.visibility = View.VISIBLE
+            } else {
+                binding.recyclerView.visibility = View.VISIBLE
+                binding.constraintLayoutNoFavorites?.visibility = View.GONE
+            }
         }
 
         binding.apply {
             recyclerView.adapter = adapter
         }
 
+        binding.noFavouritesButton?.setOnClickListener {
+            findNavController().popBackStack(R.id.navigation_home, true)
+            findNavController().navigate(R.id.navigation_home)
+        }
     }
 
     override fun onDestroyView() {
