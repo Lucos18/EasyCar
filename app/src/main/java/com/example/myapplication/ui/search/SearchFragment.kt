@@ -1,11 +1,11 @@
 package com.example.myapplication.ui.search
 
+import android.app.AlertDialog
 import android.os.Bundle
-import android.view.KeyEvent
-import android.view.KeyEvent.*
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.util.Log
+import android.view.*
+import android.view.KeyEvent.ACTION_DOWN
+import android.view.KeyEvent.KEYCODE_ENTER
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -19,8 +19,8 @@ import com.example.myapplication.model.Car
 import com.example.myapplication.utils.carListItemsAlertDialog
 import com.example.myapplication.utils.showCustomSnackBar
 import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+
 
 class SearchFragment : Fragment() {
     val searchViewModel: SearchViewModel by activityViewModels {
@@ -69,7 +69,7 @@ class SearchFragment : Fragment() {
             }
         }
         binding.startingPriceSearch.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
-            onKey(v,keyCode,event, binding.startingPriceSearch, binding.endingPriceSearch)
+            onKey(v, keyCode, event, binding.startingPriceSearch, binding.endingPriceSearch)
         })
         binding.endingPriceSearchText.doOnTextChanged { _, _, _, _ ->
             if (binding.endingPriceSearchText.text.toString().isNotEmpty()) {
@@ -93,8 +93,7 @@ class SearchFragment : Fragment() {
             if (binding.carSearchBrandText.text.toString().isNotEmpty()) {
                 binding.carSearchModelText.isEnabled = true
                 searchViewModel.onBrandChange(binding.carSearchBrandText.text.toString())
-            } else
-            {
+            } else {
                 binding.carSearchModelText.isEnabled = false
                 searchViewModel.mapFilters[CarFiltersSearch.BRAND] = false
                 searchViewModel.filterListOfCars()
@@ -219,6 +218,40 @@ class SearchFragment : Fragment() {
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.topbar_menu_search, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_delete -> {
+                val builder = AlertDialog.Builder(requireContext())
+                //set title for alert dialog
+                builder.setTitle(getString(R.string.delete_car_dialog_title))
+                //set message for alert dialog
+                builder.setMessage(getString(R.string.delete_car_dialog_message))
+                builder.setIcon(android.R.drawable.ic_dialog_alert)
+
+                //performing positive action
+                builder.setPositiveButton(getString(R.string.delete_car_dialog_positive_button)) { _, _ ->
+                    clearAllFiltersInFragment()
+                }
+
+                //performing negative action
+                builder.setNegativeButton(getString(R.string.delete_car_dialog_negative_button)) { _, _ ->
+
+                }
+                // Create the AlertDialog
+                val alertDialog: AlertDialog = builder.create()
+                // Set other dialog properties
+                alertDialog.setCancelable(false)
+                alertDialog.show()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
@@ -231,7 +264,35 @@ class SearchFragment : Fragment() {
             Snackbar.LENGTH_LONG
         )
     }
-    fun onKey(v: View?, keyCode: Int, event: KeyEvent, text1: TextInputLayout, text2: TextInputLayout): Boolean {
+
+    fun clearAllFiltersInFragment() {
+        binding.apply {
+            startingPriceSearchText.setText("")
+            endingPriceSearchText.setText("")
+            carSearchBrandText.setText("")
+            carSearchModelText.setText("")
+            buttonGroupVehicleState.clearChecked()
+            buttonGroupVehicleFuelType.clearCheck()
+            buttonGroupVehiclePowerType.clearCheck()
+            carSearchPowerStartingText.setText("")
+            carSearchPowerEndingText.setText("")
+            checkboxAtLeastOnePhoto.isChecked = false
+            searchViewModel.mapFilters.keys.forEach {
+                searchViewModel.mapFilters[it] = false
+            }
+            searchViewModel.mapFiltersFuelType.keys.forEach {
+                searchViewModel.mapFiltersFuelType[it] = false
+            }
+        }
+    }
+
+    fun onKey(
+        v: View?,
+        keyCode: Int,
+        event: KeyEvent,
+        text1: TextInputLayout,
+        text2: TextInputLayout
+    ): Boolean {
         // If the event is a key-down event on the "enter" button
         if (event.action == ACTION_DOWN &&
             keyCode == KEYCODE_ENTER

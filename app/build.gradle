@@ -115,5 +115,6 @@ dependencies {
 
     implementation 'org.imaginativeworld.oopsnointernet:oopsnointernet:2.0.0'
 
+    implementation 'com.github.oktavianto:ionalert:1.0.4'
 
 }
