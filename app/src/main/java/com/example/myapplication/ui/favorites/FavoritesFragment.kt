@@ -1,29 +1,19 @@
 package com.example.myapplication.ui.favorites
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.TextView
+import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.asFlow
 import androidx.navigation.fragment.findNavController
 import com.example.myapplication.BaseApplication
 import com.example.myapplication.R
-import com.example.myapplication.databinding.FragmentDetailCarBinding
 import com.example.myapplication.databinding.FragmentFavoritesBinding
-import com.example.myapplication.model.Car
+import com.example.myapplication.enums.CarFiltersFavourites
 import com.example.myapplication.model.CarLogo
-import com.example.myapplication.ui.detailCar.DetailCarViewModel
-import com.example.myapplication.ui.detailCar.DetailViewModelFactory
-import com.example.myapplication.ui.home.HomeFragmentDirections
-import com.example.myapplication.ui.home.HomeListAdapter
-import com.example.myapplication.utils.showCustomSnackBar
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
+import com.example.myapplication.utils.FavouritesFilterAlertDialog
 
 class FavoritesFragment : Fragment() {
 
@@ -42,22 +32,34 @@ class FavoritesFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        setHasOptionsMenu(true)
         _binding = FragmentFavoritesBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val adapter = FavoritesListAdapter(clickListener = { car ->
-            val action = FavoritesFragmentDirections
-                .actionNavigationFavoritesToDetailCarFragment(car.id)
-            findNavController().navigate(action)
-        }, functionFavorites =  { favoritesViewModel.updateFavorites(it) }, undoRemovedFavorites = {favoritesViewModel.restoreFavorite(it)}, favoritesViewModel.carLogos  )
+        val adapter = FavoritesListAdapter(
+            clickListener = { car ->
+                val action = FavoritesFragmentDirections
+                    .actionNavigationFavoritesToDetailCarFragment(car.id)
+                findNavController().navigate(action)
+            },
+            functionFavorites = { favoritesViewModel.updateFavorites(it) },
+            undoRemovedFavorites = { favoritesViewModel.restoreFavorite(it) },
+            favoritesViewModel.carLogos
+        )
         val observer = Observer<List<CarLogo>> {
             binding.recyclerView.adapter = adapter
         }
-        favoritesViewModel.carLogos.observe(viewLifecycleOwner,observer)
+        favoritesViewModel.carLogos.observe(viewLifecycleOwner, observer)
         favoritesViewModel.allFavoritesCar.observe(this.viewLifecycleOwner) { carSelected ->
+            carSelected.let {
+                adapter.submitList(it)
+            }
+        }
+        favoritesViewModel.allFavoritesCarSortedByFilter.observe(this.viewLifecycleOwner) { carSelected ->
+            Log.d("ciaoss", favoritesViewModel.allFavoritesCarSortedByFilter.value.toString())
             carSelected.let {
                 adapter.submitList(it)
             }
@@ -66,12 +68,12 @@ class FavoritesFragment : Fragment() {
         favoritesViewModel.favoritesCarNumber.observe(this.viewLifecycleOwner) {
             binding.numberOfFavorites.text =
                 getString(R.string.car_favorites_number, it.toString())
-            if (it.equals(0)){
+            if (it.equals(0)) {
                 binding.recyclerView.visibility = View.GONE
-                binding.constraintLayoutNoFavorites?.visibility = View.VISIBLE
+                binding.constraintLayoutNoFavorites.visibility = View.VISIBLE
             } else {
                 binding.recyclerView.visibility = View.VISIBLE
-                binding.constraintLayoutNoFavorites?.visibility = View.GONE
+                binding.constraintLayoutNoFavorites.visibility = View.GONE
             }
         }
 
@@ -79,9 +81,35 @@ class FavoritesFragment : Fragment() {
             recyclerView.adapter = adapter
         }
 
-        binding.noFavouritesButton?.setOnClickListener {
-            findNavController().popBackStack(R.id.navigation_home, true)
-            findNavController().navigate(R.id.navigation_home)
+        binding.noFavouritesButton.setOnClickListener {
+            val action = FavoritesFragmentDirections
+                .actionNavigationFavoritesToNavigationHome()
+            findNavController().navigate(action)
+        }
+
+    }
+    fun applyFiltersFavorites(){
+        CarFiltersFavourites.values().forEach { filter ->
+            if (filter.isSelected){
+                when(filter){
+                    CarFiltersFavourites.MILEAGE_ASCENDING_ORDER -> favoritesViewModel.sortByMileageAscendingOrder()
+                    else -> null
+                }
+            }
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.topbar_menu_favorites, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_filter -> {
+                FavouritesFilterAlertDialog(requireContext(), ::applyFiltersFavorites)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 

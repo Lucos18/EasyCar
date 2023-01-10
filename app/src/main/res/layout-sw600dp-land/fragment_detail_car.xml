@@ -29,6 +29,7 @@
                     android:layout_height="match_parent">
 
                     <LinearLayout
+                        android:id="@+id/linear_layout_car_image"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical">
@@ -44,23 +45,22 @@
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
-
-                        <Button
-                            android:id="@+id/button_change_image"
-                            android:layout_width="170dp"
-                            android:layout_height="45dp"
-                            android:layout_marginEnd="16dp"
-                            android:layout_marginBottom="16dp"
-                            android:alpha="0.80"
-                            android:background="@drawable/buttonshape"
-                            android:text="@string/change_image_text"
-                            android:textColor="#FFFFFF"
-                            android:textSize="14sp"
-                            android:visibility="gone"
-                            app:backgroundTint="@null"
-                            app:layout_constraintBottom_toBottomOf="@id/car_image_detail"
-                            app:layout_constraintEnd_toEndOf="@id/car_image_detail" />
                     </LinearLayout>
+                    <Button
+                        android:id="@+id/button_change_image"
+                        android:layout_width="170dp"
+                        android:layout_height="45dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginBottom="16dp"
+                        android:alpha="0.80"
+                        android:background="@drawable/buttonshape"
+                        android:text="@string/change_image_text"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp"
+
+                        app:backgroundTint="@null"
+                        app:layout_constraintBottom_toBottomOf="@id/linear_layout_car_image"
+                        app:layout_constraintEnd_toEndOf="@id/linear_layout_car_image" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </ScrollView>

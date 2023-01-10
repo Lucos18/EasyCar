@@ -22,6 +22,7 @@
         <entry key="..\:/Users/Lucos18/AndroidStudioProjects/EasyCarNew/app/src/main/res/drawable-nodpi/ic_wrench_24.xml" value="0.201" />
         <entry key="..\:/Users/Lucos18/AndroidStudioProjects/EasyCarNew/app/src/main/res/drawable-nodpi/icons8_benzina_50.xml" value="0.1635" />
         <entry key="..\:/Users/Lucos18/AndroidStudioProjects/EasyCarNew/app/src/main/res/drawable-nodpi/icons8_car_roof_box_90.xml" value="0.2095" />
+        <entry key="..\:/Users/Lucos18/AndroidStudioProjects/EasyCarNew/app/src/main/res/drawable-nodpi/icons8_up_down_arrow_50.xml" value="0.1" />
         <entry key="..\:/Users/Lucos18/AndroidStudioProjects/EasyCarNew/app/src/main/res/drawable-nodpi/searching_car.xml" value="0.2385" />
         <entry key="..\:/Users/Lucos18/AndroidStudioProjects/EasyCarNew/app/src/main/res/drawable-nodpi/van2.xml" value="0.1" />
         <entry key="..\:/Users/Lucos18/AndroidStudioProjects/EasyCarNew/app/src/main/res/drawable-nodpi/van3.xml" value="0.2335" />
@@ -64,6 +65,7 @@
         <entry key="..\:/Users/Lucos18/AndroidStudioProjects/EasyCarNew/app/src/main/res/layout/fragment_sell.xml" value="0.1" />
         <entry key="..\:/Users/Lucos18/AndroidStudioProjects/EasyCarNew/app/src/main/res/layout/simple_list_item_color.xml" value="0.2484375" />
         <entry key="..\:/Users/Lucos18/AndroidStudioProjects/EasyCarNew/app/src/main/res/menu/bottom_nav_menu.xml" value="0.15185185185185185" />
+        <entry key="..\:/Users/Lucos18/AndroidStudioProjects/EasyCarNew/app/src/main/res/menu/topbar_menu_favorites.xml" value="0.13333333333333333" />
         <entry key="..\:/Users/Lucos18/AndroidStudioProjects/EasyCarNew/app/src/main/res/menu/topbar_menu_search.xml" value="0.33" />
         <entry key="..\:/Users/Lucos18/AndroidStudioProjects/EasyCarNew/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />
         <entry key="..\:/Users/Lucos18/AndroidStudioProjects/EasyCarNew/app/src/main/res/xml/file_paths.xml" value="0.11458333333333333" />
@@ -89,7 +91,7 @@
   <component name="VisualizationToolProject">
     <option name="state">
       <ProjectState>
-        <option name="scale" value="0.42448979591836733" />
+        <option name="scale" value="0.33" />
       </ProjectState>
     </option>
   </component>

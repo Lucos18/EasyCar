@@ -2,7 +2,6 @@ package com.example.myapplication.ui.search
 
 import android.app.AlertDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.view.KeyEvent.ACTION_DOWN
 import android.view.KeyEvent.KEYCODE_ENTER
@@ -226,24 +225,16 @@ class SearchFragment : Fragment() {
         return when (item.itemId) {
             R.id.action_delete -> {
                 val builder = AlertDialog.Builder(requireContext())
-                //set title for alert dialog
-                builder.setTitle(getString(R.string.delete_car_dialog_title))
-                //set message for alert dialog
-                builder.setMessage(getString(R.string.delete_car_dialog_message))
+                builder.setTitle(getString(R.string.delete_current_filters_string))
+                builder.setMessage(getString(R.string.message_delete_current_filters_string))
                 builder.setIcon(android.R.drawable.ic_dialog_alert)
-
-                //performing positive action
                 builder.setPositiveButton(getString(R.string.delete_car_dialog_positive_button)) { _, _ ->
                     clearAllFiltersInFragment()
                 }
-
-                //performing negative action
                 builder.setNegativeButton(getString(R.string.delete_car_dialog_negative_button)) { _, _ ->
 
                 }
-                // Create the AlertDialog
                 val alertDialog: AlertDialog = builder.create()
-                // Set other dialog properties
                 alertDialog.setCancelable(false)
                 alertDialog.show()
                 true

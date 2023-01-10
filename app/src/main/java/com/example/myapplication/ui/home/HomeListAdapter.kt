@@ -1,13 +1,10 @@
 package com.example.myapplication.ui.home
 
-import android.animation.Animator
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -17,10 +14,6 @@ import com.example.myapplication.R
 import com.example.myapplication.databinding.CarItemCardBinding
 import com.example.myapplication.model.*
 import com.example.myapplication.utils.setAndGetUriByBrandParsingListOfLogoAndImageView
-import com.example.myapplication.workers.CarReminderWorker.Companion.carImage
-import com.rommansabbir.animationx.Attention
-import com.rommansabbir.animationx.animationXAttention
-import com.rommansabbir.animationx.animationXRotate
 
 class HomeListAdapter(
     private val clickListener: (Car) -> Unit,
@@ -33,7 +26,7 @@ class HomeListAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(car: Car, functionFavorites: (Car) -> Unit, listLogo: LiveData<List<CarLogo>>) {
             binding.car = car
-            if (car.model.length >= 17){
+            if (car.model.length >= 17) {
                 val modelReplaced = car.model.replaceRange(18 until car.model.length, "...")
                 binding.carModel.text = modelReplaced
             } else binding.carModel.text = car.model
@@ -42,13 +35,14 @@ class HomeListAdapter(
             binding.carPower.text = car.carPowerWithUnitString(car.carPower)
             binding.carYearProduction.text = car.yearStartProduction.toString()
             binding.carItemState.text = car.carMileageWithUnitString(car.mileage)
-            binding.favoritesButton?.isChecked = car.favorite
-            binding.favoritesButton?.animationStartDelay = 0L
-            binding.favoritesButton?.burstAnimationDuration = 300L
-            binding.favoritesButton?.setOnCheckListener(object : OnCheckListener {
+            binding.favoritesButton.isChecked = car.favorite
+            binding.favoritesButton.animationStartDelay = 0L
+            binding.favoritesButton.burstAnimationDuration = 300L
+            binding.favoritesButton.setOnCheckListener(object : OnCheckListener {
                 override fun onChecked(view: ExpressView?) {
                     functionFavorites(car)
                 }
+
                 override fun onUnChecked(view: ExpressView?) {
                     functionFavorites(car)
                 }
@@ -73,7 +67,8 @@ class HomeListAdapter(
             )
             binding.executePendingBindings()
         }
-        fun getImageResource(isFavorite: Boolean): Int{
+
+        fun getImageResource(isFavorite: Boolean): Int {
             return if (isFavorite) R.drawable.ic_baseline_star_24
             else R.drawable.ic_baseline_star_border_24dp
         }

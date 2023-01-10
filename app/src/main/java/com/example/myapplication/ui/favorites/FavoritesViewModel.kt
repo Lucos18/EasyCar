@@ -1,5 +1,6 @@
 package com.example.myapplication.ui.favorites
 
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.*
 import com.example.myapplication.data.CarDao
@@ -29,6 +30,7 @@ class FavoritesViewModel(private val CarDao: CarDao) : ViewModel() {
     }
 
     val allFavoritesCar: LiveData<List<Car>> = CarDao.getAllFavoritesCar().asLiveData()
+    var allFavoritesCarSortedByFilter: LiveData<List<Car>> = CarDao.getAllFavoritesCar().asLiveData()
     val favoritesCarNumber: LiveData<Int> = CarDao.getFavoritesCarNumber().asLiveData()
     fun updateFavorites(car: Car){
         //val newFavoriteValue = if (isUndoAction == null )  else true
@@ -73,6 +75,11 @@ class FavoritesViewModel(private val CarDao: CarDao) : ViewModel() {
             color = car.color
         )
         updateCarDatabase(updatedCar)
+    }
+
+    fun sortByMileageAscendingOrder(){
+        allFavoritesCarSortedByFilter = CarDao.getAllFavoritesCarMileageAscending().asLiveData()
+        Log.d("ciaoss", allFavoritesCarSortedByFilter.value.toString())
     }
 }
 

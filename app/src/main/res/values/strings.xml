@@ -112,5 +112,8 @@
     <string name="no_car_found_text">No Car Found</string>
     <string name="go_back_to_search_button">Go back to Search</string>
     <string name="no_cars_have_been_found_with_the_current_filters_please_retry_with_different_ones_text_error">No cars have been found with the current filters. Please retry with different ones.</string>
-
+    <string name="delete_current_filters_string">Delete current filters</string>
+    <string name="message_delete_current_filters_string">Are you sure that you want to delete current filters?</string>
+    <string name="filter_favourites_cars_string">filter favourites cars</string>
+    <string name="choose_current_filter_favorites_alert_dialog_text">Choose current filter</string>
 </resources>

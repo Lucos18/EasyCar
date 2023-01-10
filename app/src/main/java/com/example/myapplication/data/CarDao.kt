@@ -21,6 +21,9 @@ interface CarDao {
     @Query("SELECT * FROM Car WHERE favorite = 1")
     fun getAllFavoritesCar():Flow<List<Car>>
 
+    @Query("SELECT * FROM Car WHERE favorite = 1 ORDER BY mileage ASC")
+    fun getAllFavoritesCarMileageAscending():Flow<List<Car>>
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(car: Car)
 

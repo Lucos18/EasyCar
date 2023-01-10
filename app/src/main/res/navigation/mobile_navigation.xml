@@ -17,7 +17,11 @@
             android:id="@+id/action_navigation_home_to_navigation_search"
             app:destination="@id/navigation_search"
             app:popUpTo="@id/navigation_search"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="true"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
     </fragment>
 
     <fragment
@@ -48,7 +52,16 @@
             android:id="@+id/action_navigation_favorites_to_detailCarFragment"
             app:destination="@id/detailCarFragment"
             app:popUpTo="@id/detailCarFragment"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="true"/>
+        <action
+            android:id="@+id/action_navigation_favorites_to_navigation_home"
+            app:destination="@id/navigation_home"
+            app:popUpTo="@id/detailCarFragment"
+            app:popUpToInclusive="true"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
     </fragment>
 
     <fragment

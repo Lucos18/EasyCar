@@ -438,13 +438,13 @@
 
                     <EditText
                         android:id="@+id/car_mileage_text_edit"
-                        android:layout_width="120dp"
+                        android:layout_width="130dp"
                         android:layout_height="match_parent"
                         android:gravity="center"
                         android:textSize="@dimen/text_size_tablet_landscape"
                         android:hint="@string/car_mileage_add"
-                        android:inputType="number"
-                        android:maxLength="7" />
+                        android:inputType="numberDecimal"
+                        android:maxLength="8" />
                 </ViewSwitcher>
             </TableRow>
             <TableRow android:layout_marginTop="16dp">
