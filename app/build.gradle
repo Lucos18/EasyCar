@@ -117,4 +117,7 @@ dependencies {
 
     implementation 'com.github.oktavianto:ionalert:1.0.4'
 
+    implementation 'com.github.rommansabbir:AnimationX:2.0'
+
+    implementation "co.ankurg.expressview:expressview:0.0.3"
 }

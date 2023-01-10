@@ -1,28 +1,24 @@
 package com.example.myapplication.ui.searchResults
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.myapplication.BaseApplication
-import com.example.myapplication.R
-import com.example.myapplication.databinding.FragmentSearchBinding
 import com.example.myapplication.databinding.FragmentSearchResultsBinding
-import com.example.myapplication.model.Car
 import com.example.myapplication.model.CarLogo
-import com.example.myapplication.ui.home.HomeFragmentDirections
-import com.example.myapplication.ui.home.HomeListAdapter
 import com.example.myapplication.ui.home.HomeViewModel
 import com.example.myapplication.ui.home.HomeViewModelFactory
 import com.example.myapplication.ui.search.SearchViewModel
 import com.example.myapplication.ui.search.SearchViewModelFactory
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import okhttp3.internal.Util.intersect
+import com.google.android.material.transition.MaterialElevationScale
+import com.google.android.material.transition.MaterialFadeThrough
+import com.google.android.material.transition.MaterialSharedAxis
+
 
 class SearchResults : Fragment() {
     //TODO Fix initial result value on search button when going back
@@ -57,7 +53,13 @@ class SearchResults : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if(searchViewModel.filteredList?.size == 0){
+        exitTransition = MaterialSharedAxis(MaterialSharedAxis.X, false).apply {
+            duration = 1000L
+        }
+        reenterTransition = MaterialSharedAxis(MaterialSharedAxis.X, true).apply {
+            duration = 1000L
+        }
+        if (searchViewModel.filteredList?.size == 0) {
             binding.searchResultsShowingResults.visibility = View.GONE
             binding.searchResultsWhenNoFound.visibility = View.VISIBLE
         } else {
@@ -72,7 +74,7 @@ class SearchResults : Fragment() {
         val observer = Observer<List<CarLogo>> {
             binding.recyclerView.adapter = adapter
         }
-        homeViewModel.carLogos.observe(viewLifecycleOwner,observer)
+        homeViewModel.carLogos.observe(viewLifecycleOwner, observer)
 
         homeViewModel.allCars.observe(this.viewLifecycleOwner) { carSelected ->
             carSelected.let {
@@ -83,10 +85,11 @@ class SearchResults : Fragment() {
         binding.apply {
             recyclerView.adapter = adapter
         }
-        binding.noCarFoundButton?.setOnClickListener {
+        binding.noCarFoundButton.setOnClickListener {
             findNavController().popBackStack()
         }
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

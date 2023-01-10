@@ -192,20 +192,14 @@
                     android:focusable="true">
 
                 </ImageView>
-                <ImageView
-                    android:id="@+id/favorites_button_image"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginVertical="2dp"
-                    android:src="@drawable/ic_baseline_star_border_42dp"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:contentDescription="@string/add_to_favorites_icon">
-
-                </ImageView>
+                <co.ankurg.expressview.ExpressView
+                    android:id="@+id/favorites_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:uncheckedIcon="@drawable/ic_baseline_star_border_24dp"
+                    app:checkedIcon="@drawable/ic_baseline_star_24"
+                    app:uncheckedIconTint="@color/primaryColor" />
             </LinearLayout>
-
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>

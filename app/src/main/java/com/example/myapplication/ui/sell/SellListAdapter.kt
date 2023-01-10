@@ -33,7 +33,7 @@ class SellListAdapter(
             binding.carPower.text = car.carPowerWithUnitString(car.carPower)
             binding.carYearProduction.text = car.yearStartProduction.toString()
             binding.carItemState.text = car.carMileageWithUnitString(car.mileage)
-            binding.favoritesButtonImage.visibility = View.GONE
+            binding.favoritesButton?.visibility = View.GONE
             if (car.image != null) {
                 val bmp = BitmapFactory.decodeByteArray(car.image, 0, car.image.size)
                 binding.carImage.setImageBitmap(

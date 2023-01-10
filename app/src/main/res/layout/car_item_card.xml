@@ -172,6 +172,7 @@
                 app:layout_constraintTop_toBottomOf="@id/table_layout_card" />
 
             <LinearLayout
+                android:id="@+id/linear_layout_user_action"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:gravity="right"
@@ -180,31 +181,23 @@
                 app:layout_constraintTop_toBottomOf="@id/divider_card">
                 <ImageView
                     android:id="@+id/share_button_car_item"
-                    android:layout_width="40dp"
+                    android:layout_width="26dp"
                     android:layout_height="match_parent"
                     android:layout_marginVertical="2dp"
-
                     android:visibility="invisible"
                     android:src="@drawable/ic_baseline_share_24"
                     android:clickable="true"
                     android:focusable="true">
-
                 </ImageView>
-                <ImageView
-                    android:id="@+id/favorites_button_image"
-                    android:layout_width="40dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginVertical="2dp"
-                    android:src="@drawable/ic_baseline_star_border_24dp"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:contentDescription="@string/add_to_favorites_icon">
-
-                </ImageView>
+                <co.ankurg.expressview.ExpressView
+                    android:id="@+id/favorites_button"
+                    app:uncheckedIcon="@drawable/ic_baseline_star_border_24dp"
+                    app:checkedIcon="@drawable/ic_baseline_star_24"
+                    app:uncheckedIconTint="@color/primaryColor"
+                    app:iconSize="40dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
             </LinearLayout>
-
-
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </androidx.cardview.widget.CardView>
 </layout>

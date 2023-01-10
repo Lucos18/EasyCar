@@ -13,6 +13,8 @@ import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import co.ankurg.expressview.ExpressView
+import co.ankurg.expressview.OnCheckListener
 import com.example.myapplication.R
 import com.example.myapplication.databinding.CarItemCardBinding
 import com.example.myapplication.model.*
@@ -53,22 +55,29 @@ class FavoritesListAdapter(
                 carYearProduction.text = car.yearStartProduction.toString()
                 carItemState.text = car.carMileageWithUnitString(car.mileage)
                 shareButtonCarItem.visibility = View.VISIBLE
-                favoritesButtonImage.setImageResource(R.drawable.ic_baseline_star_24)
-                favoritesButtonImage.setOnClickListener {
-                    functionFavorites(car)
-                    showCustomSnackBarWithUndo(
-                        carItemConstraintLayout,
-                        itemView.context.getString(
-                            R.string.remove_success_favorites_car,
-                            car.brand
-                        ),
-                        Snackbar.LENGTH_LONG,
-                        itemView.context.getString(
-                            R.string.undo
-                        ),
-                        {undoRemovedFavorites(car)}
-                    )
-                }
+                binding.favoritesButton?.isChecked = car.favorite
+                binding.favoritesButton?.animationStartDelay = 0L
+                binding.favoritesButton?.burstAnimationDuration = 300L
+                binding.favoritesButton?.setOnCheckListener(object : OnCheckListener {
+                    override fun onChecked(view: ExpressView?) {
+                        //Nothing to do
+                    }
+                    override fun onUnChecked(view: ExpressView?) {
+                        functionFavorites(car)
+                        showCustomSnackBarWithUndo(
+                            carItemConstraintLayout,
+                            itemView.context.getString(
+                                R.string.remove_success_favorites_car,
+                                car.brand
+                            ),
+                            Snackbar.LENGTH_LONG,
+                            itemView.context.getString(
+                                R.string.undo
+                            ),
+                            {undoRemovedFavorites(car)}
+                        )
+                    }
+                })
                 shareButtonCarItem.setOnClickListener {
                     var file: File? = null
                     if (car.image != null)
