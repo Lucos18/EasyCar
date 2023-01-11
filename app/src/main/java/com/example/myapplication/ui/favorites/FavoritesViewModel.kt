@@ -10,6 +10,7 @@ import com.example.myapplication.network.VehicleApi
 import com.example.myapplication.ui.home.HomeViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.launch
 import java.io.IOException
 
@@ -29,8 +30,8 @@ class FavoritesViewModel(private val CarDao: CarDao) : ViewModel() {
         }
     }
 
-    val allFavoritesCar: LiveData<List<Car>> = CarDao.getAllFavoritesCar().asLiveData()
-    var allFavoritesCarSortedByFilter: LiveData<List<Car>> = CarDao.getAllFavoritesCar().asLiveData()
+    var allFavoritesCar: LiveData<List<Car>> = CarDao.getAllFavoritesCar().asLiveData()
+    var allFavoritesCarSortedByFilter: LiveData<List<Car>> = CarDao.getAllFavoritesCarMileageAscending().asLiveData()
     val favoritesCarNumber: LiveData<Int> = CarDao.getFavoritesCarNumber().asLiveData()
     fun updateFavorites(car: Car){
         //val newFavoriteValue = if (isUndoAction == null )  else true
@@ -78,8 +79,9 @@ class FavoritesViewModel(private val CarDao: CarDao) : ViewModel() {
     }
 
     fun sortByMileageAscendingOrder(){
-        allFavoritesCarSortedByFilter = CarDao.getAllFavoritesCarMileageAscending().asLiveData()
-        Log.d("ciaoss", allFavoritesCarSortedByFilter.value.toString())
+        allFavoritesCar = allFavoritesCarSortedByFilter
+        //allFavoritesCarSortedByFilter?.sortedBy { it -> it.mileage }
+        //Log.d("ciaoss", allFavoritesCarSortedByFilter.value.toString())
     }
 }
 

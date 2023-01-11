@@ -65,7 +65,9 @@ class SearchFragment : Fragment() {
                 searchViewModel.onStartingPriceChange(
                     binding.startingPriceSearchText.text.toString().toDouble()
                 )
-            }
+            } else searchViewModel.onStartingPriceChange(
+                0.0
+            )
         }
         binding.startingPriceSearch.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
             onKey(v, keyCode, event, binding.startingPriceSearch, binding.endingPriceSearch)
@@ -265,6 +267,8 @@ class SearchFragment : Fragment() {
             buttonGroupVehicleState.clearChecked()
             buttonGroupVehicleFuelType.clearCheck()
             buttonGroupVehiclePowerType.clearCheck()
+            buttonGroupVehiclePowerType.check(KwFilter.id)
+            searchViewModel.multiplierPower = 1.00
             carSearchPowerStartingText.setText("")
             carSearchPowerEndingText.setText("")
             checkboxAtLeastOnePhoto.isChecked = false
@@ -274,6 +278,7 @@ class SearchFragment : Fragment() {
             searchViewModel.mapFiltersFuelType.keys.forEach {
                 searchViewModel.mapFiltersFuelType[it] = false
             }
+            searchViewModel.filterListOfCars()
         }
     }
 

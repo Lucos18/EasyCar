@@ -3,6 +3,7 @@ package com.example.myapplication.ui.favorites
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -12,8 +13,10 @@ import com.example.myapplication.BaseApplication
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentFavoritesBinding
 import com.example.myapplication.enums.CarFiltersFavourites
+import com.example.myapplication.model.Car
 import com.example.myapplication.model.CarLogo
 import com.example.myapplication.utils.FavouritesFilterAlertDialog
+import com.example.myapplication.utils.checkedItemFavourites
 
 class FavoritesFragment : Fragment() {
 
@@ -26,6 +29,8 @@ class FavoritesFragment : Fragment() {
     private var _binding: FragmentFavoritesBinding? = null
 
     private val binding get() = _binding!!
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -54,14 +59,17 @@ class FavoritesFragment : Fragment() {
         }
         favoritesViewModel.carLogos.observe(viewLifecycleOwner, observer)
         favoritesViewModel.allFavoritesCar.observe(this.viewLifecycleOwner) { carSelected ->
-            carSelected.let {
-                adapter.submitList(it)
-            }
+            //favoritesViewModel.allFavoritesCarSortedByFilter = favoritesViewModel.allFavoritesCar.value
+                carSelected.let {
+                    adapter.submitList(it)
+                }
         }
         favoritesViewModel.allFavoritesCarSortedByFilter.observe(this.viewLifecycleOwner) { carSelected ->
-            Log.d("ciaoss", favoritesViewModel.allFavoritesCarSortedByFilter.value.toString())
-            carSelected.let {
-                adapter.submitList(it)
+            Log.d("ciao", favoritesViewModel.allFavoritesCarSortedByFilter.value.toString())
+            if (checkedItemFavourites != -1 && favoritesViewModel.allFavoritesCarSortedByFilter.value != null) {
+                carSelected.let {
+                    adapter.submitList(it)
+                }
             }
         }
 
@@ -86,15 +94,20 @@ class FavoritesFragment : Fragment() {
                 .actionNavigationFavoritesToNavigationHome()
             findNavController().navigate(action)
         }
-
     }
     fun applyFiltersFavorites(){
         CarFiltersFavourites.values().forEach { filter ->
-            if (filter.isSelected){
-                when(filter){
-                    CarFiltersFavourites.MILEAGE_ASCENDING_ORDER -> favoritesViewModel.sortByMileageAscendingOrder()
-                    else -> null
+            if (checkedItemFavourites != -1){
+                if (filter.isSelected){
+                    when(filter){
+                        CarFiltersFavourites.MILEAGE_ASCENDING_ORDER -> favoritesViewModel.sortByMileageAscendingOrder()
+                        //TODO add here other
+                        else -> null
+                    }
                 }
+                //loadNewList(favoritesViewModel.allFavoritesCarSortedByFilter)
+            } else {
+                //TODO add here something to return the original list of favorites
             }
         }
     }

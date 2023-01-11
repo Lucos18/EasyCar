@@ -8,7 +8,6 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,17 +32,15 @@ import com.example.myapplication.ui.transformIntoDatePicker
 import com.example.myapplication.utils.*
 import com.example.myapplication.workers.CarWorkerViewModel
 import com.example.myapplication.workers.CarWorkerViewModelFactory
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.textfield.TextInputLayout
-import com.google.android.material.transition.MaterialSharedAxis
-import com.squareup.picasso.Picasso
-import java.lang.System.load
 import java.text.DecimalFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
+
 private var UriImage: Uri? = null
 private val REQUEST_CODE = 100
 private var imageClickable = false
+
 class DetailCarFragment : Fragment() {
     var oldCarMileage: Double = 0.0
     private val mapInputsEditValues = mutableMapOf<CarAddInputs, Boolean>()
@@ -127,8 +124,7 @@ class DetailCarFragment : Fragment() {
 
     private fun bindCar(car: Car) {
         binding.apply {
-            if (car.image != null)
-            {
+            if (car.image != null) {
                 carImageDetail.tag = "is_not_null"
             }
             binding.carYearProductionEditText.transformIntoDatePicker(
@@ -139,7 +135,7 @@ class DetailCarFragment : Fragment() {
             binding.carFuelTypeEditText.setOnClickListener {
                 FuelTypeAlertDialog(requireContext(), binding.carFuelTypeEditText)
             }
-            binding.buttonChangeImage?.setOnClickListener {
+            binding.buttonChangeImage.setOnClickListener {
                 openGalleryForImage()
             }
             editCarFab.setOnClickListener {
@@ -149,7 +145,7 @@ class DetailCarFragment : Fragment() {
                 deleteCarFab.visibility = View.GONE
                 editCarFab.visibility = View.GONE
                 saveCarFab.visibility = View.VISIBLE
-                buttonChangeImage?.visibility = View.VISIBLE
+                buttonChangeImage.visibility = View.VISIBLE
             }
             saveCarFab.setOnClickListener {
                 if (checkInput()) {
@@ -158,7 +154,7 @@ class DetailCarFragment : Fragment() {
                     deleteCarFab.visibility = View.VISIBLE
                     editCarFab.visibility = View.VISIBLE
                     saveCarFab.visibility = View.GONE
-                    buttonChangeImage?.visibility = View.GONE
+                    buttonChangeImage.visibility = View.GONE
                     editCarFab.setImageResource(R.drawable.ic_baseline_edit_24)
                     detailCarViewModel.updateCar(
                         car,
@@ -168,7 +164,10 @@ class DetailCarFragment : Fragment() {
                         year = carYearProductionEditText.text.toString(),
                         price = carPriceEditText.text.toString(),
                         mileage = carMileageTextEdit.text.toString(),
-                        Image = checkIfInsertIsNull(createBitmapFromView(binding.carImageDetail), binding.carImageDetail)
+                        Image = checkIfInsertIsNull(
+                            createBitmapFromView(binding.carImageDetail),
+                            binding.carImageDetail
+                        )
                     )
                     val checkMileage =
                         binding.carMileageTextEdit.text.toString().toDouble() - oldCarMileage
@@ -197,7 +196,7 @@ class DetailCarFragment : Fragment() {
             carPriceDetail.text = car.formatPriceToCurrency(car.price)
             carPowerDetail.text = car.carPowerWithUnitString(car.carPower)
             carMileageText.text = car.carMileageWithUnitString(car.mileage)
-            carColorText.text   = car.color
+            carColorText.text = car.color
             setColorDrawable(binding.carColorText)
 
             carFuelTypeDetail.text = getString(R.string.car_fuel_type_detail_string, car.fuelType)
@@ -228,7 +227,7 @@ class DetailCarFragment : Fragment() {
                     binding.carLogoDetail
                 )
             }
-            detailCarViewModel.carLogos.observe(viewLifecycleOwner,observer)
+            detailCarViewModel.carLogos.observe(viewLifecycleOwner, observer)
         }
     }
 
@@ -255,8 +254,8 @@ class DetailCarFragment : Fragment() {
     }
 
     private fun setEditTextBinding() {
-        val df = DecimalFormat("#");
-        df.maximumFractionDigits = 0;
+        val df = DecimalFormat("#")
+        df.maximumFractionDigits = 0
         val priceNew = df.format(car.price)
         binding.apply {
 
@@ -282,20 +281,31 @@ class DetailCarFragment : Fragment() {
 
     private fun checkInput(): Boolean {
         mapInputsEditValues[CarAddInputs.Price] =
-            detailCarViewModel.checkPriceInput(binding.carPriceEditText.text.toString().toDoubleOrNull())
+            detailCarViewModel.checkPriceInput(
+                binding.carPriceEditText.text.toString().toDoubleOrNull()
+            )
         mapInputsEditValues[CarAddInputs.Power] =
-            detailCarViewModel.checkPowerInput(binding.carPowerEditText.text.toString().toIntOrNull())
+            detailCarViewModel.checkPowerInput(
+                binding.carPowerEditText.text.toString().toIntOrNull()
+            )
         mapInputsEditValues[CarAddInputs.Fuel] =
             detailCarViewModel.checkFuelInput(binding.carFuelTypeEditText.text.toString())
         mapInputsEditValues[CarAddInputs.Year] =
-            detailCarViewModel.checkYearInput(binding.carYearProductionEditText.text.toString().toIntOrNull())
+            detailCarViewModel.checkYearInput(
+                binding.carYearProductionEditText.text.toString().toIntOrNull()
+            )
         mapInputsEditValues[CarAddInputs.Seats] =
-            detailCarViewModel.checkSeatsInput(binding.carSeatsEditText.text.toString().toIntOrNull())
+            detailCarViewModel.checkSeatsInput(
+                binding.carSeatsEditText.text.toString().toIntOrNull()
+            )
         mapInputsEditValues[CarAddInputs.Mileage] =
-            detailCarViewModel.checkMileageInput(binding.carMileageTextEdit.text.toString().toDoubleOrNull())
+            detailCarViewModel.checkMileageInput(
+                binding.carMileageTextEdit.text.toString().toDoubleOrNull()
+            )
         setInputs(mapInputsEditValues)
         return !mapInputsEditValues.containsValue(false)
     }
+
     private fun setInputs(map: Map<CarAddInputs, Boolean>) {
         map.forEach { (k, v) ->
             val errorToShow = if (v) null else getString(R.string.error_add_new_car_text)
@@ -313,10 +323,12 @@ class DetailCarFragment : Fragment() {
             }
         }
     }
+
     private fun setErrorShown(text: TextInputLayout, errorToShow: String?) {
         text.error = errorToShow
         text.isErrorEnabled = errorToShow != null
     }
+
     private fun openGalleryForImage() {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
@@ -336,11 +348,13 @@ class DetailCarFragment : Fragment() {
             }
         }
     }
+
     fun View.hideKeyboard() {
         val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(windowToken, 0)
     }
-    private fun setColorDrawable(textView: TextView){
+
+    private fun setColorDrawable(textView: TextView) {
         val drawable = AppCompatResources.getDrawable(requireContext(), R.drawable.circle_shape)
         val wrappedDrawable = drawable?.let { DrawableCompat.wrap(it) }
         wrappedDrawable?.setBounds(0, 0, 70, 70)
