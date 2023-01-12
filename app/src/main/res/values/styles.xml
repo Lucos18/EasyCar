@@ -9,4 +9,7 @@
         <item name="windowFixedWidthMajor">90%</item>
         <item name="windowFixedWidthMinor">90%</item>
     </style>
+    <style name="title_size">
+        <item name="android:textSize">25sp</item>
+    </style>
 </resources>

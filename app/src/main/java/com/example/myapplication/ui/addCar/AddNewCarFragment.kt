@@ -36,9 +36,9 @@ import java.text.NumberFormat
 import java.util.*
 
 
-private var UriImage: Uri? = null
-private var kw: Int = 0
-private var price: Double = 0.0
+var UriImage: Uri? = null
+var kw: Int = 0
+var price: Double = 0.0
 private val REQUEST_CODE = 100
 
 @Suppress("DEPRECATION")
@@ -69,6 +69,7 @@ class AddNewCarFragment : Fragment() {
     @SuppressLint("InflateParams")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        if(binding.carYearAddText.text?.isNotEmpty() == true) binding.carYearAddText.isEnabled = true
         NoInternetDialogSignal.Builder(
             requireActivity(),
             lifecycle
@@ -223,9 +224,6 @@ class AddNewCarFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-        UriImage = null
-        price = 0.0
-        kw = 0
         super.onDestroyView()
         _binding = null
     }

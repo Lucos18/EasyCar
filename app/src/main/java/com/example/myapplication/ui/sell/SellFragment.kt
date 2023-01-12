@@ -12,6 +12,9 @@ import com.example.myapplication.BaseApplication
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentSellBinding
 import com.example.myapplication.model.CarLogo
+import com.example.myapplication.ui.addCar.UriImage
+import com.example.myapplication.ui.addCar.kw
+import com.example.myapplication.ui.addCar.price
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class SellFragment : Fragment() {
@@ -42,6 +45,9 @@ class SellFragment : Fragment() {
                 val action = SellFragmentDirections
                     .actionNavigationSellToAddNewCarFragment()
                 findNavController().navigate(action)
+                UriImage = null
+                price = 0.0
+                kw = 0
             }
         }
         val adapter = SellListAdapter ({ car ->
