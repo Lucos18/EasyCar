@@ -17,35 +17,25 @@
             android:layout_height="match_parent"
             android:layout_weight="0.6">
             <!--Change to image scrollable -->
-            <ScrollView
+            <LinearLayout
+                android:id="@+id/linear_layout_car_image"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <ImageView
+                    android:id="@+id/car_image_detail"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <LinearLayout
-                        android:id="@+id/linear_layout_car_image"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:id="@+id/car_image_detail"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:clickable="false"
-                            android:contentDescription="@string/car_image_content_description"
-                            android:scaleType="fitXY"
-                            android:src="@drawable/beg_removebg_preview"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-                    </LinearLayout>
+                    android:layout_height="match_parent"
+                    android:clickable="false"
+                    android:contentDescription="@string/car_image_content_description"
+                    android:scaleType="fitXY"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </LinearLayout>
                     <Button
                         android:id="@+id/button_change_image"
                         android:layout_width="170dp"
@@ -57,13 +47,11 @@
                         android:text="@string/change_image_text"
                         android:textColor="#FFFFFF"
                         android:textSize="14sp"
-
+                        android:visibility="gone"
                         app:backgroundTint="@null"
                         app:layout_constraintBottom_toBottomOf="@id/linear_layout_car_image"
                         app:layout_constraintEnd_toEndOf="@id/linear_layout_car_image" />
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </ScrollView>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ScrollView
@@ -177,7 +165,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginTop="8dp"
-
                     android:stretchColumns="*"
                     app:layout_constraintStart_toStartOf="@id/price_switcher"
                     app:layout_constraintTop_toBottomOf="@id/divider_2">

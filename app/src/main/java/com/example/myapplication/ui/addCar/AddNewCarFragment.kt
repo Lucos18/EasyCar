@@ -119,10 +119,8 @@ class AddNewCarFragment : Fragment() {
         }
         binding.carYearAddText.transformIntoDatePicker(requireContext(), "yyyy", Date())
         binding.carYearAddText.doOnTextChanged { _, _, _, _ ->
-            if (binding.carYearAddText.text?.isEmpty() == true) {
-                binding.carModelAddText.isEnabled = false
-                resetText(binding.carModelAddText)
-            } else binding.carModelAddText.isEnabled = true
+            resetText(binding.carModelAddText)
+            binding.carModelAddText.isEnabled = binding.carYearAddText.text?.isEmpty() != true
         }
 
         binding.carModelAddText.setOnClickListener {

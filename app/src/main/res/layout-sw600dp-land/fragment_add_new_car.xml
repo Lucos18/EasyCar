@@ -84,7 +84,7 @@
                             android:scaleType="fitXY"
                             android:id="@+id/car_image_1"
                             android:layout_width="match_parent"
-                            android:layout_height="500dp"
+                            android:layout_height="480dp"
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             android:clickable="true"
@@ -121,13 +121,14 @@
 
                     <TableRow
                         android:id="@+id/firstRow"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp">
+                        android:layout_marginBottom="16dp"
+                        android:weightSum="1" >
 
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/car_brand_add_label"
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="@dimen/add_car_row_height_tablet"
                             android:layout_marginEnd="25dp"
                             android:background="@android:color/transparent"
@@ -150,7 +151,7 @@
 
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/car_year_add_label"
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="@dimen/add_car_row_height_tablet"
 
                             android:background="@android:color/transparent"
@@ -177,11 +178,12 @@
                         android:id="@+id/secondRow"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp">
+                        android:layout_marginBottom="16dp"
+                        android:weightSum="1" >
 
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/car_model_add_label"
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="@dimen/add_car_row_height_tablet"
                             android:layout_marginEnd="25dp"
                             android:background="@android:color/transparent"
@@ -205,7 +207,7 @@
 
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/car_fuel_type_add_label"
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="@dimen/add_car_row_height_tablet"
                             android:background="@android:color/transparent"
                             app:boxBackgroundColor="@android:color/transparent"
@@ -230,11 +232,12 @@
                         android:id="@+id/thirdRow"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp">
+                        android:layout_marginBottom="16dp"
+                        android:weightSum="1" >
 
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/car_power_add_label"
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="@dimen/add_car_row_height_tablet"
                             android:layout_marginEnd="25dp"
                             android:clickable="false"
@@ -261,7 +264,7 @@
 
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/car_seats_add_label"
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="@dimen/add_car_row_height_tablet"
 
                             android:background="@android:color/transparent"
@@ -286,11 +289,12 @@
                         android:id="@+id/fourthRow"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp">
+                        android:layout_marginBottom="16dp"
+                        android:weightSum="1" >
 
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/car_price_add_label"
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="@dimen/add_car_row_height_tablet"
                             android:layout_marginEnd="25dp"
                             android:background="@android:color/transparent"
@@ -318,7 +322,7 @@
 
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/car_mileage_add_label"
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="@dimen/add_car_row_height_tablet"
                             android:background="@android:color/transparent"
                             app:boxBackgroundColor="@android:color/transparent"
