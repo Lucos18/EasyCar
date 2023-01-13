@@ -23,7 +23,6 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.myapplication.BaseApplication
-import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentDetailCarBinding
 import com.example.myapplication.enums.CarAddInputs
 import com.example.myapplication.enums.CarColors
@@ -36,6 +35,7 @@ import com.google.android.material.textfield.TextInputLayout
 import java.text.DecimalFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
+
 
 private var UriImage: Uri? = null
 private val REQUEST_CODE = 100
@@ -89,13 +89,13 @@ class DetailCarFragment : Fragment() {
             binding.deleteCarFab.setOnClickListener {
                 val builder = AlertDialog.Builder(requireContext())
                 //set title for alert dialog
-                builder.setTitle(getString(R.string.delete_car_dialog_title))
+                builder.setTitle(getString(com.example.myapplication.R.string.delete_car_dialog_title))
                 //set message for alert dialog
-                builder.setMessage(getString(R.string.delete_car_dialog_message))
+                builder.setMessage(getString(com.example.myapplication.R.string.delete_car_dialog_message))
                 builder.setIcon(android.R.drawable.ic_dialog_alert)
 
                 //performing positive action
-                builder.setPositiveButton(getString(R.string.delete_car_dialog_positive_button)) { _, _ ->
+                builder.setPositiveButton(getString(com.example.myapplication.R.string.delete_car_dialog_positive_button)) { _, _ ->
                     detailCarViewModel.deleteCarById(detailCarArgs.carId)
                     val action = DetailCarFragmentDirections
                         .actionDetailCarFragmentToNavigationSell()
@@ -103,7 +103,7 @@ class DetailCarFragment : Fragment() {
                 }
 
                 //performing negative action
-                builder.setNegativeButton(getString(R.string.delete_car_dialog_negative_button)) { _, _ ->
+                builder.setNegativeButton(getString(com.example.myapplication.R.string.delete_car_dialog_negative_button)) { _, _ ->
 
                 }
                 // Create the AlertDialog
@@ -155,7 +155,7 @@ class DetailCarFragment : Fragment() {
                     editCarFab.visibility = View.VISIBLE
                     saveCarFab.visibility = View.GONE
                     buttonChangeImage.visibility = View.GONE
-                    editCarFab.setImageResource(R.drawable.ic_baseline_edit_24)
+                    editCarFab.setImageResource(com.example.myapplication.R.drawable.ic_baseline_edit_24)
                     detailCarViewModel.updateCar(
                         car,
                         power = carPowerEditText.text.toString(),
@@ -175,9 +175,13 @@ class DetailCarFragment : Fragment() {
                         5,
                         TimeUnit.SECONDS,
                         getString(
-                            R.string.service_car_expired_text, car.brand
+                            com.example.myapplication.R.string.service_car_expired_text, car.brand
                         ),
-                        getString(R.string.service_car_context_text, car.brand, car.model),
+                        getString(
+                            com.example.myapplication.R.string.service_car_context_text,
+                            car.brand,
+                            car.model
+                        ),
                         car.id,
                         car.brand,
                         car.model,
@@ -186,7 +190,7 @@ class DetailCarFragment : Fragment() {
                 } else {
                     showCustomSnackBar(
                         binding.coordinatorDetailCar,
-                        getString(R.string.error_validation_edit),
+                        getString(com.example.myapplication.R.string.error_validation_edit),
                         com.google.android.material.snackbar.Snackbar.LENGTH_LONG
                     )
                 }
@@ -199,13 +203,24 @@ class DetailCarFragment : Fragment() {
             carColorText.text = car.color
             setColorDrawable(binding.carColorText)
 
-            carFuelTypeDetail.text = getString(R.string.car_fuel_type_detail_string, car.fuelType)
+            carFuelTypeDetail.text = getString(
+                com.example.myapplication.R.string.car_fuel_type_detail_string,
+                car.fuelType
+            )
             carSeatsTypeDetail.text =
-                getString(R.string.car_seats_detail_string, car.seats.toString())
+                getString(
+                    com.example.myapplication.R.string.car_seats_detail_string,
+                    car.seats.toString()
+                )
             carYearProductionDetail.text =
-                getString(R.string.car_year_detail_string, car.yearStartProduction.toString())
+                getString(
+                    com.example.myapplication.R.string.car_year_detail_string,
+                    car.yearStartProduction.toString()
+                )
             carStateText.text =
-                if (car.mileage > 0) getString(R.string.used_text) else getString(R.string.new_text)
+                if (car.mileage > 0) getString(com.example.myapplication.R.string.used_text) else getString(
+                    com.example.myapplication.R.string.new_text
+                )
             //TODO CHECK HERE
             if (car.image != null) {
                 val bmp = BitmapFactory.decodeByteArray(car.image, 0, car.image.size)
@@ -218,7 +233,7 @@ class DetailCarFragment : Fragment() {
                     )
                 )
             } else {
-                binding.carImageDetail.setImageResource(R.drawable.ic_baseline_directions_car_24)
+                binding.carImageDetail.setImageResource(com.example.myapplication.R.drawable.ic_baseline_directions_car_24)
             }
             val observer = Observer<List<CarLogo>> { list ->
                 setAndGetUriByBrandParsingListOfLogoAndImageView(
@@ -308,7 +323,8 @@ class DetailCarFragment : Fragment() {
 
     private fun setInputs(map: Map<CarAddInputs, Boolean>) {
         map.forEach { (k, v) ->
-            val errorToShow = if (v) null else getString(R.string.error_add_new_car_text)
+            val errorToShow =
+                if (v) null else getString(com.example.myapplication.R.string.error_add_new_car_text)
             when (k) {
                 CarAddInputs.Year -> setErrorShown(binding.carYearProductionEditLabel, errorToShow)
                 CarAddInputs.Fuel -> setErrorShown(binding.carFuelTypeEditLabel, errorToShow)
@@ -355,12 +371,17 @@ class DetailCarFragment : Fragment() {
     }
 
     private fun setColorDrawable(textView: TextView) {
-        val drawable = AppCompatResources.getDrawable(requireContext(), R.drawable.circle_shape)
+
+        val drawable = AppCompatResources.getDrawable(
+            requireContext(),
+            com.example.myapplication.R.drawable.circle_shape
+        )
         val wrappedDrawable = drawable?.let { DrawableCompat.wrap(it) }
         wrappedDrawable?.setBounds(0, 0, 70, 70)
         val color =
             CarColors.values().first { it.nameColor == textView.text.toString() }
         wrappedDrawable?.setTint(color.rgbColor)
         textView.setCompoundDrawables(wrappedDrawable, null, null, null)
+
     }
 }

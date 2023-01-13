@@ -37,7 +37,8 @@ class FavoritesFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        setHasOptionsMenu(true)
+        //TODO change here if fixed filter
+        //setHasOptionsMenu(true)
         _binding = FragmentFavoritesBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -65,7 +66,6 @@ class FavoritesFragment : Fragment() {
                 }
         }
         favoritesViewModel.allFavoritesCarSortedByFilter.observe(this.viewLifecycleOwner) { carSelected ->
-            Log.d("ciao", favoritesViewModel.allFavoritesCarSortedByFilter.value.toString())
             if (checkedItemFavourites != -1 && favoritesViewModel.allFavoritesCarSortedByFilter.value != null) {
                 carSelected.let {
                     adapter.submitList(it)
